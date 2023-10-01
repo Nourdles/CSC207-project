@@ -1,0 +1,49 @@
+{
+  "ISBN:9781789543537": {
+    "url": "https://openlibrary.org/books/OL34697347M/Powers_and_Thrones",
+    "key": "/books/OL34697347M",
+    "title": "Powers and Thrones",
+    "subtitle": "A New History of the Middle Ages",
+    "authors": [
+      {
+        "url": "https://openlibrary.org/authors/OL7163768A/Dan_Jones",
+        "name": "Dan Jones"
+      }
+    ],
+    "pagination": "720",
+    "identifiers": {
+      "isbn_13": [
+        "9781789543537"
+      ],
+      "openlibrary": [
+        "OL34697347M"
+      ]
+    },
+    "classifications": {
+      "lc_classifications": [
+        "D117"
+        ]
+    },
+    "publishers": [
+      {
+        "name": "Head of Zeus"
+      }
+    ],
+    "publish_date": "2021",
+    "subjects": [
+      {
+        "name": "World history",
+        "url": "https://openlibrary.org/subjects/world_history"
+      },
+      {
+        "name": "Middle Ages",
+        "url": "https://openlibrary.org/subjects/middle_ages"
+      },
+      {
+        "name": "Medieval Civilization",
+        "url": "https://openlibrary.org/subjects/medieval_civilization"
+      }
+    ]
+  }
+}
+}
