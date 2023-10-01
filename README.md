@@ -66,6 +66,7 @@ API Tool: https://hoppscotch.io/
 
 Example: Using ISBN, 9781789543537
 https://openlibrary.org/api/books?bibkeys=ISBN:9781789543537&jscmd=data&format=json
+![Screenshot 2023-10-01 012331](https://github.com/Nourdles/CSC207-project/assets/128332497/e6df3612-a576-461b-ac7c-8980935f76bb)
 
 Example Response Body Output
 
