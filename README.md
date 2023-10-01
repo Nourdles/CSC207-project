@@ -3,8 +3,7 @@ Repo for our "Minimum 85%" group project for CSC207
 
 Problem Domain:
 A secondhand bookselling website.
-    
-(Potentially: A payment system for shipped books)
+
 * Allow users to create listings to sell books, and search current listings to buy books using filters.
   * Categorize books by genre (e.g. nonfiction, romance), date published, price, etc (see Class below for more info)
 * Chat features allowing buyers + sellers to communicate
@@ -14,7 +13,7 @@ A secondhand bookselling website.
 
 
 High-Level App Description
-A user Interface which allows the user to:
+* A user Interface which allows the user to:
 * Sign in/create an account
 * Search for books to buy by typing in title/author/isbn AND/OR apply filters (genre, location, price, etc)
   * Choose from the list of books that appear from the search
@@ -29,7 +28,7 @@ A user Interface which allows the user to:
 * Change email
 * Delete profile
 * Sign out
-* Send payment for shipped books
+* Send payment for shipped books (potential)
 
 * Classes:
 * Users
