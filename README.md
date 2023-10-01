@@ -4,7 +4,7 @@
 A secondhand book-selling website.
 
 * Allow users to create listings to sell books, and search current listings to buy books using filters.
-  * Categorize books by genre (e.g. nonfiction, romance), date published, price, etc (see Class below for more info)
+  * Categorize books by genre (e.g. nonfiction, romance), date published, price, etc. (see Class below for more info)
 * Chat features allowing buyers + sellers to communicate
 * Allows users to access location of potential counterparties
 * Use of an API to access data about books and make sure buyers provide correct information on their book listing by 
@@ -14,9 +14,9 @@ A secondhand book-selling website.
 ## High-Level App Description
 * A user Interface which allows the user to:
 * Sign in/create an account
-* Search for books to buy by typing in title/author/isbn AND/OR apply filters (genre, location, price, etc)
+* Search for books to buy by typing in title/author/isbn AND/OR apply filters (genre, location, price, etc.)
   * Choose from the list of books that appear from the search
-    *   See info about said book (price, amount of listings, etc)
+    *   See info about said book (price, amount of listings, etc.)
       * Click on a listing to view it
         * Option to chat with the seller
 * Option to create listing
@@ -70,7 +70,8 @@ https://openlibrary.org/api/books?bibkeys=ISBN:9781789543537&jscmd=data&format=j
 ## Example Response Body Output
 
 **For OpenLibrary:**
-  * add screenshot once we have the code (expected output temporarily moved to `package.json`)
+  * This is the output when running `OpenLibraryTest.java`
+    
 
 **For Google Chat**
   * add screenshot once we have the code
