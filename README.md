@@ -59,6 +59,7 @@ A secondhand book-selling website.
 
 ## Links to API Documentation:
 https://openlibrary.org/dev/docs/api/books
+
 https://developers.google.com/chat/api/reference/rest
 
 ## API Tool: https://hoppscotch.io/
