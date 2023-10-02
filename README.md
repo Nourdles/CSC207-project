@@ -72,7 +72,7 @@ https://openlibrary.org/api/books?bibkeys=ISBN:9781789543537&jscmd=data&format=j
 
 **For OpenLibrary:**
   * This is the output when running `OpenLibraryTest.java`
-  * ![image](https://github.com/Nourdles/CSC207-project/assets/96416295/e657d00c-1a35-4015-a155-49bf1c77cbaf)
+  * !![image](https://github.com/Nourdles/CSC207-project/assets/96416295/ed20f7a0-b862-4b09-ab3e-a1f27c9895ff)
   * ![image](https://github.com/Nourdles/CSC207-project/assets/96416295/adc43e9c-4a3d-477b-a61c-339925cb2896)
 
 
