@@ -72,9 +72,8 @@ https://openlibrary.org/api/books?bibkeys=ISBN:9781789543537&jscmd=data&format=j
 
 **For OpenLibrary:**
   * This is the output when running `OpenLibraryTest.java`
-  * !![image](https://github.com/Nourdles/CSC207-project/assets/96416295/ed20f7a0-b862-4b09-ab3e-a1f27c9895ff)
-  * ![image](https://github.com/Nourdles/CSC207-project/assets/96416295/adc43e9c-4a3d-477b-a61c-339925cb2896)
-
+  * ![image](https://github.com/Nourdles/CSC207-project/assets/96416295/ed20f7a0-b862-4b09-ab3e-a1f27c9895ff)
+  * ![image](https://github.com/Nourdles/CSC207-project/assets/96416295/1ccbd96c-259c-411d-839b-906530ff03ec)
 
     
 
