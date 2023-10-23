@@ -1,4 +1,6 @@
-package src.entity;
+package entity;
+
+import entity.CommonUser;
 
 import java.time.LocalDateTime;
 
@@ -10,8 +12,11 @@ public class Listing {
 
     private String condition;
 
-    Listing(Book book, double listingPrice, String condition, LocalDateTime creationTime) {
+    private final CommonUser seller;
+
+    Listing(Book book, CommonUser seller, double listingPrice, String condition, LocalDateTime creationTime) {
         this.book = book;
+        this.seller = seller;
         this.creationTime = creationTime;
         this.listingPrice = listingPrice;
         this.condition = condition;
