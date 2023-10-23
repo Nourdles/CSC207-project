@@ -1,7 +1,5 @@
 package src.entity;
 
-import java.util.ArrayList;
-
 public class Book {
 
     private String title;
