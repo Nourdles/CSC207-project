@@ -1,6 +1,5 @@
-package entity;
+package src.entity;
 
-import src.entity.User;
 public class CommonUser implements User {
     private String username;
     private String password;
