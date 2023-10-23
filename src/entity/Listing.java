@@ -1,7 +1,5 @@
 package src.entity;
 
-import entity.CommonUser;
-
 import java.time.LocalDateTime;
 
 public class Listing {
