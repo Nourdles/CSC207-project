@@ -1,4 +1,4 @@
-package entity;
+package src.entity;
 
 import src.entity.User;
 public class AdminUser implements User {

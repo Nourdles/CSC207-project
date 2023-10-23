@@ -1,4 +1,4 @@
-package entity;
+package src.entity;
 
 import entity.CommonUser;
 
