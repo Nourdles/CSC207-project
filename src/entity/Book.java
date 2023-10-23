@@ -22,5 +22,32 @@ public class Book {
         this.inStock = inStock;
     }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public int getISBN() {
+        return ISBN;
+    }
+
+    public int getInStock() {
+        return inStock;
+    }
 }
