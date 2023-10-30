@@ -1,4 +1,4 @@
-package src.entity;
+package entity;
 
 public class CommonUser implements User {
     private String username;
@@ -9,12 +9,20 @@ public class CommonUser implements User {
     private int numRatings;
     private String city;
 
-    /*Change to make email, phoneNumber optional - should one be required, both, how to access? */
-    /*Make a rating use case*/
     CommonUser(String username, String password, String email, String phoneNumber, String city){
         this.username = username;
         this.password = password;
         this.email = email;
+        this.performanceRating = 0.0;
+        this.numRatings = 0;
+        this.city = city;
+    }
+
+
+    CommonUser(String username, String password, String phoneNumber, String city){
+        this.username = username;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
         this.performanceRating = 0.0;
         this.numRatings = 0;
         this.city = city;

@@ -1,4 +1,6 @@
-package src.entity;
+package entity;
+
+import entity.CommonUser;
 
 import java.time.LocalDateTime;
 
