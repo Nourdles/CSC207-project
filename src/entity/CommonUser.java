@@ -8,7 +8,6 @@ public class CommonUser implements User {
     private double performanceRating;
     private int numRatings;
     private String city;
-
     CommonUser(String username, String password, String email, String phoneNumber, String city){
         this.username = username;
         this.password = password;
