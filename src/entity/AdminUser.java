@@ -1,6 +1,6 @@
-package src.entity;
+package entity;
 
-import src.entity.User;
+import entity.User;
 public class AdminUser implements User {
     private String username;
     private String password;

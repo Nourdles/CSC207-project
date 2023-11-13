@@ -1,5 +1,5 @@
-package src.view;
-import src.interface_adapter.ViewManagerModel;
+package view;
+import interface_adapter.ViewManagerModel;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;

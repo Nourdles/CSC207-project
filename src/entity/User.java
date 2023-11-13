@@ -5,5 +5,4 @@ public interface User {
 
     String getPassword();
 
-
 }
