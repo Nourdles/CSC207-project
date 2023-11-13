@@ -17,7 +17,7 @@ public class OpenLibraryTest {
 
 
         Request getRequest = new Request.Builder()
-                .url("https://openlibrary.org/api/books?bibkeys=ISBN:9781789543537&jscmd=data&format=json")
+                .url("https://openlibrary.org/search.json?q=Lord+of+the+Rings")
                 .build();
 
         try {
