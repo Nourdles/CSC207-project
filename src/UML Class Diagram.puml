@@ -1,0 +1,85 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Listing {
+-Book book
+-LocalDateTime creationTime
+-double listingPrice
+-String condition
+-CommonUser seller
+
++getCreationTime(): LocalDateTime
++getListingPrice(): double
++getCondition(): String
++deleteListing()
++createListing()
+}
+
+class AdminUser {
+-String username
+-String password
+-String email
+
++getUsername(): String
++getPassword(): String
++deleteUser()
++changeRating()
+}
+
+class CommonUser {
+-String username
+-String password
+-String email
+-int phoneNumber
+-double performanceRating
+-int numRatings
+-String city
+
++getUsername(): String
++getPassword(): String
++getEmail(): String
++getPhoneNumber(): int
++getPerformanceRating(): int
++getNumRatings(): int
++getCity(): String
++changePassword()
++changeEmail()
++giveRating()
++viewListings()
+
+}
+
+class Book {
+-String title
+-String genre
+-int year
+-String author
+-String summary
+-int ISBN
+-int inStock
+-? pictures
+
++getTitle(): String
++getGenre(): String
++getYear(): int
++getAuthor(): String
++getSummary(): String
++getISBN(): int
++getInStock(): int
++getPictures()
++addInStock()
+}
+
+interface User {
++getUsername(): String
++getPassword(): String
+}
+
+CommonUser ..|> User
+AdminUser ..|> User
+Book o-- Listing
+CommonUser o-- Listing
+
+
+@enduml
