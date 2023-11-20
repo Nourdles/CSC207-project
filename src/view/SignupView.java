@@ -20,6 +20,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+    private final JTextField emailInputField = new JTextField(15);
+    private final JTextField phoneNumberInputField = new JTextField(15);
+    private final JTextField cityInputField = new JTextField(15);
     private final SignupController signupController;
     private final JButton signUp;
     private final JButton cancel;
@@ -40,6 +43,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+        LabelTextPanel emailInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.EMAIL_LABEL), emailInputField);
+        LabelTextPanel phoneNumberInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.PHONE_NUMBER_LABEL), phoneNumberInputField);
+        LabelTextPanel cityInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.CITY_LABEL), cityInputField);
 
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
@@ -59,7 +68,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                             signupController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword(),
-                                    currentState.getRepeatPassword()
+                                    currentState.getRepeatPassword(),
+                                    currentState.getEmail(),
+                                    currentState.getPhoneNumber(),
+                                    currentState.getCity()
                             );
                         }
                     }
@@ -132,11 +144,68 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
+        emailInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        String text = emailInputField.getText() + e.getKeyChar();
+                        currentState.setEmail(text);
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+        phoneNumberInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        String text = phoneNumberInputField.getText() + e.getKeyChar();
+                        currentState.setPhoneNumber(text);
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+        cityInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        String text = cityInputField.getText() + e.getKeyChar();
+                        currentState.setCity(text);
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
+        this.add(emailInfo);
+        this.add(phoneNumberInfo);
+        this.add(cityInfo);
         this.add(buttons);
     }
 

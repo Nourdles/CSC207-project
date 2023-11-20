@@ -27,6 +27,7 @@ public class CommonUser implements User {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.performanceRating = 0.0;
         this.numRatings = 0;
         this.city = city;
