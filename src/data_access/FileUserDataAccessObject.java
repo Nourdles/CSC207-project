@@ -28,6 +28,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         headers.put("username", 0);
         headers.put("password", 1);
         headers.put("creation_time", 2);
+        headers.put("email", 3);
+        headers.put("phoneNumber", 4);
+        headers.put("city", 5);
 
         if (csvFile.length() == 0) {
             save();
@@ -45,8 +48,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
                     String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
+                    String email = String.valueOf(col[headers.get("email")]);
+                    String phoneNumber = String.valueOf(col[headers.get("phoneNumber")]);
+                    String city = String.valueOf(col[headers.get("city")]);
                     LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password);
+                    User user = userFactory.create(username, password, email, phoneNumber, city);
                     accounts.put(username, user);
                 }
             }

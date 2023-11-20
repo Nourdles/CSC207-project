@@ -9,9 +9,11 @@ public class SignupController {
         this.userSignupUseCaseInteractor = userSignupUseCaseInteractor;
     }
 
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username, String password1, String password2,
+                        String email, String phoneNumber, String city ) {
         SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2);
+                username, password1, password2,
+                email, phoneNumber, city);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }
