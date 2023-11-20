@@ -5,11 +5,25 @@ public class CommonUser implements User {
     private String username;
     private String password;
     private String email;
-    private String phoneNumber;
+    private int phoneNumber;
     private double performanceRating;
     private int numRatings;
     private String city;
-    CommonUser(String username, String password, String email, String phoneNumber, String city){
+
+    /*Common Users need to provide a phoneNumber, an email, or both. */
+
+    /*Common User provides both.*/
+    CommonUser(String username, String password, String city, String email, int phoneNumber){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.performanceRating = 0.0;
+        this.numRatings = 0;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+    }
+
+    CommonUser(String username, String password, String city, String email){
         this.username = username;
         this.password = password;
         this.email = email;
@@ -18,9 +32,7 @@ public class CommonUser implements User {
         this.numRatings = 0;
         this.city = city;
     }
-
-
-    CommonUser(String username, String password, String phoneNumber, String city){
+    CommonUser(String username, String password, String city, int phoneNumber){
         this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -52,11 +64,11 @@ public class CommonUser implements User {
         return email;
     }
 
-    public void setPhoneNumber(String newPhoneNumber){
+    public void setPhoneNumber(int newPhoneNumber){
         this.phoneNumber= newPhoneNumber;
     }
 
-    public String getPhoneNumber(){
+    public int getPhoneNumber(){
         return phoneNumber;
     }
 

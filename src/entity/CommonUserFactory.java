@@ -2,17 +2,17 @@ package entity;
 public class CommonUserFactory implements UserFactory {
         /**
          * Requires: password is valid.
-         * @param name
+         * @param username
          * @param password
          * @param email
          * @param phoneNumber
-         * @param city
          * @return
          */
-    @Override
-    public User create(String name, String password, String email, String phoneNumber, String city) {
-        return new CommonUser(name, password, email, phoneNumber, city);
+
+    /*Creating a CommonUser.  */
+    public User create(String username, String password, String city, String email, int phoneNumber) {
+        return new CommonUser(username, password, city, email, phoneNumber);
+
     }
-}
 
 
