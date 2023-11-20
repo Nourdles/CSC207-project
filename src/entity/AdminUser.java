@@ -6,11 +6,13 @@ public class AdminUser implements User {
     private String password;
 
     private String email;
+    private final int employeeNumber;
 
-    AdminUser(String username, String password, String email){
+    AdminUser(String username, String password, String email, int employeeNumber){
         this.username = username;
         this.password = password;
         this.email = email;
+        this.employeeNumber = employeeNumber;
     }
 
     /*Could add change username, password, email functionalities or use cases */
