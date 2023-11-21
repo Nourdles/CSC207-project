@@ -40,7 +40,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time");
+                assert header.equals("username,password,creation_time, email, phoneNumber, city");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -52,7 +52,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     String phoneNumber = String.valueOf(col[headers.get("phoneNumber")]);
                     String city = String.valueOf(col[headers.get("city")]);
                     LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password, email, phoneNumber, city);
+                    User user = userFactory.create(username, password, ldt, email, phoneNumber, city);
                     accounts.put(username, user);
                 }
             }
@@ -102,8 +102,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s",
-                        user.getUsername(), user.getPassword());
+                String line = String.format("%s,%s,%s,%s,%s,%s",
+                        user.getUsername(), user.getPassword(), user.getCreationTime(),
+                        user.getEmail(), user.getPhoneNumber(), user.getCity());
                 writer.write(line);
                 writer.newLine();
             }
