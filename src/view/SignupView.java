@@ -56,7 +56,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         buttons.add(cancel);
 
         signUp.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
+
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
@@ -210,12 +210,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      * React to a button click that results in evt.
      */
     public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
+        JOptionPane.showConfirmDialog(this, ".");
     }
 
-    public void clearPerformed(ActionEvent e, String usernames){
-        JOptionPane.showConfirmDialog(this, usernames);
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
