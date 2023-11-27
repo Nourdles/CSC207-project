@@ -3,21 +3,21 @@ package entity;
 public class Book {
 
     private String title;
-    private String genre;
     private int year;
     private String author;
     private String summary;
-    private int ISBN;
+    private String ISBN;
     private int inStock;
+    private String coverUrl;
 
-    Book(String title, String genre, int year, String author, String summary, int ISBN, int inStock) {
+    public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl) {
         this.title = title;
-        this.genre = genre;
         this.year = year;
         this.author = author;
         this.summary = summary;
         this.ISBN = ISBN;
         this.inStock = inStock;
+        this.coverUrl = coverUrl;
     }
 
     public String getTitle() {
@@ -28,13 +28,6 @@ public class Book {
         this.title = title;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
 
     public int getYear() {
         return year;
@@ -61,11 +54,11 @@ public class Book {
         this.summary = summary;
     }
 
-    public int getISBN() {
+    public String getISBN() {
         return ISBN;
     }
 
-    public void setISBN(int ISBN) {
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
 
@@ -75,5 +68,22 @@ public class Book {
 
     public void setInStock(int inStock) {
         this.inStock = inStock;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", year=" + year +
+                ", author='" + author + '\'' +
+                ", summary='" + summary + '\'' +
+                ", ISBN=" + ISBN +
+                ", inStock=" + inStock +
+                ", coverUrl='" + coverUrl + '\'' +
+                '}';
+    }
+
+    public String getCoverUrl() {
+        return this.coverUrl;
     }
 }
