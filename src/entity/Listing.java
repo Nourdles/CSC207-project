@@ -1,9 +1,5 @@
 package entity;
 
-import entity.CommonUser;
-import entity.Book;
-import entity.Photo;
-
 import java.time.LocalDateTime;
 
 /*A seller's listing of a book. Books must be available in the OpenLibrary Database, be
