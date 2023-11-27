@@ -21,7 +21,6 @@ public class SignupPresenter implements SignupOutputBoundary {
         this.signupViewModel = signupViewModel;
         this.loginViewModel = loginViewModel;
     }
-
     @Override
     public void prepareSuccessView(SignupOutputData response) {
         // On success, switch to the login view.

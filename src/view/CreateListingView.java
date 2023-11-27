@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.create_listing.CreateListingController;
+import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -74,7 +75,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(createListing)) {
                         LocalDateTime ltd = LocalDateTime.now();
-                        createListingController.execute(book, seller, selectedCondition, image, ltd);
+                        createListingController.execute(book, seller, listingPrice, selectedCondition, image, ltd);
                         }
                     }
                 }
@@ -116,6 +117,6 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        CreateListingState = (CreateListingState) evt.getNewValue();
     }
 }

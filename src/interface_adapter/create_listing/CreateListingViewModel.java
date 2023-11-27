@@ -22,4 +22,11 @@ public class CreateListingViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
 
     }
+
+    public CreateListingState getState() {
+
+    }
+
+    public void setState(CreateListingState currentState) {
+    }
 }
