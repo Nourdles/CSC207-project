@@ -1,7 +1,4 @@
-package src.entity;
-
-import src.entity.CommonUser;
-import entity.Book;
+package entity;
 
 import java.time.LocalDateTime;
 
