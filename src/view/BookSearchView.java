@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 public class BookSearchView extends JFrame implements ActionListener, PropertyChangeListener{
     private JTextField searchField;
     private JButton searchButton;
+    private JButton filterButton;
     private JPanel resultsPanel;
     private BookSearchController controller;
     private BookSearchViewModel viewModel;
@@ -52,15 +53,16 @@ public class BookSearchView extends JFrame implements ActionListener, PropertyCh
         topPanel.setBackground(lightBrown);
         topPanel.setLayout(new BorderLayout());
 
-        // Add your logo as an ImageIcon to a JLabel
+        // Add our logo as an ImageIcon to a JLabel
         ImageIcon logoIcon = new ImageIcon("bookshelf.png"); // Replace with the path to your logo image
         JLabel logoLabel = new JLabel(logoIcon);
         logoLabel.setPreferredSize(new Dimension(150, 150)); // Set the preferred size (adjust as needed)
 
-        // Create a JTextArea for the paragraph
-        JTextArea paragraphText = new JTextArea("Welcome to our second-hand book selling website! " +
+        // Create a JTextArea for our search instructions
+        JTextArea paragraphText = new JTextArea("Welcome to our second-hand book selling application! " +
                 "Enter a book title, author, or keyword to start searching. Please make sure there are no typos, and " +
-                "press the Search button when you are ready.");
+                "press the Search button when you are ready. You can use the Filter button to filter your search once " +
+                "results are displayed.");
 
         Font font = new Font("SansSerif", Font.PLAIN, 14); // You can adjust the font and size
         paragraphText.setFont(font);
@@ -92,19 +94,27 @@ public class BookSearchView extends JFrame implements ActionListener, PropertyCh
         searchPanel.setLayout(new FlowLayout());
         searchPanel.setBackground(lightBrown);
 
+        ImageIcon searchImage = new ImageIcon("search.png");
+        searchImage.setImage(searchImage.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+
         searchField = new JTextField(40);
-        searchButton = new JButton("Search");
+        searchButton = new JButton(searchImage);
+        filterButton = new JButton("Filters");
         searchButton.addActionListener(this);
+        filterButton.addActionListener(this);
 
         JPanel searchComponentsPanel = new JPanel(new BorderLayout());
 
         searchComponentsPanel.add(searchField, BorderLayout.CENTER);
         searchComponentsPanel.add(searchButton, BorderLayout.EAST);
+        searchComponentsPanel.add(filterButton, BorderLayout.WEST);
+
 
         // Add the search components panel to the search panel
         searchPanel.add(searchComponentsPanel, BorderLayout.NORTH);
 
         searchButton.setBackground(Brown);
+        filterButton.setBackground(Brown);
         searchField.setBackground(whiteBrown);
 
         // Results panel setup
@@ -131,6 +141,10 @@ public class BookSearchView extends JFrame implements ActionListener, PropertyCh
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
             controller.onSearchButtonClicked(searchField.getText());
+        }
+
+        if (e.getSource() == filterButton) {
+            JOptionPane.showMessageDialog(this, "Filter options:");
         }
     }
 
@@ -231,8 +245,9 @@ public class BookSearchView extends JFrame implements ActionListener, PropertyCh
     private void showBookDetails(Book book) {
         // Implement logic to display book details
         // This could open a new JFrame or JDialog with the book's details
-        JOptionPane.showMessageDialog(this, "Details for: " + book.getTitle());
+        JOptionPane.showInputDialog(this, "Details for: " + book.getTitle());
     }
+
 
     public void display() {
         setVisible(true);

@@ -18,7 +18,7 @@ import java.awt.*;
 import java.io.IOException;
 
 /*Same as CA5 for now*/
-public class Main {
+/* public class Main {
     public static void main(String[] args) {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
@@ -68,10 +68,10 @@ public class Main {
         application.pack();
         application.setVisible(true);
 
-    }
+    } */
 
 
- /* public class Main {
+ public class Main {
     public static void main(String[] args) {
         // Real implementation of BookSearchDataAccessInterface
         BookSearchDataAccessInterface realDataAccess = new OpenLibraryDB();
@@ -89,5 +89,5 @@ public class Main {
         // Initialize and display the BookSearchView
         BookSearchView view = new BookSearchView(controller, viewModel);
         view.display();
-    } */
+    }
 }
