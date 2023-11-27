@@ -40,33 +40,91 @@ public class BookSearchView extends JFrame implements ActionListener, PropertyCh
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Search panel setup
-        JPanel searchPanel = new JPanel();
-        searchPanel.setLayout(new FlowLayout());
-
-        searchField = new JTextField(20);
-        searchButton = new JButton("Search");
-        searchButton.addActionListener(this);
-
-        searchPanel.add(searchField);
-        searchPanel.add(searchButton);
-
         Color Brown = new Color(217, 196, 152);
         Color lightBrown = new Color(245, 229, 196);
         Color whiteBrown = new Color(224, 218, 213);
-        searchButton.setBackground(Brown);
+
+        // Main content panel with BorderLayout
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
+        // Top panel setup
+        JPanel topPanel = new JPanel();
+        topPanel.setBackground(lightBrown);
+        topPanel.setLayout(new BorderLayout());
+
+        // Add your logo as an ImageIcon to a JLabel
+        ImageIcon logoIcon = new ImageIcon("bookshelf.png"); // Replace with the path to your logo image
+        JLabel logoLabel = new JLabel(logoIcon);
+        logoLabel.setPreferredSize(new Dimension(150, 150)); // Set the preferred size (adjust as needed)
+
+        // Create a JTextArea for the paragraph
+        JTextArea paragraphText = new JTextArea("Welcome to our second-hand book selling website! " +
+                "Enter a book title, author, or keyword to start searching. Please make sure there are no typos, and " +
+                "press the Search button when you are ready.");
+
+        Font font = new Font("SansSerif", Font.PLAIN, 14); // You can adjust the font and size
+        paragraphText.setFont(font);
+
+        paragraphText.setEditable(false);
+        paragraphText.setWrapStyleWord(true);
+        paragraphText.setLineWrap(true);
+        paragraphText.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+        paragraphText.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
+        paragraphText.setForeground(Color.BLACK);
+        paragraphText.setBackground(lightBrown);
+
+        // Create an EmptyBorder to add space around the paragraph text
+        int topPadding = 20; // Adjust the top padding as needed
+        int leftPadding = 20; // Adjust the left padding as needed
+        int bottomPadding = 20; // Adjust the bottom padding as needed
+        int rightPadding = 20; // Adjust the right padding as needed
+        paragraphText.setBorder(BorderFactory.createEmptyBorder(
+                topPadding, leftPadding, bottomPadding, rightPadding));
+
+        // Add the logo to the topPanel
+        topPanel.add(logoLabel, BorderLayout.NORTH);
+
+        // Add the paragraphText to the topPanel at the SOUTH position
+        topPanel.add(paragraphText, BorderLayout.SOUTH);
+
+        // Search panel setup
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new FlowLayout());
         searchPanel.setBackground(lightBrown);
+
+        searchField = new JTextField(40);
+        searchButton = new JButton("Search");
+        searchButton.addActionListener(this);
+
+        JPanel searchComponentsPanel = new JPanel(new BorderLayout());
+
+        searchComponentsPanel.add(searchField, BorderLayout.CENTER);
+        searchComponentsPanel.add(searchButton, BorderLayout.EAST);
+
+        // Add the search components panel to the search panel
+        searchPanel.add(searchComponentsPanel, BorderLayout.NORTH);
+
+        searchButton.setBackground(Brown);
         searchField.setBackground(whiteBrown);
 
         // Results panel setup
         resultsPanel = new JPanel();
         resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
-
         resultsPanel.setBackground(lightBrown);
 
-        // Adding the search panel and results panel to the frame
-        getContentPane().add(searchPanel, BorderLayout.NORTH);
-        getContentPane().add(new JScrollPane(resultsPanel), BorderLayout.CENTER);
+        // Encapsulate the resultsPanel within a JScrollPane
+        JScrollPane resultsScrollPane = new JScrollPane(resultsPanel);
+
+        // Adding the topPanel and search panel to the main panel
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(searchPanel, BorderLayout.CENTER);
+
+        // Add the main panel to the frame
+        getContentPane().add(mainPanel, BorderLayout.NORTH); // Use BorderLayout.NORTH to keep the top panel at the top
+        getContentPane().add(resultsScrollPane, BorderLayout.CENTER); // Use BorderLayout.CENTER for the results
+
+        // Ensure that the components are visible
+        setVisible(true);
     }
 
     @Override
