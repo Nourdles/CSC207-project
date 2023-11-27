@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/*Data saved includes all the  */
+
 public class FileListingDataAccessObject implements CreateListingDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -21,8 +23,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         headers.put("seller", 1);
         headers.put("listing_price", 2);
         headers.put("condition", 3);
-        headers.put("photo", 4);
-        headers.put("creation_time", 5);
+        headers.put("creation_time", 4);
 
         if (csvFile.length() == 0) {
             save();
