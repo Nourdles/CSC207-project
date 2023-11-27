@@ -25,8 +25,18 @@ import java.io.IOException;
 
 public class CreateListingUseCaseFactory {
 
+    /**
+     * Prevent instantiation.
+     */
     private CreateListingUseCaseFactory(){}
 
+    /** Return a View of a User's listings after an attempt to create a listing.
+     *
+     * @param viewManagerModel
+     * @param createListingViewModel
+     * @param fileListingDataAccessObject
+     * @return A View of a User's listings after a user has attempted to create a listing.
+     */
     public static ListingsView create(ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel,
                                       CreateListingDataAccessInterface fileListingDataAccessObject){
         try {

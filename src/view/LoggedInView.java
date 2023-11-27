@@ -13,6 +13,9 @@ import java.beans.PropertyChangeListener;
 
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
+    /**
+     * The view of the home page after logging in.
+     */
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
 

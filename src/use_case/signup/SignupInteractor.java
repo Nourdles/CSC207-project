@@ -4,10 +4,20 @@ import entity.User;
 import entity.UserFactory;
 
 public class SignupInteractor implements SignupInputBoundary {
+
+    /**
+     * An interactor that directs the creation and saving of users after checking for username matching.
+     */
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
     final UserFactory userFactory;
 
+    /**
+     * Initializing the Signup Interactor.
+     * @param signupDataAccessInterface
+     * @param signupOutputBoundary
+     * @param userFactory
+     */
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
@@ -16,6 +26,10 @@ public class SignupInteractor implements SignupInputBoundary {
         this.userFactory = userFactory;
     }
 
+    /**
+     * Executing the use case based on the Signup Data.
+     * @param signupInputData
+     */
     @Override
     public void execute(SignupInputData signupInputData) {
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {

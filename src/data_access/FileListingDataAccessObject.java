@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class FileListingDataAccessObject implements CreateListingDataAccessInterface {
     /**
-     * A DataAccessObject that stores all listing information except bookPhoto.
+     * A Data Access Object that stores all listing information except images.
      * @param csvPath the String that represents a filepath for the file that stores Listings.
      * @param listingFactory a Factory for creating Listings.
      * @param bookPhoto: a photo of the book, default or uploaded by the seller.
@@ -21,6 +21,14 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     private final Map<String, Listing> listingInfo = new HashMap<>();
     private Photo bookPhoto;
     private ListingFactory listingFactory;
+
+    /** Constructing a Data Access Object for listing information except images.
+     *
+     * @param csvPath
+     * @param listingFactory
+     * @param bookPhoto
+     * @throws IOException
+     */
     public FileListingDataAccessObject(String csvPath, ListingFactory listingFactory, Photo bookPhoto) throws IOException {
         this.listingFactory = listingFactory;
         this.bookPhoto = bookPhoto;
@@ -58,17 +66,22 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         }
     }
 
+    /**
+     * Maps a listing ID to a listing object, then saves the listing information to a local system.
+     * @param listing
+     */
     @Override
     public void save(Listing listing) {
         listingInfo.put(listing.getListingId(), listing);
         this.save();
     }
+
+    /**
+     * Clears the listing data file.
+     */
     public void clear(){
         listingInfo.clear();
         this.save();
-    }
-    public Listing get(String listingId) {
-        return listingInfo.get(listingId);
     }
     private void save() {
         BufferedWriter writer;
