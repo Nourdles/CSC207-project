@@ -69,9 +69,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getUsername(),
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword(),
+                                    currentState.getCity(),
                                     currentState.getEmail(),
-                                    currentState.getPhoneNumber(),
-                                    currentState.getCity()
+                                    currentState.getPhoneNumber()
                             );
                         }
                     }
@@ -168,7 +168,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
                         String text = phoneNumberInputField.getText() + e.getKeyChar();
-                        currentState.setPhoneNumber(text);
+                        currentState.setPhoneNumber(Integer.parseInt(text));
                         signupViewModel.setState(currentState);
                     }
 
@@ -214,10 +214,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      */
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
-    }
-
-    public void clearPerformed(ActionEvent e, String usernames){
-        JOptionPane.showConfirmDialog(this, usernames);
     }
 
     @Override

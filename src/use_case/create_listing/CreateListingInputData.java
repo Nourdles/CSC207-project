@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class CreateListingInputData {
 
-    final private User seller;
+    final private CommonUser seller;
     final private Book book;
     private String condition;
     private double listingPrice;
@@ -26,19 +26,17 @@ public class CreateListingInputData {
     Book getBook(){
         return book;
     }
-    User getUser(){
+    CommonUser getSeller(){
         return seller;
     }
-
     double getListingPrice(){
         return listingPrice;
     }
-
     String getCondition(){
         return condition;
     }
     Photo getBookPhoto(){
         return bookPhoto;
     }
-
+    LocalDateTime getCreationTime(){return LocalDateTime.now();}
 }

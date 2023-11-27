@@ -1,15 +1,17 @@
 package use_case.signup;
 
+import java.time.LocalDateTime;
+
 public class SignupInputData {
 
     final private String username;
     final private String password;
     final private String repeatPassword;
     final private String email;
-    final private String phoneNumber;
+    final private int phoneNumber;
     final private String city;
 
-    public SignupInputData(String username, String password, String repeatPassword, String email, String phoneNumber, String city) {
+    public SignupInputData(String username, String password, String repeatPassword, String city, String email, int phoneNumber) {
         this.username = username;
         this.password = password;
         this.repeatPassword = repeatPassword;
@@ -24,7 +26,7 @@ public class SignupInputData {
     String getEmail(){
         return email;
     }
-    String getPhoneNumber(){
+    int getPhoneNumber(){
         return phoneNumber;
     }
     String getCity(){
@@ -34,8 +36,8 @@ public class SignupInputData {
     String getPassword() {
         return password;
     }
-
     public String getRepeatPassword() {
         return repeatPassword;
     }
+
 }

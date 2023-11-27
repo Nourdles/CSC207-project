@@ -1,7 +1,7 @@
 package data_access;
 
-import entity.User;
-import entity.UserFactory;
+import entity.*;
+import use_case.create_listing.CreateListingDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -9,84 +9,67 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/*Data saved includes all the  */
-
 public class FileListingDataAccessObject implements CreateListingDataAccessInterface {
+    /**
+     * A DataAccessObject that stores all listing information except bookPhoto.
+     * @param csvPath the String that represents a filepath for the file that stores Listings.
+     * @param listingFactory a Factory for creating Listings.
+     * @param bookPhoto: a photo of the book, default or uploaded by the seller.
+     */
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
-    private final Map<String, User> accounts = new HashMap<>();
-    private UserFactory userFactory;
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
-        this.userFactory = userFactory;
+    private final Map<String, Listing> listingInfo = new HashMap<>();
+    private Photo bookPhoto;
+    private ListingFactory listingFactory;
+    public FileListingDataAccessObject(String csvPath, ListingFactory listingFactory, Photo bookPhoto) throws IOException {
+        this.listingFactory = listingFactory;
+        this.bookPhoto = bookPhoto;
         csvFile = new File(csvPath);
-        headers.put("book", 0);
+        headers.put("isbn", 0);
         headers.put("seller", 1);
         headers.put("listing_price", 2);
         headers.put("condition", 3);
-        headers.put("creation_time", 4);
+        headers.put("listingId", 4);
+        headers.put("creation_time", 5);
 
         if (csvFile.length() == 0) {
             save();
         } else {
-
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time");
+                assert header.equals("isbn,seller,listing_price,condition,creation_time");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
-                    String username = String.valueOf(col[headers.get("username")]);
-                    String password = String.valueOf(col[headers.get("password")]);
+                    Book book = String.valueOf(col[headers.get("isbn")]);
+                    CommonUser seller = User.get(col[headers.get("seller")]);
+                    double listing_price = Double.parseDouble(col[headers.get("listing_price")]);
+                    String condition = String.valueOf(col[headers.get("condition")]);
+                    String listingId = String.valueOf(col[headers.get("listingId")]);
                     String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
-                    String email = String.valueOf(col[headers.get("email")]);
-                    String phoneNumber = String.valueOf(col[headers.get("phoneNumber")]);
-                    String city = String.valueOf(col[headers.get("city")]);
                     LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password, email, phoneNumber, city);
-                    accounts.put(username, user);
+                    Listing listing = listingFactory.create(book, seller, listing_price, condition, bookPhoto, ldt);
+                    listingInfo.put(listingId, listing);
                 }
             }
         }
     }
 
     @Override
-    public void save(User user) {
-        accounts.put(user.getUsername(), user);
+    public void save(Listing listing) {
+        listingInfo.put(listing.getListingId(), listing);
         this.save();
     }
-
     public void clear(){
-        accounts.clear();
+        listingInfo.clear();
         this.save();
     }
-
-    public String getUsernames(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            String deleted = "";
-            String header = reader.readLine();
-            // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-            assert header.equals("username,password,creation_time");
-            String row;
-            while ((row = reader.readLine()) != null) {
-                String[] col = row.split(",");
-                String username = String.valueOf(col[headers.get("username")]);
-                deleted = deleted.concat(username);
-            }
-            return deleted;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+    public Listing get(String listingId) {
+        return listingInfo.get(listingId);
     }
-
-    @Override
-    public User get(String username) {
-        return accounts.get(username);
-    }
-
     private void save() {
         BufferedWriter writer;
         try {
@@ -94,9 +77,9 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
 
-            for (User user : accounts.values()) {
-                String line = String.format("%s,%s",
-                        user.getUsername(), user.getPassword());
+            for (Listing listing : listingInfo.values()) {
+                String line = String.format("%s,%s,%s,%s,%s,%s",
+                        listing.getBook(), listing.getSeller(), listing.getPrice(), listing.getCondition(), listing.getListingId(), listing.getCreationTime());
                 writer.write(line);
                 writer.newLine();
             }
@@ -110,17 +93,13 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
 
     /**
-     * Return whether a user exists with username identifier.
-     * @param identifier the username to check.
-     * @return whether a user exists with username identifier
+     * Return whether a listing exists with listingId identifier.
+     * @param listingId the listingId to check.
+     * @return whether a listing exists with listingId identifier
      */
-    @Override
-    public boolean existsByName(String identifier) {
-        return accounts.containsKey(identifier);
+    public boolean existsById(String listingId) {
+        return listingInfo.containsKey(listingId);
     }
-
 }
 
-    void save();
 
-}

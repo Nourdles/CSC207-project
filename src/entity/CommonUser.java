@@ -89,7 +89,6 @@ public class CommonUser implements User {
     public void setCity(String newCity){
         this.city = newCity;
     }
-
     public String getCity(){
         return city;
     }

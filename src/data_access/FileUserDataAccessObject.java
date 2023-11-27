@@ -13,6 +13,9 @@ import java.util.Map;
 
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
 
+    /**
+     * Make only for CommonUsers?
+     */
     private final File csvFile;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -47,12 +50,10 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
-                    String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
                     String email = String.valueOf(col[headers.get("email")]);
-                    String phoneNumber = String.valueOf(col[headers.get("phoneNumber")]);
+                    int phoneNumber = Integer.parseInt(col[headers.get("phoneNumber")]);
                     String city = String.valueOf(col[headers.get("city")]);
-                    LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password, email, phoneNumber, city);
+                    User user = userFactory.create(username, password, city, email, phoneNumber);
                     accounts.put(username, user);
                 }
             }
@@ -102,8 +103,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s",
-                        user.getUsername(), user.getPassword());
+                String line = String.format("%s,%s,%s,%s,%s",
+                        user.getUsername(), user.getPassword(), user.getCity(), user.getEmail(), user.getPhoneNumber());
                 writer.write(line);
                 writer.newLine();
             }

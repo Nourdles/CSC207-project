@@ -18,6 +18,6 @@ public class CreateListingController {
     public void execute(Book book, CommonUser seller, double listingPrice, String condition, Photo bookPhoto, LocalDateTime ltd) {
         CreateListingInputData createListingInputData = new CreateListingInputData(
                 book, seller, listingPrice, condition, bookPhoto, ltd);
-        CreateListingInteractor.execute(createListingInputData);
+        createListingInteractor.execute(createListingInputData);
     }
 }
