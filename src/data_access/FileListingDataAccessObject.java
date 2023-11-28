@@ -29,7 +29,8 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
      * @param bookPhoto
      * @throws IOException
      */
-    public FileListingDataAccessObject(String csvPath, ListingFactory listingFactory, Photo bookPhoto) throws IOException {
+    public FileListingDataAccessObject(String csvPath, ListingFactory listingFactory, Photo bookPhoto,
+                                       CommonUser seller, Book book) throws IOException {
         this.listingFactory = listingFactory;
         this.bookPhoto = bookPhoto;
         csvFile = new File(csvPath);
@@ -52,8 +53,8 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
-                    Book book = String.valueOf(col[headers.get("isbn")]);
-                    CommonUser seller = data_access.FileUserDataAccessObject.get(col[headers.get("seller")]);
+                    int isbn = Integer.parseInt(col[headers.get("isbn")]);
+                    String sellerUsername = (col[headers.get("seller")]);
                     double listing_price = Double.parseDouble(col[headers.get("listing_price")]);
                     String condition = String.valueOf(col[headers.get("condition")]);
                     String listingId = String.valueOf(col[headers.get("listingId")]);
@@ -75,7 +76,6 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         listingInfo.put(listing.getListingId(), listing);
         this.save();
     }
-
     /**
      * Clears the listing data file.
      */
@@ -92,7 +92,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
             for (Listing listing : listingInfo.values()) {
                 String line = String.format("%s,%s,%s,%s,%s,%s",
-                        listing.getBook(), listing.getSeller(), listing.getPrice(), listing.getCondition(), listing.getListingId(), listing.getCreationTime());
+                        listing.getBook().getISBN(), listing.getSeller(), listing.getPrice(), listing.getCondition(), listing.getListingId(), listing.getCreationTime());
                 writer.write(line);
                 writer.newLine();
             }

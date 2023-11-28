@@ -42,11 +42,7 @@ public class CommonUser implements User {
         return email;
     }
 
-    public void setPhoneNumber(int newPhoneNumber){
-        this.phoneNumber= newPhoneNumber;
-    }
-
-    public int getPhoneNumber(){
+    public String getPhoneNumber(){
         return phoneNumber;
     }
 
@@ -55,9 +51,6 @@ public class CommonUser implements User {
     }
     public double getPerformanceRating() {
         return performanceRating;
-    }
-    public void setCity(String newCity){
-        this.city = newCity;
     }
     public String getCity(){
         return city;

@@ -2,7 +2,7 @@ package interface_adapter.signup;
 
 public class SignupState {
     private String email = "";
-    private int phoneNumber;
+    private String phoneNumber;
     private String city = "";
     private String username = "";
     private String usernameError = null;
@@ -51,7 +51,7 @@ public class SignupState {
         return repeatPasswordError;
     }
     public String getEmail(){return email;}
-    public int getPhoneNumber(){return phoneNumber;}
+    public String getPhoneNumber(){return phoneNumber;}
     public String getCity(){return city;}
 
     public void setUsername(String username) {
@@ -82,7 +82,7 @@ public class SignupState {
         this.email = email;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

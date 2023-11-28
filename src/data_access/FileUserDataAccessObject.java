@@ -70,25 +70,6 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         this.save();
     }
 
-    public String getUsernames(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            String deleted = "";
-            String header = reader.readLine();
-            // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-            assert header.equals("username,password,creation_time");
-            String row;
-            while ((row = reader.readLine()) != null) {
-                String[] col = row.split(",");
-                String username = String.valueOf(col[headers.get("username")]);
-                deleted = deleted.concat(username);
-            }
-            return deleted;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
     @Override
     public User get(String username) {
         return accounts.get(username);

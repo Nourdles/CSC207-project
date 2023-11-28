@@ -1,7 +1,5 @@
 package use_case.signup;
 
-import java.time.LocalDateTime;
-
 public class SignupInputData {
 
     final private String username;
@@ -11,7 +9,7 @@ public class SignupInputData {
     final private int phoneNumber;
     final private String city;
 
-    public SignupInputData(String username, String password, String repeatPassword, String city, String email, int phoneNumber) {
+    public SignupInputData(String username, String password, String repeatPassword, String city, String email, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.repeatPassword = repeatPassword;

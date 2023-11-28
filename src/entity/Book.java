@@ -13,7 +13,6 @@ public class Book {
 
     public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl) {
         this.title = title;
-        this.genre = genre;
         this.year = year;
         this.author = author;
         this.summary = summary;
@@ -30,48 +29,36 @@ public class Book {
         this.title = title;
     }
 
-
     public int getYear() {
         return year;
     }
-
     public void setYear(int year) {
         this.year = year;
     }
-
-
     public String getAuthor() {
         return author;
     }
-
     public void setAuthor(String author) {
         this.author = author;
     }
-
     public String getSummary() {
         return summary;
     }
-
     public void setSummary(String summary) {
         this.summary = summary;
     }
-
-    public int getISBN() {
+    public String getISBN() {
         return ISBN;
     }
-
-    public void setISBN(int ISBN) {
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
-
     public int getInStock() {
         return inStock;
     }
-
     public void setInStock(int inStock) {
         this.inStock = inStock;
     }
-
     @Override
     public String toString() {
         return "Book{" +
@@ -84,7 +71,6 @@ public class Book {
                 ", coverUrl='" + coverUrl + '\'' +
                 '}';
     }
-
     public String getCoverUrl() {
         return this.coverUrl;
     }

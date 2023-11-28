@@ -35,7 +35,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
     private final String[] options = new String[]{"New", "Excellent", "Good", "Ok", "Poor"};
     private final String selectedCondition = "New";
     private final JComboBox<String> conditionDropdown = new JComboBox<String>(options);
-    private Photo image;
+    private File image;
     public CreateListingView(CreateListingViewModel createListingViewModel,
                              CreateListingController createListingController){
         this.createListingViewModel = createListingViewModel;
@@ -54,6 +54,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
         createListingPanel.add(upload);
         createListingPanel.add(createListing);
         createListingPanel.add(conditionDropdown);
+        final File[] image = {null};
 
         upload.addActionListener(
             // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -64,7 +65,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                         FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
                             "gif", "png", "jpeg");
                             bookPhotoChooser.setFileFilter(filter);
-                        File image = bookPhotoChooser.getSelectedFile();
+                        image[0] = bookPhotoChooser.getSelectedFile();
                     }
                 }
             }
@@ -76,7 +77,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(createListing)) {
                         LocalDateTime ltd = LocalDateTime.now();
-                        createListingController.execute(book, seller, listingPrice, selectedCondition, image, ltd);
+                        createListingController.execute(book, seller, listingPrice, selectedCondition, image[0], ltd);
                         }
                     }
                 }
@@ -101,11 +102,9 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                         currentState.setListingPrice(Double.parseDouble(text));
                         createListingViewModel.setState(currentState);
                     }
-
                     @Override
                     public void keyPressed(KeyEvent e) {
                     }
-
                     @Override
                     public void keyReleased(KeyEvent e) {
                     }

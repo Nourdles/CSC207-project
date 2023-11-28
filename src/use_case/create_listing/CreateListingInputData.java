@@ -5,6 +5,7 @@ import entity.CommonUser;
 import entity.Photo;
 import entity.User;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 public class CreateListingInputData {
@@ -13,8 +14,8 @@ public class CreateListingInputData {
     final private Book book;
     private String condition;
     private double listingPrice;
-    private Photo bookPhoto;
-    public CreateListingInputData(Book book, CommonUser seller, double listingPrice, String condition, Photo bookPhoto, LocalDateTime ltd) {
+    private File bookPhoto;
+    public CreateListingInputData(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto, LocalDateTime ltd) {
         this.book = book;
         this.seller = seller;
         this.listingPrice = listingPrice;

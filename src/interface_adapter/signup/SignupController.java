@@ -10,7 +10,7 @@ public class SignupController {
     }
 
     public void execute(String username, String password1, String password2,
-                        String city, String email, int phoneNumber) {
+                        String city, String email, String phoneNumber) {
         SignupInputData signupInputData = new SignupInputData(
                 username, password1, password2, city,
                 email, phoneNumber);
