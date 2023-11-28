@@ -1,10 +1,10 @@
 package view;
 
+import entity.Photo;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
-import interface_adapter.signup.SignupState;
-import interface_adapter.signup.SignupViewModel;
+import interface_adapter.login.LoginState;
 import use_case.create_listing.CreateListingOutputBoundary;
 
 import javax.swing.*;
@@ -35,6 +35,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
     private final String[] options = new String[]{"New", "Excellent", "Good", "Ok", "Poor"};
     private final String selectedCondition = "New";
     private final JComboBox<String> conditionDropdown = new JComboBox<String>(options);
+    private Photo image;
     public CreateListingView(CreateListingViewModel createListingViewModel,
                              CreateListingController createListingController){
         this.createListingViewModel = createListingViewModel;
@@ -97,7 +98,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                     public void keyTyped(KeyEvent e) {
                         CreateListingState currentState = createListingViewModel.getState();
                         String text = listingPriceInputField.getText() + e.getKeyChar();
-                        currentState.setListingPrice(text);
+                        currentState.setListingPrice(Double.parseDouble(text));
                         createListingViewModel.setState(currentState);
                     }
 
@@ -110,13 +111,19 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                     }
             });
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
+    /**
+     * Empty class for now
+     * @param evt the event to be processed
+     */
+    public void actionPerformed(ActionEvent evt) {
     }
-
-    @Override
+        @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        CreateListingState = (CreateListingState) evt.getNewValue();
+        CreateListingState state = (CreateListingState) evt.getNewValue();
+        setFields(state);
+    }
+    private void setFields(CreateListingState state) {
+        listingPriceInputField.setText(String.valueOf(state.getListingPrice()));
     }
 }

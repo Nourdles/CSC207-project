@@ -3,7 +3,6 @@ package interface_adapter.create_listing;
 import entity.Book;
 import entity.CommonUser;
 import entity.Photo;
-import interface_adapter.signup.SignupState;
 
 public class CreateListingState {
     private Book book;
@@ -17,14 +16,15 @@ public class CreateListingState {
         listingPrice = copy.listingPrice;
         condition = copy.condition;
         bookPhoto = copy.bookPhoto;
-        repeatPassword = copy.repeatPassword;
-        repeatPasswordError = copy.repeatPasswordError;
-        email = copy.email;
-        phoneNumber = copy.phoneNumber;
-        city = copy.city;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
-    public SignupState() {
+    public CreateListingState() {
     }
+    public void setListingPrice(double listingPrice) { this.listingPrice = listingPrice;}
+    public double getListingPrice(){ return this.listingPrice;}
+    public void setCondition(String condition) { this.condition = condition;}
+    public String getCondition(){ return this.condition;}
+    public void setBookPhoto(Photo bookPhoto) {this.bookPhoto = bookPhoto;}
+    public Photo getBookPhoto(){return this.bookPhoto;}
 }

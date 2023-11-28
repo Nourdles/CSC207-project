@@ -17,6 +17,7 @@ import use_case.create_listing.CreateListingOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
+import view.CreateListingView;
 import view.ListingsView;
 import view.SignupView;
 
@@ -37,13 +38,13 @@ public class CreateListingUseCaseFactory {
      * @param fileListingDataAccessObject
      * @return A View of a User's listings after a user has attempted to create a listing.
      */
-    public static ListingsView create(ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel,
-                                      CreateListingDataAccessInterface fileListingDataAccessObject){
+    public static CreateListingView create(ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel,
+                                           CreateListingDataAccessInterface fileListingDataAccessObject){
         try {
             CreateListingController createListingController = createCreateListingUseCase(viewManagerModel,
                     createListingViewModel, fileListingDataAccessObject);
 
-            return new ListingsView(signupController, signupViewModel);
+            return new CreateListingView(createListingViewModel, createListingController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open listings data file.");
         }

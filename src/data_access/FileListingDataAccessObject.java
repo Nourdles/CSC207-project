@@ -53,7 +53,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
                     Book book = String.valueOf(col[headers.get("isbn")]);
-                    CommonUser seller = User.get(col[headers.get("seller")]);
+                    CommonUser seller = data_access.FileUserDataAccessObject.get(col[headers.get("seller")]);
                     double listing_price = Double.parseDouble(col[headers.get("listing_price")]);
                     String condition = String.valueOf(col[headers.get("condition")]);
                     String listingId = String.valueOf(col[headers.get("listingId")]);
