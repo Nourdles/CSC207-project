@@ -7,10 +7,11 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+
+import use_case.booksearch.*;
+import interface_adapter.booksearch.*;
+import view.*;
+import data_access.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Example");
+        JFrame application = new JFrame("Login");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -55,16 +56,38 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
+
     }
+
+
+ /* public class Main {
+    public static void main(String[] args) {
+        // Real implementation of BookSearchDataAccessInterface
+        BookSearchDataAccessInterface realDataAccess = new OpenLibraryDB();
+
+        // Initialize the presenter and view model
+        BookSearchViewModel viewModel = new BookSearchViewModel();
+        BookSearchPresenter presenter = new BookSearchPresenter(viewModel);
+
+        // Initialize the interactor (use case) with the real data access and presenter
+        BookSearchInteractor interactor = new BookSearchInteractor(realDataAccess, presenter);
+
+        // Initialize the controller with the interactor
+        BookSearchController controller = new BookSearchController(interactor);
+
+        // Initialize and display the BookSearchView
+        BookSearchView view = new BookSearchView(controller, viewModel);
+        view.display();
+    } */
 }

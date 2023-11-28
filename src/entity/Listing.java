@@ -1,9 +1,5 @@
 package entity;
 
-import entity.CommonUser;
-import entity.Book;
-import entity.Photo;
-
 import java.time.LocalDateTime;
 public class Listing {
     private final Book book;

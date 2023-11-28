@@ -56,7 +56,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         buttons.add(cancel);
 
         signUp.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
+
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
@@ -66,9 +66,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getUsername(),
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword(),
-                                    currentState.getCity(),
                                     currentState.getEmail(),
-                                    currentState.getPhoneNumber()
+                                    currentState.getPhoneNumber(),
+                                    currentState.getCity()
                             );
                         }
                     }
@@ -165,7 +165,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
                         String text = phoneNumberInputField.getText() + e.getKeyChar();
-                        currentState.setPhoneNumber(Integer.parseInt(text));
+                        currentState.setPhoneNumber(text);
                         signupViewModel.setState(currentState);
                     }
 
@@ -211,6 +211,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      */
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
+    }
+
+    public void clearPerformed(ActionEvent e, String usernames){
+        JOptionPane.showConfirmDialog(this, usernames);
     }
 
     @Override
