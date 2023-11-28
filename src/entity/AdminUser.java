@@ -1,6 +1,9 @@
 package entity;
 
 import entity.User;
+
+import java.time.LocalDateTime;
+
 public class AdminUser implements User {
     private String username;
     private String password;
@@ -34,6 +37,20 @@ public class AdminUser implements User {
 
     public String getEmail(){
         return email;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
+    }
+
+    @Override
+    public String getCity() {
+        return null;
+    }
+    @Override
+    public LocalDateTime getCreationTime(){
+        return null;
     }
 
     public void setEmail(String email){

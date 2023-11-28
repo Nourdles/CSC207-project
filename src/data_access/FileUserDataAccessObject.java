@@ -13,9 +13,6 @@ import java.util.Map;
 
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
 
-    /**
-     * Make only for CommonUsers?
-     */
     private final File csvFile;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -43,17 +40,19 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time");
+                assert header.equals("username,password,creation_time, email, phoneNumber, city");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
+                    String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
                     String email = String.valueOf(col[headers.get("email")]);
-                    int phoneNumber = Integer.parseInt(col[headers.get("phoneNumber")]);
+                    String phoneNumber = String.valueOf(col[headers.get("phoneNumber")]);
                     String city = String.valueOf(col[headers.get("city")]);
-                    User user = userFactory.create(username, password, city, email, phoneNumber);
+                    LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
+                    User user = userFactory.create(username, password, ldt, email, phoneNumber, city);
                     accounts.put(username, user);
                 }
             }
@@ -103,8 +102,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s,%s,%s,%s",
-                        user.getUsername(), user.getPassword(), user.getCity(), user.getEmail(), user.getPhoneNumber());
+                String line = String.format("%s,%s",
+                        user.getUsername(), user.getPassword());
                 writer.write(line);
                 writer.newLine();
             }
