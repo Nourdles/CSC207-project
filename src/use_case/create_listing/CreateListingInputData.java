@@ -36,7 +36,7 @@ public class CreateListingInputData {
     String getCondition(){
         return condition;
     }
-    Photo getBookPhoto(){
+    File getBookPhoto(){
         return bookPhoto;
     }
     LocalDateTime getCreationTime(){return LocalDateTime.now();}

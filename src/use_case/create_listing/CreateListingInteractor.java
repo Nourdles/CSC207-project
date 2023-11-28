@@ -19,7 +19,6 @@ public class CreateListingInteractor implements CreateListingInputBoundary{
         this.listingPresenter = createListingOutputBoundary;
         this.listingFactory = listingFactory;
     }
-
     @Override
     public void execute(CreateListingInputData createListingInputData) {
         Listing listing = listingFactory.create(createListingInputData.getBook(), createListingInputData.getSeller(),

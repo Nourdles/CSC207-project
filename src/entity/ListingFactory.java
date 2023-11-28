@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.File;
 import java.time.LocalDateTime;
 public class ListingFactory {
     /**
@@ -11,7 +12,7 @@ public class ListingFactory {
      * @param bookPhoto: a Photo representing an image of a Book.
      * @param creationTime: the time the Listing was created.
      */
-    public Listing create(Book book, CommonUser seller, double listing_price, String condition, Photo bookPhoto, LocalDateTime creationTime){
+    public Listing create(Book book, CommonUser seller, double listing_price, String condition, File bookPhoto, LocalDateTime creationTime){
         return new Listing(book, seller, listing_price, condition, bookPhoto, creationTime);
     }
 }

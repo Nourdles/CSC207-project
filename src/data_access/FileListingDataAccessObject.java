@@ -19,7 +19,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
     private final Map<String, Listing> listingInfo = new HashMap<>();
-    private Photo bookPhoto;
+    private File bookPhoto;
     private ListingFactory listingFactory;
 
     /** Constructing a Data Access Object for listing information except images.
@@ -29,7 +29,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
      * @param bookPhoto
      * @throws IOException
      */
-    public FileListingDataAccessObject(String csvPath, ListingFactory listingFactory, Photo bookPhoto,
+    public FileListingDataAccessObject(String csvPath, ListingFactory listingFactory, File bookPhoto,
                                        CommonUser seller, Book book) throws IOException {
         this.listingFactory = listingFactory;
         this.bookPhoto = bookPhoto;
