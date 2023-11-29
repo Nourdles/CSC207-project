@@ -41,7 +41,7 @@ public class CommonUser implements User {
     public String getEmail(){
         return email;
     }
-    @Override
+
     public String getPhoneNumber(){
         return phoneNumber;
     }
@@ -52,7 +52,6 @@ public class CommonUser implements User {
     public double getPerformanceRating() {
         return performanceRating;
     }
-    @Override
     public String getCity(){
         return city;
     }

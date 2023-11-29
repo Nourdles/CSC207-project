@@ -210,9 +210,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      * React to a button click that results in evt.
      */
     public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, ".");
+        JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
     }
 
+    public void clearPerformed(ActionEvent e, String usernames){
+        JOptionPane.showConfirmDialog(this, usernames);
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
