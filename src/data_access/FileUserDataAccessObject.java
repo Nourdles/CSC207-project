@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.*;
 
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
 
@@ -127,4 +128,41 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
+
+    public boolean passwordMeetsReq(String password) {
+        if (password.length() < 6){
+            return false;
+        }
+        else {
+            boolean lowerCase = false;
+            boolean upperCase = false;
+            boolean number = false;
+            for (char c: password.toCharArray()){
+                if (c == ' '){
+                    return false;
+                } else if (Character.isLowerCase(c)) {
+                    lowerCase = true;
+                } else if (Character.isUpperCase(c)) {
+                    upperCase = true;
+                } else if (Character.isDigit(c)) {
+                    number = true;
+                }
+            }
+            return (lowerCase && upperCase && number);
+        }
+    }
+
+    public boolean emailValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        // Create a Pattern object
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Create a Matcher object
+        Matcher matcher = pattern.matcher(email);
+
+        // Return true if the email matches the pattern, otherwise false
+        return matcher.matches();
+
+    }
 }
