@@ -6,7 +6,7 @@ public class SignupInputData {
     final private String password;
     final private String repeatPassword;
     final private String email;
-    final private int phoneNumber;
+    final private String phoneNumber;
     final private String city;
 
     public SignupInputData(String username, String password, String repeatPassword, String city, String email, String phoneNumber) {
@@ -24,7 +24,7 @@ public class SignupInputData {
     String getEmail(){
         return email;
     }
-    int getPhoneNumber(){
+    String getPhoneNumber(){
         return phoneNumber;
     }
     String getCity(){
