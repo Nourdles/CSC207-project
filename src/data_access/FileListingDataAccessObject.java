@@ -113,6 +113,17 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     public boolean existsById(String listingId) {
         return listingInfo.containsKey(listingId);
     }
+    public String delete(String listingId){
+        for(String id : listingInfo.keySet()){
+            if(id.equals(listingId)){
+                listingInfo.remove(listingId);
+            }
+        }
+        this.save();
+        return listingId;
+    }
 }
+
+
 
 
