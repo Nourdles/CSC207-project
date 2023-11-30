@@ -10,10 +10,10 @@ public class SignupController {
     }
 
     public void execute(String username, String password1, String password2,
-                        String city, String email, String phoneNumber) {
+                      String email, String phoneNumber, String city) {
         SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2, city,
-                email, phoneNumber);
+                username, password1, password2,
+                email, phoneNumber, city);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }
