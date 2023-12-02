@@ -2,6 +2,7 @@ package entity;
 
 public class Book {
 
+    private int everInStock;
     private String title;
     private int year;
     private String author;
@@ -28,48 +29,36 @@ public class Book {
         this.title = title;
     }
 
-
     public int getYear() {
         return year;
     }
-
     public void setYear(int year) {
         this.year = year;
     }
-
-
     public String getAuthor() {
         return author;
     }
-
     public void setAuthor(String author) {
         this.author = author;
     }
-
     public String getSummary() {
         return summary;
     }
-
     public void setSummary(String summary) {
         this.summary = summary;
     }
-
     public String getISBN() {
         return ISBN;
     }
-
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
-
     public int getInStock() {
         return inStock;
     }
-
     public void setInStock(int inStock) {
         this.inStock = inStock;
     }
-
     @Override
     public String toString() {
         return "Book{" +
@@ -82,8 +71,11 @@ public class Book {
                 ", coverUrl='" + coverUrl + '\'' +
                 '}';
     }
-
     public String getCoverUrl() {
         return this.coverUrl;
+    }
+    public int getEverInStock(){ return this.everInStock; }
+    public void setEverInStock(){
+        this.everInStock = this.everInStock++;
     }
 }

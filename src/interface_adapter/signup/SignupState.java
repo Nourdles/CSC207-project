@@ -2,7 +2,7 @@ package interface_adapter.signup;
 
 public class SignupState {
     private String email = "";
-    private String phoneNumber = "";
+    private String phoneNumber;
     private String city = "";
     private String username = "";
     private String usernameError = null;

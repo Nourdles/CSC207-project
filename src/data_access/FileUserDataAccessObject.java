@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.*;
 
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
 
@@ -70,25 +71,6 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         this.save();
     }
 
-    public String getUsernames(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            String deleted = "";
-            String header = reader.readLine();
-            // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-            assert header.equals("username,password,creation_time");
-            String row;
-            while ((row = reader.readLine()) != null) {
-                String[] col = row.split(",");
-                String username = String.valueOf(col[headers.get("username")]);
-                deleted = deleted.concat(username);
-            }
-            return deleted;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
     @Override
     public User get(String username) {
         return accounts.get(username);
@@ -103,8 +85,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
             for (User user : accounts.values()) {
                 String line = String.format("%s,%s,%s,%s,%s,%s",
-                        user.getUsername(), user.getPassword(), user.getCreationTime(),
-                        user.getEmail(), user.getPhoneNumber(), user.getCity());
+                        user.getUsername(), user.getPassword(),
+                        user.getCreationTime(), user.getEmail(),
+                        user.getPhoneNumber(), user.getCity());
                 writer.write(line);
                 writer.newLine();
             }
@@ -127,4 +110,41 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
+
+    public boolean passwordMeetsReq(String password) {
+        if (password.length() < 6){
+            return false;
+        }
+        else {
+            boolean lowerCase = false;
+            boolean upperCase = false;
+            boolean number = false;
+            for (char c: password.toCharArray()){
+                if (c == ' '){
+                    return false;
+                } else if (Character.isLowerCase(c)) {
+                    lowerCase = true;
+                } else if (Character.isUpperCase(c)) {
+                    upperCase = true;
+                } else if (Character.isDigit(c)) {
+                    number = true;
+                }
+            }
+            return (lowerCase && upperCase && number);
+        }
+    }
+
+    public boolean emailValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        // Create a Pattern object
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Create a Matcher object
+        Matcher matcher = pattern.matcher(email);
+
+        // Return true if the email matches the pattern, otherwise false
+        return matcher.matches();
+
+    }
 }

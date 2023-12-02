@@ -7,6 +7,7 @@ import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInputData;
 import use_case.create_listing.CreateListingInteractor;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 public class CreateListingController {
@@ -15,9 +16,9 @@ public class CreateListingController {
     public CreateListingController(CreateListingInputBoundary createListingInteractor) {
         this.createListingInteractor = createListingInteractor;
     }
-    public void execute(Book book, CommonUser seller, double listingPrice, String condition, Photo bookPhoto, LocalDateTime ltd) {
+    public void execute(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto, LocalDateTime ltd) {
         CreateListingInputData createListingInputData = new CreateListingInputData(
                 book, seller, listingPrice, condition, bookPhoto, ltd);
-        CreateListingInteractor.execute(createListingInputData);
+        createListingInteractor.execute(createListingInputData);
     }
 }

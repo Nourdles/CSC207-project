@@ -24,6 +24,15 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {
     }
 
+    /**
+     * Creates a SignupView upon opening the application, instantiates a controller to execute signup if the user
+     * data file exists.
+     * @param viewManagerModel
+     * @param loginViewModel
+     * @param signupViewModel
+     * @param userDataAccessObject
+     * @return
+     */
     public static SignupView create(
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel,
             SignupUserDataAccessInterface userDataAccessObject) {
@@ -31,20 +40,18 @@ public class SignupUseCaseFactory {
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
 
-            return new SignupView(signupController, signupViewModel);
+            return new SignupView(signupController, signupViewModel, loginViewModel, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
 
         return null;
     }
-
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel,
                                                             SignupViewModel signupViewModel,
                                                             LoginViewModel loginViewModel,
                                                             SignupUserDataAccessInterface userDataAccessObject) throws IOException {
 
-        // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
         UserFactory userFactory = new CommonUserFactory();
