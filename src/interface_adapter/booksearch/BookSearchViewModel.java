@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class BookSearchViewModel extends ViewModel{
 
-    public static final String TITLE_LABEL = "Book Search View";
+    public static final String viewName = "Book Search View";
     public static final String SEARCH_LABEL = "Search";
     private BookSearchState state = new BookSearchState();
 

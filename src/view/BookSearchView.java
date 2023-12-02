@@ -20,7 +20,8 @@ import java.net.HttpURLConnection;
 
 
 import javax.imageio.ImageIO;
-public class BookSearchView extends JFrame implements ActionListener, PropertyChangeListener{
+public class BookSearchView extends JPanel implements ActionListener, PropertyChangeListener{
+    public final String viewName = "book search";
     private JTextField searchField;
     private JButton searchButton;
     private JButton filterButton;
@@ -37,9 +38,19 @@ public class BookSearchView extends JFrame implements ActionListener, PropertyCh
     }
 
     private void createUI() {
-        setTitle("Book Search");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(800, 600)); // Set the preferred size of the panel
+
+        // Create a panel for the title
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        // Create a JLabel for the title
+        JLabel titleLabel = new JLabel("Book Search");
+        titlePanel.add(titleLabel);
+
+        // Add the title panel to the top (NORTH) of the panel
+        this.add(titlePanel, BorderLayout.NORTH);
 
         Color Brown = new Color(217, 196, 152);
         Color lightBrown = new Color(245, 229, 196);
@@ -129,9 +140,9 @@ public class BookSearchView extends JFrame implements ActionListener, PropertyCh
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(searchPanel, BorderLayout.CENTER);
 
-        // Add the main panel to the frame
-        getContentPane().add(mainPanel, BorderLayout.NORTH); // Use BorderLayout.NORTH to keep the top panel at the top
-        getContentPane().add(resultsScrollPane, BorderLayout.CENTER); // Use BorderLayout.CENTER for the results
+        // Adding components directly to 'this' (the BookSearchView panel)
+        this.add(mainPanel, BorderLayout.NORTH); // Add the main panel to the top
+        this.add(resultsScrollPane, BorderLayout.CENTER); // Add the results scroll pane to the center
 
         // Ensure that the components are visible
         setVisible(true);

@@ -18,7 +18,8 @@ import java.awt.*;
 import java.io.IOException;
 
 /*Same as CA5 for now*/
-/* public class Main {
+ public class Main {
+
     public static void main(String[] args) {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
@@ -56,11 +57,26 @@ import java.io.IOException;
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
+        BookSearchViewModel bookSearchViewModel = new BookSearchViewModel();
+
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+
+        BookSearchPresenter presenter = new BookSearchPresenter(bookSearchViewModel);
+        BookSearchDataAccessInterface realDataAccess = new OpenLibraryDB();
+
+        // Initialize the interactor (use case) with the real data access and presenter
+        BookSearchInteractor interactor = new BookSearchInteractor(realDataAccess, presenter);
+
+        // Initialize the controller with the interactor
+        BookSearchController bookSearchController = new BookSearchController(interactor);
+
+        BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel);
+        views.add(bookSearchView, bookSearchView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
@@ -68,10 +84,10 @@ import java.io.IOException;
         application.pack();
         application.setVisible(true);
 
-    } */
+    }
 
 
- public class Main {
+/*  public class Main {
     public static void main(String[] args) {
         // Real implementation of BookSearchDataAccessInterface
         BookSearchDataAccessInterface realDataAccess = new OpenLibraryDB();
@@ -89,5 +105,5 @@ import java.io.IOException;
         // Initialize and display the BookSearchView
         BookSearchView view = new BookSearchView(controller, viewModel);
         view.display();
-    }
+    } */
 }

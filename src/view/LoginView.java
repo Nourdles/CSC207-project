@@ -185,13 +185,24 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoginState state = (LoginState) evt.getNewValue();
-        if (state.getUsernameError() != null){
-            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        String propertyName = evt.getPropertyName();
 
-        } else if (state.getPasswordError() != null) {
-            JOptionPane.showMessageDialog(this, state.getPasswordError());
+        if ("loginSuccess".equals(propertyName)) {
+            Boolean loginSuccess = (Boolean) evt.getNewValue();
+            if (loginSuccess) {
+                // Change to BookSearchView
+                viewManagerModel.setActiveView("BookSearchView");
+                viewManagerModel.firePropertyChanged();
+            }
+        } else {
+            // Retrieve the updated LoginState object
+            LoginState state = (LoginState) evt.getNewValue();
 
+            if ("usernameError".equals(propertyName) && state.getUsernameError() != null) {
+                JOptionPane.showMessageDialog(this, state.getUsernameError());
+            } else if ("passwordError".equals(propertyName) && state.getPasswordError() != null) {
+                JOptionPane.showMessageDialog(this, state.getPasswordError());
+            }
         }
     }
 
