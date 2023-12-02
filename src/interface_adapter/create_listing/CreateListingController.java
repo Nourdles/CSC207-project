@@ -2,10 +2,8 @@ package interface_adapter.create_listing;
 
 import entity.Book;
 import entity.CommonUser;
-import entity.Photo;
 import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInputData;
-import use_case.create_listing.CreateListingInteractor;
 
 import java.io.File;
 import java.time.LocalDateTime;

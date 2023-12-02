@@ -27,12 +27,10 @@ public class CommonUser implements User {
         this.creationTime = creationTime;
     }
 
-
     @Override
     public String getUsername(){
         return username;
     }
-
     @Override
     public String getPassword(){
         return password;

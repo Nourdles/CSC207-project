@@ -56,6 +56,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     User user = userFactory.create(username, password, ldt, email, phoneNumber, city);
                     accounts.put(username, user);
                 }
+            } catch (IOException e){
+                System.out.println("There was a problem reading the file.");
             }
         }
     }

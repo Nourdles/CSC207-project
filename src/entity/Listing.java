@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDateTime;
 public class Listing {
@@ -10,6 +11,7 @@ public class Listing {
     private double listingPrice;
     private String condition;
     private final CommonUser seller;
+    private String pathId;
 
     /** A seller's listing of a book.
      * Requires: book must be in the OpenLibraryDatabase
@@ -23,6 +25,7 @@ public class Listing {
         this.condition = condition;
         this.bookPhoto = bookPhoto;
         this.listingId = String.valueOf(book.getISBN()) + String.valueOf(book.getEverInStock());
+        this.pathId = seller.getUsername() + "/" + book.getISBN() + ".png";
     }
     public double getPrice(){
         return listingPrice;
@@ -30,6 +33,7 @@ public class Listing {
     public void setPrice(double newPrice){
         this.listingPrice = newPrice;
     }
+    public String getPathId() {return pathId;}
     public String getCondition(){
         return this.condition;
     }
