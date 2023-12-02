@@ -1,6 +1,5 @@
 package use_case.searchfilter;
 import entity.Book;
-import interface_adapter.searchfilter.SearchFilterPresenter;
 
 import java.util.ArrayList;
 

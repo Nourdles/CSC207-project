@@ -3,8 +3,6 @@ package use_case.searchfilter;
 import java.util.ArrayList;
 import entity.Book;
 
-import java.util.ArrayList;
-
 public class SearchFilterInputData {
     final private String author;
     final private String year;

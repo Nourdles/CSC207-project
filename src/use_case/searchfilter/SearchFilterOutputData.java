@@ -5,8 +5,8 @@ import entity.Book;
 import java.util.ArrayList;
 
 public class SearchFilterOutputData {
-    private ArrayList<Book> books;
-    private String errorMessage;
+    final private ArrayList<Book> books;
+    final private String errorMessage;
 
     public SearchFilterOutputData(ArrayList<Book> books) {
         this.books = books;
