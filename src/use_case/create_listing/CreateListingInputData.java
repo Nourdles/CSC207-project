@@ -2,9 +2,8 @@ package use_case.create_listing;
 
 import entity.Book;
 import entity.CommonUser;
-import entity.Photo;
-import entity.User;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDateTime;
 
@@ -15,7 +14,9 @@ public class CreateListingInputData {
     private String condition;
     private double listingPrice;
     private File bookPhoto;
-    public CreateListingInputData(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto, LocalDateTime ltd) {
+    private String imgPath;
+    public CreateListingInputData(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto,
+                                  LocalDateTime ltd) {
         this.book = book;
         this.seller = seller;
         this.listingPrice = listingPrice;

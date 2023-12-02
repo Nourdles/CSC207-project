@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDateTime;
 public class ListingFactory {

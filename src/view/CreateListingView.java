@@ -1,11 +1,8 @@
 package view;
 
-import entity.Photo;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
-import interface_adapter.login.LoginState;
-import use_case.create_listing.CreateListingOutputBoundary;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,10 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.ImageFilter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
@@ -55,6 +52,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
         createListingPanel.add(createListing);
         createListingPanel.add(conditionDropdown);
         final File[] image = {null};
+        Label createListingFail = new Label("");
 
         upload.addActionListener(
             // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -62,8 +60,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(upload)) {
                         bookPhotoChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-                        FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
-                            "gif", "png", "jpeg");
+                        FileNameExtensionFilter filter = new FileNameExtensionFilter("png");
                             bookPhotoChooser.setFileFilter(filter);
                         image[0] = bookPhotoChooser.getSelectedFile();
                     }
@@ -77,8 +74,15 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(createListing)) {
                         LocalDateTime ltd = LocalDateTime.now();
-                        //createListingController.execute(book, seller, listingPrice, selectedCondition, image[0], ltd);
+                        CreateListingState currentState = createListingViewModel.getState();
+                        try {
+                            createListingController.execute(currentState.getBook(), currentState.getSeller(),
+                                    currentState.getListingPrice(), currentState.getCondition(),
+                                    currentState.getBookPhoto(), ltd);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
+                    }
                     }
                 }
         );
