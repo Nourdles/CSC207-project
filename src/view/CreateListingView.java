@@ -14,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
@@ -74,10 +75,14 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                     if (evt.getSource().equals(createListing)) {
                         LocalDateTime ltd = LocalDateTime.now();
                         CreateListingState currentState = createListingViewModel.getState();
-                        createListingController.execute(currentState.getBook(), currentState.getSeller(),
-                                currentState.getListingPrice(), currentState.getCondition(),
-                                currentState.getBookPhoto(), ltd);
+                        try {
+                            createListingController.execute(currentState.getBook(), currentState.getSeller(),
+                                    currentState.getListingPrice(), currentState.getCondition(),
+                                    currentState.getBookPhoto(), ltd);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
+                    }
                     }
                 }
         );

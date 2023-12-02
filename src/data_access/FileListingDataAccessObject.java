@@ -52,6 +52,13 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         headers.put("listingId", 4);
         headers.put("creation_time", 5);
 
+        storedImage = new BufferedImage(5, 5, 1);
+
+        File imageDirectory = new File("allImages");
+        if (!imageDirectory.exists()){
+            imageDirectory.mkdir();
+        }
+
         if (csvFile.length() == 0) {
             save();
         } else {
@@ -87,34 +94,25 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     @Override
     public void save(Listing listing) throws IOException {
         listingInfo.put(listing.getListingId(), listing);
-        BufferedImage storedImage = ImageIO.read((listing.getBookPhoto()));
+        File userDirectory = new File(listing.getSeller().getUsername());
+        if(!userDirectory.exists()){
+            userDirectory.mkdir();
+            Path imageDirFullpath = Paths.get(imageDirectory.getAbsolutePath());
+            Path userDirFullpath = Paths.get(userDirectory.getAbsolutePath());
+            Files.move(userDirFullpath, imageDirFullpath);
+        }
+        storedImage = ImageIO.read((listing.getBookPhoto()));
         this.save();
     }
     /**
      * Clears the listing data file.
      */
-    public void clear(){
+    public void clear() throws IOException {
         listingInfo.clear();
         this.save();
     }
 
-    private void save() {
-        try{
-            File imageDirectory = new File("allImages");
-            if (!imageDirectory.exists()){
-                imageDirectory.mkdir();
-            }
-            Path imageDirFullpath = Paths.get(imageDirectory.getAbsolutePath());
-            if(!userDirectory.exists()){
-                userDirectory.mkdir();
-                Path userDirFullpath = Paths.get(userDirectory.getAbsolutePath());
-                Files.move(userDirFullpath, imageDirFullpath);
-            }
-            ImageIO.write(storedImage, "png", savedPhoto);
-            Files.move(Paths.get(savedPhoto.getAbsolutePath()), Paths.get(imageDirectory.getAbsolutePath()));
-        } catch(IOException e){
-            System.out.println("There was a problem saving the image.");
-        }
+    private void save() throws IOException {
 
         BufferedWriter writer;
         try {
@@ -139,6 +137,13 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        try{
+            ImageIO.write(storedImage, "png", savedPhoto);
+            Files.move(Paths.get(savedPhoto.getAbsolutePath()), Paths.get(imageDirectory.getAbsolutePath()));
+        } catch(IOException e){
+            System.out.println("There was a problem saving the image.");
         }
     }
 
