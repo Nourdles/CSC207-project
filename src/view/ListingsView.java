@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.Listings.ListingsState;
 import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.delete_listing.DeleteListingController;
@@ -25,16 +26,22 @@ public class ListingsView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "listings view";
 
     private final ListingsViewModel listingViewModel;
+    private final DeleteListingController deleteListingController;
+    private final ViewManagerModel viewManagerModel;
+    private final  DeleteListingViewModel deleteListingViewModel;
 
     JLabel listings;
 
     final JButton delete;
     final JButton back;
-    private final DeleteListingController deleteListingController;
-    public ListingsView(DeleteListingController deleteListingController, ListingsViewModel listingsViewModel){
+
+    public ListingsView(ListingsViewModel listingsViewModel, DeleteListingController deleteListingController,
+                        ViewManagerModel viewManagerModel, DeleteListingViewModel deleteListingViewModel){
         this.listingViewModel = listingsViewModel;
         this.listingViewModel.addPropertyChangeListener(this);
         this.deleteListingController = deleteListingController;
+        this.viewManagerModel = viewManagerModel;
+        this.deleteListingViewModel = deleteListingViewModel;
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -60,7 +67,7 @@ public class ListingsView extends JPanel implements ActionListener, PropertyChan
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(delete)){
                     String selectedListing = (String)  listingDropdown.getSelectedItem();
-                    DeleteListingState state = new DeleteListingState();
+                    DeleteListingState state = deleteListingViewModel.getState();
                     state.setListing(selectedListing);
                     deleteListingController.execute(state.getListing());
                 }

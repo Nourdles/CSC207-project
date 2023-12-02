@@ -11,13 +11,15 @@ public class DeleteListingViewModel extends ViewModel {
     public void setState(DeleteListingState state){
         this.deleteListingState = state;
     }
-    @Override
-    public void firePropertyChanged() {
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.deleteListingState);
     }
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
 
     }
     public DeleteListingState getState(){return deleteListingState;}

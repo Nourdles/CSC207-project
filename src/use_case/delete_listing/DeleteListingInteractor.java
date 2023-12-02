@@ -7,12 +7,12 @@ import use_case.create_listing.CreateListingDataAccessInterface;
 public class DeleteListingInteractor implements DeleteListingInputBoundary {
     final DeleteListingDataAccessInterface listingDataAccessObject;
     final DeleteListingOutputBoundary deletePresenter;
-    final ListingFactory listingFactory;
-    public DeleteListingInteractor(DeleteListingDataAccessInterface listingDataAccessObject, DeleteListingOutputBoundary deletePresenter,
-                                   ListingFactory listingFactory){
+
+    public DeleteListingInteractor(DeleteListingDataAccessInterface listingDataAccessObject, DeleteListingOutputBoundary deletePresenter
+                                   ){
         this.listingDataAccessObject = listingDataAccessObject;
         this.deletePresenter = deletePresenter;
-        this.listingFactory = listingFactory;
+
     }
 
     @Override
