@@ -2,8 +2,10 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
-import entity.Listing;
 import entity.ListingFactory;
+import interface_adapter.book_info.BookInfoController;
+import interface_adapter.book_info.BookInfoPresenter;
+import interface_adapter.book_info.BookInfoViewModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
@@ -13,10 +15,10 @@ import interface_adapter.searchfilter.SearchFilterController;
 import interface_adapter.searchfilter.SearchFilterPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.book_info.BookInfoInteractor;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
-import use_case.login.LoginUserDataAccessInterface;
 
 import use_case.booksearch.*;
 import interface_adapter.booksearch.*;
@@ -52,6 +54,7 @@ import java.io.IOException;
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         BookSearchViewModel bookSearchViewModel = new BookSearchViewModel();
+        BookInfoViewModel infoViewModel = new BookInfoViewModel();
         CreateListingViewModel createListingViewModel = new CreateListingViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
@@ -80,15 +83,22 @@ import java.io.IOException;
         BookSearchPresenter presenter = new BookSearchPresenter(bookSearchViewModel);
         BookSearchDataAccessInterface realDataAccess = new OpenLibraryDB();
 
+        BookInfoPresenter infoPresenter = new BookInfoPresenter(infoViewModel, viewManagerModel);
+
         // Initialize the interactor (use case) with the real data access and presenter
         BookSearchInteractor interactor = new BookSearchInteractor(realDataAccess, presenter);
         SearchFilterInteractor filterInteractor = new SearchFilterInteractor(filterPresenter);
+        BookInfoInteractor infoInteractor = new BookInfoInteractor(infoPresenter);
 
         // Initialize the controller with the interactor
         BookSearchController bookSearchController = new BookSearchController(interactor);
         SearchFilterController searchFilterController = new SearchFilterController(filterInteractor);
+        BookInfoController bookInfoController = new BookInfoController(infoInteractor);
 
-        BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController);
+        BookInfoView bookInfoView = new BookInfoView(infoViewModel, viewManagerModel);
+        views.add(bookInfoView, bookInfoView.viewName);
+
+        BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController, bookInfoController);
         views.add(bookSearchView, bookSearchView.viewName);
 
 
