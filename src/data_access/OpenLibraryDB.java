@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 public class OpenLibraryDB implements BookSearchDataAccessInterface {
     private final OkHttpClient client = new OkHttpClient();
-
+    //StandardCharsets.UTF_8
 
     public ArrayList<Book> getSearchResult(String searchQuery) {
         String encodedQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8);
