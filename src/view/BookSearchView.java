@@ -1,29 +1,25 @@
 package view;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.book_info.BookInfoController;
-import interface_adapter.booksearch.*;
+
 import entity.Book;
+import interface_adapter.booksearch.BookSearchController;
+import interface_adapter.booksearch.BookSearchViewModel;
 import interface_adapter.searchfilter.SearchFilterController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
-import java.awt.Cursor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
-
-import javax.imageio.ImageIO;
 public class BookSearchView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "book search";
     private JTextField searchField;
@@ -35,14 +31,12 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
     private BookSearchController controller;
     private BookSearchViewModel viewModel;
     private SearchFilterController filterController;
-    private BookInfoController bookInfoController;
     private ArrayList<Book> displayedBooks;
 
-    public BookSearchView(BookSearchController controller, BookSearchViewModel viewModel, SearchFilterController searchFilterController, BookInfoController bookInfoController) {
+    public BookSearchView(BookSearchController controller, BookSearchViewModel viewModel, SearchFilterController searchFilterController) {
         this.controller = controller;
         this.viewModel = viewModel;
         this.filterController = searchFilterController;
-        this.bookInfoController = bookInfoController;
         this.displayedBooks = new ArrayList<>();
         viewModel.addPropertyChangeListener(this);
 
@@ -194,9 +188,9 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
 
             // Create UI components for author, year, and "has listings" filters
             JTextField authorFilter = new JTextField(20);
-            authorFilter.setBackground(whiteBrown);
+            authorFilter.setBackground(lightBrown);
             JTextField yearFilter = new JTextField(10);
-            yearFilter.setBackground(whiteBrown);
+            yearFilter.setBackground(lightBrown);
             JComboBox<String> hasListingsFilter = new JComboBox<>(new String[]{"Both", "No", "Yes"});
             hasListingsFilter.setBackground(lightBrown);
             JButton applyFilterButton = new JButton("Apply Filters");
@@ -228,7 +222,6 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
             });
 
             JPanel filterPanel = new JPanel(new GridLayout(4, 2));
-            filterPanel.setBackground(lightBrown);
             filterPanel.add(new JLabel("Author:"));
             filterPanel.add(authorFilter);
             filterPanel.add(new JLabel("Year:"));
@@ -237,7 +230,6 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
             filterPanel.add(hasListingsFilter);
 
             JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
-            buttonPanel.setBackground(lightBrown);
             buttonPanel.add(applyFilterButton);
             buttonPanel.add(cancelButton);
 
@@ -271,6 +263,10 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         if ("state".equals(evt.getPropertyName())) {
             updateResultsPanel(viewModel.getState().getSearchResults());
         }
+    }
+
+    public void loadInitialSearchResults(ArrayList<Book> searchResults) {
+        this.displayedBooks.addAll(searchResults);
     }
 
     private void updateResultsPanel(List<Book> books) {
@@ -372,13 +368,10 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
 
         // Add the custom bookPanel to the resultsPanel
         resultsPanel.add(bookPanel);
+    }
 
-        bookPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                bookInfoController.onBookSelected(book.getTitle(), book.getYear(), book.getAuthor(), book.getISBN(), book.getCoverUrl(), book.getLanguage(), book.getSubjects());
-            }
-        });
 
+    public void display() {
+        setVisible(true);
     }
 }
