@@ -1,7 +1,5 @@
 package use_case.listings;
 
-import interface_adapter.Listings.ListingsPresenter;
-
 public class ListingsInteractor implements ListingsInputBoundary {
     final ListingsDataAccessInterface listingsDataAccessInterface;
     final ListingsOutputBoundary listingsPresenter;
