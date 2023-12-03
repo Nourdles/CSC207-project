@@ -45,24 +45,33 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.signupViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
 
+        Color Brown = new Color(217, 196, 152);
+        Color lightBrown = new Color(245, 229, 196);
+        Color whiteBrown = new Color(224, 218, 213);
+
         setLayout(new BorderLayout());
 
         // Create a panel for the title
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JLabel title = new JLabel("Login Screen");
+        titlePanel.setBackground(lightBrown);
         titlePanel.add(title);
 
         // Add the title panel to the NORTH
-        add(titlePanel, BorderLayout.NORTH);
+         // add(titlePanel, BorderLayout.NORTH);
 
         // Create a panel for the input fields
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(2, 2)); // Two rows, two columns
 
+        inputPanel.setBackground(lightBrown);
+
         // LabelTextPanel for Username
         LabelTextPanel usernameInfo = new LabelTextPanel(new JLabel("Username"), usernameInputField);
         inputPanel.add(usernameInfo);
+
+        usernameInfo.setBackground(lightBrown);
 
         // Error label for Username
         inputPanel.add(usernameErrorField);
@@ -70,6 +79,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         // LabelTextPanel for Password
         LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), passwordInputField);
         inputPanel.add(passwordInfo);
+
+        passwordInfo.setBackground(lightBrown);
 
         // Error label for Password
         inputPanel.add(passwordErrorField);
@@ -80,28 +91,30 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout()); // FlowLayout for buttons in a row
+        buttonsPanel.setBackground(lightBrown);
 
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
         buttonsPanel.add(logIn);
-
-
-
-
+        logIn.setBackground(Brown);
 
         signup = new JButton(loginViewModel.SIGN_UP_BUTTON_LABEL);
         buttonsPanel.add(signup);
-
+        signup.setBackground(Brown);
 
         add(buttonsPanel, BorderLayout.CENTER);
 
         // Add an image to the WEST
+        JPanel imagePanel = new JPanel();
         ImageIcon imageIcon = new ImageIcon("src/logo.png");
         Image image = imageIcon.getImage();
         Image scaledImage = image.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(imageIcon);
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(imageLabel, BorderLayout.WEST);
+        imagePanel.add(imageLabel);
+        imagePanel.setBackground(lightBrown);
+        add(imagePanel, BorderLayout.WEST);
+
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -167,7 +180,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 });
 
-        this.add(title);
+         // this.add(title);
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
