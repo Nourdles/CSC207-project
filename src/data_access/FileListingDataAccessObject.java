@@ -2,14 +2,14 @@ package data_access;
 
 import entity.*;
 import use_case.create_listing.CreateListingDataAccessInterface;
+import use_case.delete_listing.DeleteListingDataAccessInterface;
+import use_case.listings.ListingsDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
-public class FileListingDataAccessObject implements CreateListingDataAccessInterface {
+public class FileListingDataAccessObject implements CreateListingDataAccessInterface, DeleteListingDataAccessInterface, ListingsDataAccessInterface {
     /**
      * A Data Access Object that stores all listing information except images.
      * @param csvPath the String that represents a filepath for the file that stores Listings.
@@ -113,6 +113,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     public boolean existsById(String listingId) {
         return listingInfo.containsKey(listingId);
     }
+    @Override
     public String delete(String listingId){
         for(String id : listingInfo.keySet()){
             if(id.equals(listingId)){
@@ -121,6 +122,18 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         }
         this.save();
         return listingId;
+    }
+
+    @Override
+    public List<Listing> getUserListings(String username) {
+        List<Listing> listings = new ArrayList<>();
+        for (Listing listing : listingInfo.values()){
+            if (listing.getSeller().getUsername().equals(username)){
+                listings.add(listing);
+            }
+        }
+
+        return listings;
     }
 }
 

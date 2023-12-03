@@ -3,8 +3,6 @@ package view;
 import interface_adapter.Listings.ListingsState;
 import interface_adapter.Listings.ListingsViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.create_listing.CreateListingController;
-import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.delete_listing.DeleteListingController;
 import interface_adapter.delete_listing.DeleteListingState;
 import interface_adapter.delete_listing.DeleteListingViewModel;
@@ -15,10 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.List;
 
-public class ListingsView extends JPanel implements ActionListener, PropertyChangeListener {
+public class ListingsProfileView extends JPanel implements ActionListener, PropertyChangeListener {
 
     /**
      * A view of a seller's own listings.
@@ -35,8 +31,8 @@ public class ListingsView extends JPanel implements ActionListener, PropertyChan
     final JButton delete;
     final JButton back;
 
-    public ListingsView(ListingsViewModel listingsViewModel, DeleteListingController deleteListingController,
-                        ViewManagerModel viewManagerModel, DeleteListingViewModel deleteListingViewModel){
+    public ListingsProfileView(ListingsViewModel listingsViewModel, DeleteListingController deleteListingController,
+                               ViewManagerModel viewManagerModel, DeleteListingViewModel deleteListingViewModel){
         this.listingViewModel = listingsViewModel;
         this.listingViewModel.addPropertyChangeListener(this);
         this.deleteListingController = deleteListingController;
@@ -46,7 +42,7 @@ public class ListingsView extends JPanel implements ActionListener, PropertyChan
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 
-        JLabel title = new JLabel("Listings");
+        JLabel title = new JLabel(listingsViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel listingInfo = new JLabel("Your listings:");

@@ -9,7 +9,7 @@ import use_case.delete_listing.DeleteListingDataAccessInterface;
 import use_case.delete_listing.DeleteListingInputBoundary;
 import use_case.delete_listing.DeleteListingInteractor;
 import use_case.delete_listing.DeleteListingOutputBoundary;
-import view.ListingsView;
+import view.ListingsProfileView;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class DeleteListingUseCaseFactory {
 
     private DeleteListingUseCaseFactory(){}
 
-    public static ListingsView create(
+    public static ListingsProfileView create(
             ViewManagerModel viewManagerModel,
             ListingsViewModel listingsViewModel,
             DeleteListingDataAccessInterface listingDataAccessObject,
@@ -27,7 +27,7 @@ public class DeleteListingUseCaseFactory {
         try {
             DeleteListingController deleteListingController = createDeleteUseCase(viewManagerModel, listingsViewModel,
                     listingDataAccessObject, deleteListingViewModel);
-            return new ListingsView(listingsViewModel, deleteListingController, viewManagerModel, deleteListingViewModel);
+            return new ListingsProfileView(listingsViewModel, deleteListingController, viewManagerModel, deleteListingViewModel);
         }catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not find user listings data");
         }

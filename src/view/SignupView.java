@@ -42,6 +42,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        JLabel passwordRequirements = new JLabel("<html>Password must have at least 6 characters, one lowercase and one uppercase character, one number, no spaces</html>");
+        passwordRequirements.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
         LabelTextPanel passwordInfo = new LabelTextPanel(
@@ -215,6 +218,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
+        this.add(passwordRequirements);
         this.add(repeatPasswordInfo);
         this.add(emailInfo);
         this.add(phoneNumberInfo);
