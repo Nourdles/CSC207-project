@@ -39,26 +39,46 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.viewManagerModel = viewManagerModel;
         signupViewModel.addPropertyChangeListener(this);
 
+        Color Brown = new Color(217, 196, 152);
+        Color lightBrown = new Color(245, 229, 196);
+        Color whiteBrown = new Color(224, 218, 213);
+
+        usernameInputField.setBackground(whiteBrown);
+        passwordInputField.setBackground(whiteBrown);
+        repeatPasswordInputField.setBackground(whiteBrown);
+        emailInputField.setBackground(whiteBrown);
+        phoneNumberInputField.setBackground(whiteBrown);
+        cityInputField.setBackground(whiteBrown);
+
         JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
+        usernameInfo.setBackground(lightBrown);
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
+        passwordInfo.setBackground(lightBrown);
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+        repeatPasswordInfo.setBackground(lightBrown);
         LabelTextPanel emailInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.EMAIL_LABEL), emailInputField);
+        emailInfo.setBackground(lightBrown);
         LabelTextPanel phoneNumberInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.PHONE_NUMBER_LABEL), phoneNumberInputField);
+        phoneNumberInfo.setBackground(lightBrown);
         LabelTextPanel cityInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.CITY_LABEL), cityInputField);
+        cityInfo.setBackground(lightBrown);
 
         JPanel buttons = new JPanel();
+        buttons.setBackground(lightBrown);
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        signUp.setBackground(Brown);
         buttons.add(signUp);
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
+        cancel.setBackground(Brown);
         buttons.add(cancel);
 
         signUp.addActionListener(
@@ -212,7 +232,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
+        // this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);

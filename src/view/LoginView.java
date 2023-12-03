@@ -49,6 +49,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         Color lightBrown = new Color(245, 229, 196);
         Color whiteBrown = new Color(224, 218, 213);
 
+        usernameInputField.setBackground(whiteBrown);
+        passwordInputField.setBackground(whiteBrown);
+
         setLayout(new BorderLayout());
 
         // Create a panel for the title

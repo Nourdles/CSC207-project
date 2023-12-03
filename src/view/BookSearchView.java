@@ -159,6 +159,7 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         mainPanel.add(resultsScrollPane, BorderLayout.CENTER);
 
         JPanel loadMorePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        loadMorePanel.setBackground(lightBrown);
         loadMorePanel.add(loadMoreButton);
         mainPanel.add(loadMorePanel, BorderLayout.SOUTH);
 
