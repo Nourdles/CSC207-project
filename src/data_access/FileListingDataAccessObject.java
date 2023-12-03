@@ -4,7 +4,6 @@ import entity.*;
 import use_case.book_info.BookInfoDataAccessInterface;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.delete_listing.DeleteListingDataAccessInterface;
-import use_case.listings.ListingsDataAccessInterface;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -164,7 +163,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
      * @return the listingId as a string.
      */
     @Override
-    public String delete(String listingId) throws IOException {
+    public String delete(String listingId) {
         for(String id : listingInfo.keySet()){
             if(id.equals(listingId)){
                 listingInfo.remove(listingId);
