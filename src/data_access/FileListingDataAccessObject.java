@@ -156,6 +156,12 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     public boolean existsById(String listingId) {
         return listingInfo.containsKey(listingId);
     }
+
+    /**
+     * Deletes the listing with the given listing ID
+     * @param listingId the listingId to delete
+     * @return the listingId as a string.
+     */
     @Override
     public String delete(String listingId){
         for(String id : listingInfo.keySet()){
@@ -171,6 +177,11 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         return listingId;
     }
 
+    /**
+     * Returns the listings of the given username in a list
+     * @param username
+     * @return
+     */
     @Override
     public List<Listing> getUserListings(String username) {
         List<Listing> listings = new ArrayList<>();
