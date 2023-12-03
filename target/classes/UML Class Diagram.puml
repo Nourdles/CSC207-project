@@ -8,9 +8,6 @@ class Listing {
 -double listingPrice
 -String condition
 -CommonUser seller
--File bookPhoto
--String listingId
--String pathId
 
 +getCreationTime(): LocalDateTime
 +getListingPrice(): double
@@ -55,23 +52,23 @@ class CommonUser {
 
 class Book {
 -String title
+-String genre
 -int year
 -String author
 -String summary
 -int ISBN
 -int inStock
--String coverUrl
--int everInStock
+-? pictures
 
 +getTitle(): String
-+getCoverUrl(): String
++getGenre(): String
 +getYear(): int
 +getAuthor(): String
 +getSummary(): String
 +getISBN(): int
 +getInStock(): int
-+getEverInStock(): int
-+toString(): String
++getPictures()
++addInStock()
 }
 
 interface User {

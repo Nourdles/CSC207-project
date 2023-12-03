@@ -1,7 +1,12 @@
 package use_case.delete_listing;
 
-import entity.Listing;
-
 public class DeleteListingInputData {
+    final private String listingId;
 
+    public DeleteListingInputData(String listingId){
+        this.listingId = listingId;
+    }
+    String getListingId(){
+        return listingId;
+    }
 }
