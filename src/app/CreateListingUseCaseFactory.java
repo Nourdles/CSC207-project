@@ -18,7 +18,7 @@ import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import view.CreateListingView;
-//import view.ListingsView;
+//import view.ListingsProfileView;
 import view.SignupView;
 
 import javax.swing.*;

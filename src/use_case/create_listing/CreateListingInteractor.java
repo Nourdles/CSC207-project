@@ -4,6 +4,7 @@ import data_access.FileListingDataAccessObject;
 import entity.Listing;
 import entity.ListingFactory;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class CreateListingInteractor implements CreateListingInputBoundary{
@@ -20,7 +21,7 @@ public class CreateListingInteractor implements CreateListingInputBoundary{
         this.listingFactory = listingFactory;
     }
     @Override
-    public void execute(CreateListingInputData createListingInputData) {
+    public void execute(CreateListingInputData createListingInputData) throws IOException {
         Listing listing = listingFactory.create(createListingInputData.getBook(), createListingInputData.getSeller(),
                 createListingInputData.getListingPrice(), createListingInputData.getCondition(),
                 createListingInputData.getBookPhoto(), createListingInputData.getCreationTime());

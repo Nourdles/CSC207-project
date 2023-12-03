@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 public class OpenLibraryDB implements BookSearchDataAccessInterface {
     private final OkHttpClient client = new OkHttpClient();
-
+    //StandardCharsets.UTF_8
 
     public ArrayList<Book> getSearchResult(String searchQuery) {
         String encodedQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8);
@@ -66,32 +66,6 @@ public class OpenLibraryDB implements BookSearchDataAccessInterface {
             System.err.println("Error fetching or parsing the book search results: " + e.getMessage());
             // Depending on your application's design, you might want to return an empty list or throw a custom exception
             return new ArrayList<>();
-        }
-    }
-
-    private String fetchBookSummary(String olid) {
-        if (olid == null || olid.isEmpty()) {
-            return "Summary not available";
-        }
-
-        String url = "https://openlibrary.org" + olid + ".json";
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                return "Summary not available";
-            }
-
-            String responseBodyString = response.body().string();
-            JSONObject bookDetails = new JSONObject(responseBodyString);
-            return bookDetails.optString("description", "Summary not available");
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            return "Summary not available";
         }
     }
 
