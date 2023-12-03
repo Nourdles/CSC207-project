@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class Book {
 
     private int everInStock;
@@ -10,8 +12,10 @@ public class Book {
     private String ISBN;
     private int inStock;
     private String coverUrl;
+    private String language;
+    private ArrayList<String> subjects;
 
-    public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl) {
+    public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl, String language, ArrayList<String> subjects) {
         this.title = title;
         this.year = year;
         this.author = author;
@@ -19,6 +23,8 @@ public class Book {
         this.ISBN = ISBN;
         this.inStock = inStock;
         this.coverUrl = coverUrl;
+        this.language = language;
+        this.subjects = subjects;
     }
 
     public String getTitle() {
@@ -78,4 +84,6 @@ public class Book {
     public void setEverInStock(){
         this.everInStock = this.everInStock++;
     }
+    public String getLanguage() {return this.language;}
+    public ArrayList<String> getSubjects(){return this.subjects;}
 }

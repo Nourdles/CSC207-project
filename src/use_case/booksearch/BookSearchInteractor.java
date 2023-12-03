@@ -1,7 +1,5 @@
 package use_case.booksearch;
 import entity.Book;
-import use_case.searchfilter.SearchFilterInputData;
-import use_case.searchfilter.SearchFilterInteractor;
 
 import java.util.ArrayList;
 
@@ -11,13 +9,11 @@ public class BookSearchInteractor implements BookSearchInputBoundary{
     final BookSearchDataAccessInterface searchDataAccessObject;
 
     final BookSearchOutputBoundary searchPresenter;
-    // final SearchFilterInteractor searchFilterInteractor;
 
     public BookSearchInteractor(BookSearchDataAccessInterface bookSearchDataAccessInterface,
                                 BookSearchOutputBoundary bookSearchOutputBoundary) {
         this.searchDataAccessObject = bookSearchDataAccessInterface;
         this.searchPresenter = bookSearchOutputBoundary;
-         //this.searchFilterInteractor = searchFilterInteractor;
     }
 
     @Override
