@@ -1,5 +1,7 @@
 package interface_adapter.login;
 
+import interface_adapter.Listings.ListingsState;
+import interface_adapter.Listings.ListingsViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.ViewManagerModel;
@@ -14,17 +16,20 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
     private final LoggedInViewModel loggedInViewModel;
+    private final ListingsViewModel listingsViewModel;
     private final BookSearchViewModel bookSearchViewModel;
     private ViewManagerModel viewManagerModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel,
+                          ListingsViewModel listingsViewModel,
                           BookSearchViewModel bookSearchViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.bookSearchViewModel = bookSearchViewModel;
+        this.listingsViewModel = listingsViewModel;
     }
 
     @Override
@@ -38,6 +43,9 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged(); */
+
+        ListingsState listingsState = listingsViewModel.getState();
+        listingsState.setUsername(response.getUsername());
 
         BookSearchState currentState = bookSearchViewModel.getState();
         // Assuming BookSearchState can store a username or other relevant information

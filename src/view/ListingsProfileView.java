@@ -6,6 +6,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.delete_listing.DeleteListingController;
 import interface_adapter.delete_listing.DeleteListingState;
 import interface_adapter.delete_listing.DeleteListingViewModel;
+import entity.Listing;
+import interface_adapter.profile.ProfileViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,12 +21,15 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
     /**
      * A view of a seller's own listings.
      */
-    public final String viewName = "listings view";
+    public final String viewName = "Listings view";
 
     private final ListingsViewModel listingViewModel;
     private final DeleteListingController deleteListingController;
     private final ViewManagerModel viewManagerModel;
     private final  DeleteListingViewModel deleteListingViewModel;
+
+    private final ProfileViewModel profileViewModel;
+//    private final ProfileViewModel profileViewModel;
 
     JLabel listings;
 
@@ -32,12 +37,14 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
     final JButton back;
 
     public ListingsProfileView(ListingsViewModel listingsViewModel, DeleteListingController deleteListingController,
-                               ViewManagerModel viewManagerModel, DeleteListingViewModel deleteListingViewModel){
+                               ViewManagerModel viewManagerModel, DeleteListingViewModel deleteListingViewModel,
+                               ProfileViewModel profileViewModel){
         this.listingViewModel = listingsViewModel;
         this.listingViewModel.addPropertyChangeListener(this);
         this.deleteListingController = deleteListingController;
         this.viewManagerModel = viewManagerModel;
         this.deleteListingViewModel = deleteListingViewModel;
+        this.profileViewModel = profileViewModel;
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -57,6 +64,33 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
         back = new JButton(ListingsViewModel.BACK_BUTTON_LABEL);
         panel.add(back);
 
+        this.add(title);
+        this.add(listingInfo);
+
+        //Populate layout with listings
+        for (Listing listing: listingsViewModel.getState().getListings()){
+            ImageIcon icon = new ImageIcon(listing.getBookPhoto().getPath());
+            Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+
+            JLabel picturelabel = new JLabel(icon);
+            picturelabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JLabel bookname = new JLabel("Book name:" + listing.getBook().getTitle());
+            bookname.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JLabel listingId = new JLabel("Listing Id:" + listing.getListingId());
+            listingId.setAlignmentX(Component.CENTER_ALIGNMENT);
+            this.add(picturelabel);
+            this.add(bookname);
+            this.add(listingId);
+            this.add(Box.createRigidArea(new Dimension(0, 10)));
+        }
+        JScrollPane scrollPane = new JScrollPane(this);
+        this.add(scrollPane);
+        this.add(panel);
+
+
         delete.addActionListener(
                 new ActionListener() {
             @Override
@@ -70,12 +104,16 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
             }
         });
 
-        back.addActionListener(this);
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(back)){
+                    viewManagerModel.setActiveView(profileViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
 
-        this.add(title);
-        this.add(listingInfo);
-        this.add(listings);
-        this.add(panel);
     }
 
 
@@ -86,6 +124,6 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ListingsState state = (ListingsState) evt.getNewValue();
-        listings.setText(state.getListingsString());
+        //listings.setText(state.getListingsString());
     }
 }

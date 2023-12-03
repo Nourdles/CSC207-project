@@ -4,6 +4,7 @@ import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.Listing;
 import entity.ListingFactory;
+import interface_adapter.Listings.ListingsViewModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
@@ -53,6 +54,7 @@ import java.io.IOException;
         SignupViewModel signupViewModel = new SignupViewModel();
         BookSearchViewModel bookSearchViewModel = new BookSearchViewModel();
         CreateListingViewModel createListingViewModel = new CreateListingViewModel();
+        ListingsViewModel listingsViewModel = new ListingsViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
 
@@ -69,7 +71,8 @@ import java.io.IOException;
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel,
+                listingsViewModel);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
