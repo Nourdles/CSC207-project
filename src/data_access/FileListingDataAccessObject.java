@@ -2,8 +2,6 @@ package data_access;
 
 import entity.*;
 import use_case.create_listing.CreateListingDataAccessInterface;
-import use_case.delete_listing.DeleteListingDataAccessInterface;
-import use_case.listings.ListingsDataAccessInterface;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -12,9 +10,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class FileListingDataAccessObject implements CreateListingDataAccessInterface, DeleteListingDataAccessInterface, ListingsDataAccessInterface {
+public class FileListingDataAccessObject implements CreateListingDataAccessInterface {
     /**
      * A Data Access Object that stores all listing information except images.
      * @param csvPath the String that represents a filepath for the file that stores Listings.
@@ -156,6 +156,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     public boolean existsById(String listingId) {
         return listingInfo.containsKey(listingId);
     }
+<<<<<<< HEAD
 
     /**
      * Deletes the listing with the given listing ID
@@ -193,8 +194,8 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
         return listings;
     }
+=======
+>>>>>>> parent of ba45bdb (Merge branch 'delete_listing')
 }
-
-
 
 
