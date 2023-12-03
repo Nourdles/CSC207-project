@@ -1,7 +1,6 @@
 package entity;
 
 public class Book {
-
     private int everInStock;
     private String title;
     private int year;
@@ -10,6 +9,18 @@ public class Book {
     private String ISBN;
     private int inStock;
     private String coverUrl;
+
+    /**
+     * A book listed in the OpenLibrary database.
+     * @param title
+     * @param year year published
+     * @param author
+     * @param summary a description of the book.
+     * @param ISBN a 13-digit number representing in characters uniquely assigned to a book, with
+     *             different editions having different ISBNs.
+     * @param inStock the number of listings currently available for a unique book.
+     * @param coverUrl a url associated with a particular book cover from OpenLibrary.
+     */
 
     public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl) {
         this.title = title;

@@ -62,10 +62,6 @@ import java.io.IOException;
             throw new RuntimeException(e);
         }
 
-        FileListingDataAccessObject fileListingDataAccessObject;
-
-
-
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
@@ -91,18 +87,13 @@ import java.io.IOException;
         BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController);
         views.add(bookSearchView, bookSearchView.viewName);
 
-
-        CreateListingOutputBoundary createListingPresenter = new CreateListingPresenter(viewManagerModel, createListingViewModel);
         ListingFactory listingFactory = new ListingFactory();
 
         try {
-            CreateListingDataAccessInterface createListingDataAccessInterface = new FileListingDataAccessObject("./listingInfo.csv", new ListingFactory());
-            CreateListingInteractor createListingInteractor = new CreateListingInteractor(createListingDataAccessInterface,
-                    createListingPresenter, listingFactory);
-
-            CreateListingController createListingController = new CreateListingController(createListingInteractor);
-
-            CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController);
+            FileListingDataAccessObject fileListingDataAccessObject = new FileListingDataAccessObject("./listingInfo.csv", listingFactory);
+            CreateListingView createListingView = CreateListingUseCaseFactory.create(viewManagerModel, createListingViewModel,
+                    fileListingDataAccessObject);
+            views.add(createListingView, createListingView.viewName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

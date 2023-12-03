@@ -22,6 +22,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
     /**
      * The View allowing sellers to input listing information to create a book.
      */
+    public final String viewName = "create listing";
     final JButton upload;
     final JButton createListing;
     private final CreateListingViewModel createListingViewModel;

@@ -29,7 +29,6 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     private Map <String, Listing> imagePathToListing = new HashMap<>();
     private Map <String, Book> isbnToBook = new HashMap<>();
     private Map <String, CommonUser> usernameToSeller = new HashMap<>();
-    private Map <String, File> imagePathToPhoto = new HashMap<>();
     private ListingFactory listingFactory;
     private BufferedImage storedImage;
     private File savedPhoto;
@@ -54,7 +53,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
         storedImage = new BufferedImage(5, 5, 1);
 
-        File imageDirectory = new File("allImages");
+        imageDirectory = new File("allImages");
         if (!imageDirectory.exists()){
             imageDirectory.mkdir();
         }
@@ -66,7 +65,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("isbn,seller,listing_price,condition,creation_time");
+                assert header.equals("isbn,seller,listing_price,condition,listingId,creation_time");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -78,6 +77,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
                     String listingId = String.valueOf(col[headers.get("listingId")]);
                     String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
                     LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
+                    isbnToBook.get(isbn).setEverInStock();
                     Listing listing = listingFactory.create(isbnToBook.get(isbn), usernameToSeller.get(sellerUsername),
                             listing_price, condition, savedPhoto, ldt);
                     listingInfo.put(listingId, listing);
@@ -94,13 +94,14 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     @Override
     public void save(Listing listing) throws IOException {
         listingInfo.put(listing.getListingId(), listing);
-        File userDirectory = new File(listing.getSeller().getUsername());
+        userDirectory = new File(listing.getSeller().getUsername());
         if(!userDirectory.exists()){
             userDirectory.mkdir();
             Path imageDirFullpath = Paths.get(imageDirectory.getAbsolutePath());
             Path userDirFullpath = Paths.get(userDirectory.getAbsolutePath());
             Files.move(userDirFullpath, imageDirFullpath);
         }
+        File defaultImage = new File("default.png");
         storedImage = ImageIO.read((listing.getBookPhoto()));
         this.save();
     }
@@ -126,7 +127,6 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
                 imagePathToListing.put(listing.getPathId(), listing);
                 bookToListing.put(listing.getBook(), listing);
                 usernameToSeller.put(listing.getSeller().getUsername(), listing.getSeller());
-                imagePathToPhoto.put(listing.getPathId(), savedPhoto);
                 String line = String.format("%s,%s,%s,%s,%s,%s",
                         listing.getBook().getISBN(), listing.getSeller(), listing.getPrice(), listing.getCondition(), listing.getListingId(), listing.getCreationTime());
                 writer.write(line);
@@ -139,7 +139,8 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
             throw new RuntimeException(e);
         }
 
-        try{
+        try {
+            savedPhoto = new File("bookPhoto.png");
             ImageIO.write(storedImage, "png", savedPhoto);
             Files.move(Paths.get(savedPhoto.getAbsolutePath()), Paths.get(imageDirectory.getAbsolutePath()));
         } catch(IOException e){
@@ -156,8 +157,15 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     public boolean existsById(String listingId) {
         return listingInfo.containsKey(listingId);
     }
+
+    /**
+     * Delete a Listing from our information database and returns its ID number.
+     * @param listingId
+     * @return the listing's Id number.
+     * @throws IOException
+     */
     @Override
-    public String delete(String listingId){
+    public String delete(String listingId) throws IOException {
         for(String id : listingInfo.keySet()){
             if(id.equals(listingId)){
                 listingInfo.remove(listingId);
@@ -166,6 +174,12 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         this.save();
         return listingId;
     }
+
+    /**
+     * Return a list of Listings created by a seller.
+     * @param username the seller's username.
+     * @return a list of Listings create by a seller.
+     */
 
     @Override
     public List<Listing> getUserListings(String username) {
@@ -178,8 +192,13 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
         return listings;
     }
+
+    /**
+     * Return a map of listingIds to Listings for testing.
+     * @return a map of listingIds to listing objects
+     */
+    public Map<String, Listing> getListingInfo(){
+        return listingInfo;
+    }
+
 }
-
-
-
-

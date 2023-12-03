@@ -13,6 +13,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="CSC207-project" target="17" />
       <module name="pom.xml" target="1.7" />
     </bytecodeTargetLevel>
   </component>

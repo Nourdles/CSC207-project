@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 public class ListingsProfileView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -65,7 +66,11 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
                     String selectedListing = (String)  listingDropdown.getSelectedItem();
                     DeleteListingState state = deleteListingViewModel.getState();
                     state.setListing(selectedListing);
-                    deleteListingController.execute(state.getListing());
+                    try {
+                        deleteListingController.execute(state.getListing());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
