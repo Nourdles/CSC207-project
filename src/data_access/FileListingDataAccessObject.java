@@ -163,7 +163,11 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
                 listingInfo.remove(listingId);
             }
         }
-        this.save();
+        try {
+            this.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return listingId;
     }
 
