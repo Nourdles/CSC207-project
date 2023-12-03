@@ -16,6 +16,11 @@ public class Listing {
     /** A seller's listing of a book.
      * Requires: book must be in the OpenLibraryDatabase
      * Users may upload up to one photo per listing.
+     * @param book the book associated with the listing.
+     * @param seller the User offering a book for sale.
+     * @param listingPrice the (possibly initial) price the seller is demanding in exchange for the book.
+     * @param bookPhoto either a default image or an uploaded photo of the book shot by the seller.
+     * @param creationTime the time the listing is created.
      */
     Listing(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto, LocalDateTime creationTime) {
         this.book = book;
@@ -24,7 +29,7 @@ public class Listing {
         this.listingPrice = listingPrice;
         this.condition = condition;
         this.bookPhoto = bookPhoto;
-        this.listingId = String.valueOf(book.getISBN()) + String.valueOf(book.getEverInStock());
+        this.listingId = book.getISBN() + String.valueOf(book.getEverInStock());
         this.pathId = seller.getUsername() + "/" + book.getISBN() + ".png";
     }
     public double getPrice(){
