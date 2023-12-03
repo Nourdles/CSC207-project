@@ -1,5 +1,8 @@
 package use_case.book_info;
 
+import entity.Listing;
+
+import java.util.List;
 import java.util.ArrayList;
 
 public class BookInfoOutputData {
@@ -10,9 +13,10 @@ public class BookInfoOutputData {
     private final String coverURL;
     private final String language;
     private final ArrayList<String> subjects;
+    private final List<List<String>> listingsDetails;
     private final String errorMessage;
 
-    public BookInfoOutputData(String title, int year, String author, String isbn, String coverURL, String language, ArrayList<String> subjects, String errorMessage) {
+    public BookInfoOutputData(String title, int year, String author, String isbn, String coverURL, String language, ArrayList<String> subjects, List<List<String>> listingsDetails, String errorMessage) {
         this.title = title;
         this.year = year;
         this.author = author;
@@ -20,6 +24,7 @@ public class BookInfoOutputData {
         this.coverURL = coverURL;
         this.language = language;
         this.subjects = subjects;
+        this.listingsDetails = listingsDetails;
         this.errorMessage = errorMessage;
     }
 
@@ -42,6 +47,8 @@ public class BookInfoOutputData {
             throw new IllegalStateException("Attempted to get title when the display was not successful.");
         }
     }
+
+    public List<List<String>> getListingsDetails() {return listingsDetails;}
 
     public String getAuthor() {
         if (isSuccess()) {

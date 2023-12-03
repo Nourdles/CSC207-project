@@ -15,6 +15,7 @@ import interface_adapter.searchfilter.SearchFilterController;
 import interface_adapter.searchfilter.SearchFilterPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.book_info.BookInfoDataAccessInterface;
 import use_case.book_info.BookInfoInteractor;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.create_listing.CreateListingInteractor;
@@ -88,7 +89,9 @@ import java.io.IOException;
         // Initialize the interactor (use case) with the real data access and presenter
         BookSearchInteractor interactor = new BookSearchInteractor(realDataAccess, presenter);
         SearchFilterInteractor filterInteractor = new SearchFilterInteractor(filterPresenter);
-        BookInfoInteractor infoInteractor = new BookInfoInteractor(infoPresenter);
+
+        BookInfoDataAccessInterface bookInfoDataAccessInterface = new FileListingDataAccessObject("./listingInfo.csv", new ListingFactory());
+        BookInfoInteractor infoInteractor = new BookInfoInteractor(infoPresenter, bookInfoDataAccessInterface);
 
         // Initialize the controller with the interactor
         BookSearchController bookSearchController = new BookSearchController(interactor);
