@@ -156,7 +156,6 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     public boolean existsById(String listingId) {
         return listingInfo.containsKey(listingId);
     }
-<<<<<<< HEAD
 
     /**
      * Deletes the listing with the given listing ID
@@ -194,8 +193,6 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
         return listings;
     }
-=======
->>>>>>> parent of ba45bdb (Merge branch 'delete_listing')
 }
 
 
