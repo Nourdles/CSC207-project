@@ -157,7 +157,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         return listingInfo.containsKey(listingId);
     }
     @Override
-    public String delete(String listingId){
+    public String delete(String listingId) throws IOException {
         for(String id : listingInfo.keySet()){
             if(id.equals(listingId)){
                 listingInfo.remove(listingId);
