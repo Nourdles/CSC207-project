@@ -1,6 +1,7 @@
 package interface_adapter.book_info;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookInfoState {
     private String title;
@@ -10,6 +11,7 @@ public class BookInfoState {
     private String coverURL;
     private String language;
     private ArrayList<String> subjects;
+    private List<List<String>> listingsInfo;
     private String errorMessage = null;
 
     public BookInfoState() {}
@@ -44,4 +46,8 @@ public class BookInfoState {
     public String getCoverURL() {return this.coverURL;}
 
     public ArrayList<String> getSubjects() {return this.subjects;}
+
+    public void setListingsInfo(List<List<String>> listingsInfo) {this.listingsInfo = listingsInfo;}
+
+    public List<List<String>> getListingsInfo() {return listingsInfo;}
 }

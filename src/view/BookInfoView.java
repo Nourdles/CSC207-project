@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.util.List;
 
 public class BookInfoView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "book info";
@@ -92,7 +92,7 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         mainPanel.add(infoPanel, gbc);
         add(mainPanel, BorderLayout.CENTER);
 
-        JPanel listingsPanel = new JPanel(new BorderLayout());
+        listingsPanel = new JPanel(new BorderLayout());
         listingsPanel.setBackground(whiteBrown);
         JLabel listingsTitle = new JLabel("Listings");
         gbc.gridx = 0;
@@ -165,9 +165,47 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
             coverLabel.setIcon(defaultCoverImage);
         };
 
-        String subjectsText = String.join(", ", state.getSubjects());
+        List<String> subjects = state.getSubjects();
+        String subjectsText = subjects != null ? String.join(", ", state.getSubjects()) : "No subjects available";
         subjectsPanel.removeAll();
         subjectsPanel.add(new JLabel(subjectsText));
+
+        listingsPanel.removeAll();
+        listingsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.NORTH;
+        int column = 0;
+
+        if (state.getListingsInfo() != null) {
+            for (List<String> listing : state.getListingsInfo()) {
+                // Assuming the order is username, price, condition, city, email, phone number
+                // Add labels for each piece of information in rows
+                gbc.gridx = column;
+                gbc.gridy = 0;
+                listingsPanel.add(new JLabel("Seller: " + listing.get(0)), gbc);
+
+                gbc.gridy = 1;
+                listingsPanel.add(new JLabel("Price: $" + listing.get(1)), gbc);
+
+                gbc.gridy = 2;
+                listingsPanel.add(new JLabel("Condition: " + listing.get(2)), gbc);
+
+                gbc.gridy = 3;
+                listingsPanel.add(new JLabel("City: " + listing.get(3)), gbc);
+
+                gbc.gridy = 4;
+                JButton contactButton = new JButton("Contact");
+                String contactInfo = "Email: " + listing.get(4) + "\nPhone: " + listing.get(5);
+                contactButton.addActionListener(e -> JOptionPane.showMessageDialog(this, contactInfo, "Contact Info", JOptionPane.INFORMATION_MESSAGE));
+                listingsPanel.add(contactButton, gbc);
+
+                column++;
+            }
+        }
+
+        listingsPanel.revalidate();
+        listingsPanel.repaint();
 
         revalidate();
         repaint();

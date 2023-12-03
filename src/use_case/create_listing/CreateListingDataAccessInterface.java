@@ -12,4 +12,5 @@ public interface CreateListingDataAccessInterface {
     String delete(String listingId);
 
     List<Listing> getUserListings(String username);
+
 }
