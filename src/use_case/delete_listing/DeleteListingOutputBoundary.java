@@ -1,5 +1,5 @@
 package use_case.delete_listing;
 
 public interface DeleteListingOutputBoundary {
-    void prepareDeleteView(DeleteListingOutputData deleteListingOutputData);
+    public void prepareDeleteView(DeleteListingOutputData deletedListing);
 }

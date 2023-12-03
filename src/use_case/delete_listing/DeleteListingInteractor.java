@@ -1,9 +1,4 @@
 package use_case.delete_listing;
-import entity.Listing;
-import entity.ListingFactory;
-import use_case.create_listing.CreateListingDataAccessInterface;
-
-import java.io.IOException;
 
 
 public class DeleteListingInteractor implements DeleteListingInputBoundary {
@@ -18,7 +13,7 @@ public class DeleteListingInteractor implements DeleteListingInputBoundary {
     }
 
     @Override
-    public void execute(DeleteListingInputData deleteListingInputData) throws IOException {
+    public void execute(DeleteListingInputData deleteListingInputData) {
         DeleteListingOutputData deleteListingOutputData = new DeleteListingOutputData(listingDataAccessObject.delete(deleteListingInputData.getListingId()));
         deletePresenter.prepareDeleteView(deleteListingOutputData);
 
