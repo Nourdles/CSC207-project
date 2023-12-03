@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: org.asynchttpclient:async-http-client:3.0.0.Beta2" type="java-imported" external-system-id="Maven">
+    <properties groupId="org.asynchttpclient" artifactId="async-http-client" version="3.0.0.Beta2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/asynchttpclient/async-http-client/3.0.0.Beta2/async-http-client-3.0.0.Beta2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/asynchttpclient/async-http-client/3.0.0.Beta2/async-http-client-3.0.0.Beta2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/asynchttpclient/async-http-client/3.0.0.Beta2/async-http-client-3.0.0.Beta2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
