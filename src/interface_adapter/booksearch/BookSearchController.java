@@ -12,14 +12,11 @@ public class BookSearchController {
 
     public void onSearchButtonClicked(String query) {
         if (query == null || query.trim().isEmpty()) {
-            // Handle the case where the query is empty
             return;
         }
 
-        // Create an input data object with the search query
         BookSearchInputData inputData = new BookSearchInputData(query);
 
-        // Call the interactor (use case) to execute the search
         bookSearchCaseInteractor.execute(inputData);
     }
 }

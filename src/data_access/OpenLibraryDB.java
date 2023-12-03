@@ -53,8 +53,16 @@ public class OpenLibraryDB implements BookSearchDataAccessInterface {
                 int inStock = 0;  // Placeholder, update as per your application logic
                 String coverId = bookJson.optString("cover_i");
                 String coverUrl = coverId.isEmpty() ? null : "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg";
+                String language = bookJson.optString("language", "Unknown");
+                ArrayList<String> subjects = new ArrayList<>();
+                JSONArray subjectsArray = bookJson.optJSONArray("subject");
+                if (subjectsArray != null) {
+                    for (int j = 0; j < subjectsArray.length(); j++) {
+                        subjects.add(subjectsArray.optString(j));
+                    }
+                }
 
-                Book book = new Book(title, year, author, "", isbn, inStock, coverUrl);
+                Book book = new Book(title, year, author, "", isbn, inStock, coverUrl, language, subjects);
                 books.add(book);
             }
 
