@@ -69,30 +69,4 @@ public class OpenLibraryDB implements BookSearchDataAccessInterface {
         }
     }
 
-    private String fetchBookSummary(String olid) {
-        if (olid == null || olid.isEmpty()) {
-            return "Summary not available";
-        }
-
-        String url = "https://openlibrary.org" + olid + ".json";
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                return "Summary not available";
-            }
-
-            String responseBodyString = response.body().string();
-            JSONObject bookDetails = new JSONObject(responseBodyString);
-            return bookDetails.optString("description", "Summary not available");
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            return "Summary not available";
-        }
-    }
-
 }
