@@ -228,4 +228,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     public String findPhoneNumber(String username) {
         return null;
     }
+    public Map<String, Listing> getListingInfo(){
+        return listingInfo;
+    }
 }
