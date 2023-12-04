@@ -24,6 +24,8 @@ public class Book {
      *             different editions having different ISBNs.
      * @param inStock the number of listings currently available for a unique book.
      * @param coverUrl a url associated with a particular book cover from OpenLibrary.
+     * @param language the language of the book.
+     * @param subjects a list of the book's subjects.
      */
     public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl, String language, ArrayList<String> subjects) {
         this.title = title;
@@ -75,6 +77,11 @@ public class Book {
     public void setInStock(int inStock) {
         this.inStock = inStock;
     }
+
+    /**
+     * Returns a string format to represent a Book and its details.
+     * @return a String format representing a Book.
+     */
     @Override
     public String toString() {
         return "Book{" +
@@ -89,10 +96,6 @@ public class Book {
     }
     public String getCoverUrl() {
         return this.coverUrl;
-    }
-    public int getEverInStock(){ return this.everInStock; }
-    public void setEverInStock(){
-        this.everInStock = this.everInStock++;
     }
     public String getLanguage() {return this.language;}
     public ArrayList<String> getSubjects(){return this.subjects;}

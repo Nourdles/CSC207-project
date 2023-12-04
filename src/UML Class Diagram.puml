@@ -3,31 +3,26 @@
 
 
 class Listing {
--Book book
--LocalDateTime creationTime
+-String ISBN
+-String title
+-String seller
 -double listingPrice
 -String condition
--CommonUser seller
 -File bookPhoto
+-LocalDateTime creationTime
 -String listingId
 -String pathId
 
-+getCreationTime(): LocalDateTime
-+getListingPrice(): double
-+getCondition(): String
-+deleteListing()
-+createListing()
 }
 
 class AdminUser {
 -String username
 -String password
+-LocalDateTime ltd
 -String email
+-String phoneNumber
+-String city
 
-+getUsername(): String
-+getPassword(): String
-+deleteUser()
-+changeRating()
 }
 
 class CommonUser {
@@ -39,17 +34,8 @@ class CommonUser {
 -int numRatings
 -String city
 
-+getUsername(): String
-+getPassword(): String
-+getEmail(): String
-+getPhoneNumber(): int
 +getPerformanceRating(): int
 +getNumRatings(): int
-+getCity(): String
-+changePassword()
-+changeEmail()
-+giveRating()
-+viewListings()
 
 }
 
@@ -61,16 +47,10 @@ class Book {
 -int ISBN
 -int inStock
 -String coverUrl
--int everInStock
+-String language
+-ArrayList<String> subjects
 
-+getTitle(): String
-+getCoverUrl(): String
-+getYear(): int
-+getAuthor(): String
-+getSummary(): String
-+getISBN(): int
 +getInStock(): int
-+getEverInStock(): int
 +toString(): String
 }
 

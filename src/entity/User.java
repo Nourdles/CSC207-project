@@ -9,6 +9,7 @@ public interface User {
     String getPhoneNumber();
     String getCity();
     LocalDateTime getCreationTime();
+    void setUsername(String username);
     void setPassword(String password);
     void setEmail(String email);
     void setPhoneNumber(String phoneNumber);

@@ -159,8 +159,6 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
             throw new RuntimeException(e);
         }
     }
-
-
     /**
      * Return whether a listing exists with listingId identifier.
      * @param listingId the listingId to check.
@@ -194,7 +192,6 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
      * @param username
      * @return
      */
-    @Override
     public List<Listing> getUserListings(String username) {
         List<Listing> listings = new ArrayList<>();
         for (Listing listing : listingInfo.values()){
