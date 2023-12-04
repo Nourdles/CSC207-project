@@ -4,7 +4,7 @@ import entity.User;
 import java.time.LocalDateTime;
 
 public class CommonUser implements User {
-    private final String username;
+    private String username;
     private String password;
     private String email;
     private String phoneNumber;
@@ -16,6 +16,16 @@ public class CommonUser implements User {
     /*Common Users need to provide a phoneNumber, an email, or both. */
 
     /*Common User provides both.*/
+
+    /**
+     * A CommonUser of the system: They can browse others' listings or create/delete their own.
+     * @param username
+     * @param password
+     * @param creationTime
+     * @param email
+     * @param phoneNumber
+     * @param city
+     */
     CommonUser(String username, String password, LocalDateTime creationTime, String email, String phoneNumber, String city){
         this.username = username;
         this.password = password;
@@ -57,7 +67,8 @@ public class CommonUser implements User {
     public LocalDateTime getCreationTime(){
         return creationTime;
     }
-
+    @Override
+    public void setUsername(String username) {this.username = username;}
     @Override
     public void setPassword(String password) {
         this.password = password;

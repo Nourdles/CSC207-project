@@ -26,7 +26,6 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     private JButton viewListing;
 
-
     public ProfileView(ProfileController controller, ProfileViewModel viewModel, ListingsViewModel listingsViewModel,ListingsController listingsController,
                        ViewManagerModel viewManagerModel) {
         this.profileController = controller;
