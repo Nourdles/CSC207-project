@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
@@ -29,6 +28,7 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
     private JTextField searchField;
     private JButton searchButton;
     private JButton filterButton;
+    private JButton profileButton;
     private JPanel resultsPanel;
     private JButton loadMoreButton;
     private int currentLoadIndex = 0; // To keep track of how many books have been loaded
@@ -36,13 +36,15 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
     private BookSearchViewModel viewModel;
     private SearchFilterController filterController;
     private BookInfoController bookInfoController;
+    private ViewManagerModel viewManagerModel;
     private ArrayList<Book> displayedBooks;
 
-    public BookSearchView(BookSearchController controller, BookSearchViewModel viewModel, SearchFilterController searchFilterController, BookInfoController bookInfoController) {
+    public BookSearchView(BookSearchController controller, BookSearchViewModel viewModel, SearchFilterController searchFilterController, BookInfoController bookInfoController, ViewManagerModel viewManagerModel) {
         this.controller = controller;
         this.viewModel = viewModel;
         this.filterController = searchFilterController;
         this.bookInfoController = bookInfoController;
+        this.viewManagerModel = viewManagerModel;
         this.displayedBooks = new ArrayList<>();
         viewModel.addPropertyChangeListener(this);
 
@@ -83,10 +85,15 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         JTextArea paragraphText = new JTextArea("Welcome to our second-hand book selling application! " +
                 "Enter a book title, author, or keyword to start searching. Please make sure there are no typos, and " +
                 "press the Search button when you are ready. You can use the Filter button to filter your search once " +
-                "results are displayed.");
+                "results are displayed.", 5, 20);
 
         Font font = new Font("SansSerif", Font.PLAIN, 14); // You can adjust the font and size
         paragraphText.setFont(font);
+
+        JPanel topComponentsPanel = new JPanel();
+        topComponentsPanel.setLayout(new BorderLayout());
+        topComponentsPanel.setBackground(lightBrown);
+        topComponentsPanel.add(logoLabel, BorderLayout.NORTH);
 
         paragraphText.setEditable(false);
         paragraphText.setWrapStyleWord(true);
@@ -95,6 +102,9 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         paragraphText.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
         paragraphText.setForeground(Color.BLACK);
         paragraphText.setBackground(lightBrown);
+
+        profileButton = new JButton("Profile");
+        profileButton.setBackground(Brown);
 
         // Create an EmptyBorder to add space around the paragraph text
         int topPadding = 20; // Adjust the top padding as needed
@@ -106,9 +116,15 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
 
         // Add the logo to the topPanel
         topPanel.add(logoLabel, BorderLayout.NORTH);
+        JPanel paragraphPanel = new JPanel();
+        paragraphPanel.setLayout(new BoxLayout(paragraphPanel, BoxLayout.Y_AXIS));
+        paragraphPanel.setBackground(lightBrown);
+        paragraphPanel.add(paragraphText);
+        paragraphPanel.add(Box.createVerticalStrut(10)); // Add some vertical space between components
+        paragraphPanel.add(profileButton);
 
-        // Add the paragraphText to the topPanel at the SOUTH position
-        topPanel.add(paragraphText, BorderLayout.SOUTH);
+        topComponentsPanel.add(paragraphPanel, BorderLayout.CENTER);
+        topPanel.add(topComponentsPanel, BorderLayout.CENTER);
 
         // Search panel setup
         JPanel searchPanel = new JPanel();
@@ -123,6 +139,7 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         filterButton = new JButton("Filters");
         searchButton.addActionListener(this);
         filterButton.addActionListener(this);
+        profileButton.addActionListener(this);
 
         JPanel searchComponentsPanel = new JPanel(new BorderLayout());
 
@@ -182,6 +199,12 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
 
             // Set the visibility of the load more button based on results availability
             loadMoreButton.setVisible(resultsAvailable);
+        }
+
+        if (e.getSource() == profileButton){
+            viewManagerModel.setActiveView("profile");
+            viewManagerModel.firePropertyChanged();
+            System.out.println(viewManagerModel.getActiveView());
         }
 
         if (e.getSource() == filterButton) {

@@ -3,6 +3,9 @@ package app;
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.ListingFactory;
+import interface_adapter.Listings.ListingsController;
+import interface_adapter.Listings.ListingsPresenter;
+import interface_adapter.Listings.ListingsViewModel;
 import interface_adapter.book_info.BookInfoController;
 import interface_adapter.book_info.BookInfoPresenter;
 import interface_adapter.book_info.BookInfoViewModel;
@@ -11,6 +14,8 @@ import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.profile.ProfileController;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.searchfilter.SearchFilterController;
 import interface_adapter.searchfilter.SearchFilterPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -23,6 +28,8 @@ import use_case.create_listing.CreateListingOutputBoundary;
 
 import use_case.booksearch.*;
 import interface_adapter.booksearch.*;
+import use_case.listings.ListingsDataAccessInterface;
+import use_case.listings.ListingsInteractor;
 import use_case.searchfilter.SearchFilterInteractor;
 import view.*;
 import data_access.*;
@@ -57,6 +64,7 @@ import java.io.IOException;
         BookSearchViewModel bookSearchViewModel = new BookSearchViewModel();
         BookInfoViewModel infoViewModel = new BookInfoViewModel();
         CreateListingViewModel createListingViewModel = new CreateListingViewModel();
+        ProfileViewModel profileViewModel = new ProfileViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
 
@@ -67,7 +75,11 @@ import java.io.IOException;
         }
 
         FileListingDataAccessObject fileListingDataAccessObject;
-
+        try {
+            fileListingDataAccessObject = new FileListingDataAccessObject("./listingInfo.csv", new ListingFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
@@ -78,6 +90,21 @@ import java.io.IOException;
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+        ListingsView listingsView = new ListingsView();
+        views.add(listingsView, listingsView.viewName);
+
+
+        ListingsViewModel listingsViewModel = new ListingsViewModel();
+        ListingsPresenter listingsPresenter = new ListingsPresenter(viewManagerModel, listingsViewModel);
+        ListingsInteractor listingsInteractor = new ListingsInteractor(fileListingDataAccessObject, listingsPresenter);
+        ListingsController listingsController = new ListingsController(listingsInteractor);
+
+
+
+        ProfileController profileController = new ProfileController();
+        ProfileView profileView = new ProfileView(profileController, profileViewModel, listingsViewModel, listingsController, viewManagerModel);
+        views.add(profileView, profileView.viewName);
 
         SearchFilterPresenter filterPresenter = new SearchFilterPresenter(bookSearchViewModel);
 
@@ -98,7 +125,7 @@ import java.io.IOException;
         SearchFilterController searchFilterController = new SearchFilterController(filterInteractor);
         BookInfoController bookInfoController = new BookInfoController(infoInteractor);
 
-        BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController, bookInfoController);
+        BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController, bookInfoController, viewManagerModel);
         views.add(bookSearchView, bookSearchView.viewName);
 
 

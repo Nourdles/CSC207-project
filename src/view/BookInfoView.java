@@ -197,22 +197,20 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
 
         if (state.getListingsInfo() != null) {
             for (List<String> listing : state.getListingsInfo()) {
-                // Assuming the order is username, price, condition, city, email, phone number
-                // Add labels for each piece of information in rows
                 gbc.gridx = column;
                 gbc.gridy = 0;
                 listingsPanel.add(new JLabel("Seller: " + listing.get(0)), gbc);
 
-                gbc.gridy = 1;
+                gbc.gridy++;
                 listingsPanel.add(new JLabel("Price: $" + listing.get(1)), gbc);
 
-                gbc.gridy = 2;
+                gbc.gridy++;
                 listingsPanel.add(new JLabel("Condition: " + listing.get(2)), gbc);
 
-                gbc.gridy = 3;
+                gbc.gridy++;
                 listingsPanel.add(new JLabel("City: " + listing.get(3)), gbc);
 
-                gbc.gridy = 4;
+                gbc.gridy++;
                 JButton contactButton = new JButton("Contact");
                 String contactInfo = "Email: " + listing.get(4) + "\nPhone: " + listing.get(5);
                 contactButton.addActionListener(e -> JOptionPane.showMessageDialog(this, contactInfo, "Contact Info", JOptionPane.INFORMATION_MESSAGE));

@@ -36,27 +36,27 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.listingsController = listingsController;
         viewModel.addPropertyChangeListener(this);
 
-        JPanel buttons = new JPanel();
+        this.setLayout(new BorderLayout());
+
         viewListing = new JButton("View Listings");
-        buttons.add(viewListing);
         Color Brown = new Color(217, 196, 152);
         viewListing.setBackground(Brown);
-
-        viewListing.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(viewListing)){
-                            ListingsState state = listingsViewModel.getState();
-                            listingsController.execute(state.getUsername());
-                        }
-                    }
+        viewListing.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(viewListing)) {
+                    ListingsState state = listingsViewModel.getState();
+                    listingsController.execute(state.getUsername());
                 }
-        );
+            }
+        });
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.add(viewListing);
+
+        this.add(centerPanel, BorderLayout.CENTER);
 
     }
-
-
 
 
     @Override
