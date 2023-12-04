@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 public class CommonUser implements User {
     private final String username;
-    private final String password;
-    private final String email;
-    private final String phoneNumber;
-    private final double performanceRating;
-    private final int numRatings;
-    private final String city;
-    private final LocalDateTime creationTime;
+    private String password;
+    private String email;
+    private String phoneNumber;
+    private double performanceRating;
+    private int numRatings;
+    private String city;
+    private LocalDateTime creationTime;
 
     /*Common Users need to provide a phoneNumber, an email, or both. */
 
@@ -56,5 +56,22 @@ public class CommonUser implements User {
     @Override
     public LocalDateTime getCreationTime(){
         return creationTime;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    @Override
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    @Override
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    @Override
+    public void setCity(String city) {
+        this.city = city;
     }
 }
