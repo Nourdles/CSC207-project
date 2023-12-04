@@ -20,30 +20,23 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class FileListingDataAccessObjectTest {
     private FileListingDataAccessObject fileListingDAO;
-    private Book book;
+    private String sellerName;
     private Listing listing;
+    private String ISBN;
     private Map<String, Listing> expectedMap = new HashMap<>();
     private Map<String, Listing> actualMap = new HashMap<>();
     private File listingInfoCSV = new File("listingInfo.csv");
     @org.junit.jupiter.api.BeforeEach
     void setUp() throws IOException {
         ListingFactory listingFactory = new ListingFactory();
-        CreateListingDataAccessInterface createListingDataAccessInterface;
-        CreateListingOutputBoundary createListingOutputBoundary;
-        // CreateListingInteractor createListingInteractor = new CreateListingInteractor(createListingDataAccessInterface,
-        //        createListingOutputBoundary, listingFactory);
         String photoPath = "src/default.png";
         String listingsPath = "listingInfo.csv";
-        book = new Book("History", 1994, "Dan Jones", "Lorem ipsum", "1234567891234",
-                5, "", "", "");
+        String bookTitle = "History";
+        sellerName = "Bob Jones";
+        ISBN = "1234567898765";
         File bookPhoto = new File(photoPath);
-        CommonUserFactory commonUserFactory = new CommonUserFactory();
-        LocalDateTime userLDT = LocalDateTime.now();
-        User seller = commonUserFactory.create("abli2003", "Abc12345", userLDT,
-                "albert3@gmail.com", "4164164120", "Toronto");
-
         LocalDateTime bookLDT = LocalDateTime.now();
-        listing = listingFactory.create(book.getTitle(), book.getISBN(), seller.getUsername(), 50, "Excellent", bookPhoto, bookLDT);
+        listing = listingFactory.create(bookTitle, ISBN, sellerName, 50, "Excellent", bookPhoto, bookLDT);
         fileListingDAO = new FileListingDataAccessObject(listingsPath, listingFactory);
         fileListingDAO.save(listing);
     }
@@ -52,17 +45,10 @@ class FileListingDataAccessObjectTest {
     }
     @org.junit.jupiter.api.Test
     void save() {
-        String listingId = book.getISBN()
+        String listingId = ISBN;
         expectedMap.put(listingId, listing);
         actualMap = fileListingDAO.getListingInfo();
-        assertEquals(actualMap.keySet(), expectedMap.keySet());
-        assertEquals(listing.getSeller(), actualMap.get(listingId).getSeller());
-        assertEquals(listing.getBookPhoto(), actualMap.get(listingId).getBookPhoto());
-        assertEquals(listing.getCreationTime(), actualMap.get(listingId).getCreationTime());
-        assertEquals(listing.getBook(), actualMap.get(listingId).getBook());
-        assertEquals(listing.getCondition(), actualMap.get(listingId).getCondition());
-        assertEquals(listing.getPathId(), actualMap.get(listingId).getPathId());
-
+        assertEquals(actualMap, expectedMap);
     }
 
     @org.junit.jupiter.api.Test
@@ -76,6 +62,4 @@ class FileListingDataAccessObjectTest {
     @org.junit.jupiter.api.Test
     void getUserListings() {
     }
-
-
 }
