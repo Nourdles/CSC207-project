@@ -1,6 +1,6 @@
 package app;
 
-import entity.CommonUserFactory;
+import entity.AllUserFactory;
 import entity.UserFactory;
 import interface_adapter.Listings.ListingsViewModel;
 import interface_adapter.ViewManagerModel;
@@ -62,7 +62,7 @@ public class LoginUseCaseFactory {
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel,
                 loginViewModel, bookSearchViewModel, createListingViewModel, listingsViewModel);
 
-        UserFactory userFactory = new CommonUserFactory();
+        UserFactory userFactory = new AllUserFactory();
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
