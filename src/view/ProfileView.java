@@ -35,7 +35,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.listingsViewModel = listingsViewModel;
         this.listingsController = listingsController;
         viewModel.addPropertyChangeListener(this);
-        createUI();
+
         JPanel buttons = new JPanel();
         viewListing = new JButton("View Listings");
         buttons.add(viewListing);
