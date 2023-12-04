@@ -3,6 +3,7 @@ package use_case.login;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUser;
 import entity.CommonUserFactory;
+import entity.User;
 import org.junit.jupiter.api.Test;
 import use_case.login.*;
 import use_case.signup.SignupInputData;
@@ -15,7 +16,7 @@ public class loginInteractorTest {
     @Test
     void  UsernameFailTest(){
 
-        CommonUser user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
+        User user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
                 "unu@mail.com", "123455478", "Toronto");
         LoginInputData loginInputData = new LoginInputData("Unu", "Password123");
         LoginUserDataAccessInterface userRepo = new InMemoryUserDataAccessObject();
@@ -37,7 +38,7 @@ public class loginInteractorTest {
     }
     @Test
     void PasswordFailTest(){
-        CommonUser user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
+        User user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
                 "unu@mail.com", "123455478", "Toronto");
         LoginInputData loginInputData = new LoginInputData("Unu", "Password12");
         LoginUserDataAccessInterface userRepo = new InMemoryUserDataAccessObject();
