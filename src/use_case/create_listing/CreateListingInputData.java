@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDateTime;
 
-public class CreateListingInputData {
+public class  CreateListingInputData {
 
     final private CommonUser seller;
     final private Book book;

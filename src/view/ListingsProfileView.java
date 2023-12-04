@@ -100,6 +100,7 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
                     DeleteListingState state = deleteListingViewModel.getState();
                     state.setListing(selectedListing);
                     deleteListingController.execute(state.getListing());
+
                 }
             }
         });

@@ -9,8 +9,5 @@ public interface CreateListingDataAccessInterface {
     void save(Listing listing) throws IOException;
     boolean existsById(String listingId);
 
-    String delete(String listingId);
-
-    List<Listing> getUserListings(String username);
 
 }
