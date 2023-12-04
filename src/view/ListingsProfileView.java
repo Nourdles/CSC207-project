@@ -86,8 +86,8 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
             this.add(listingId);
             this.add(Box.createRigidArea(new Dimension(0, 10)));
         }
-        JScrollPane scrollPane = new JScrollPane(this);
-        this.add(scrollPane);
+        // JScrollPane scrollPane = new JScrollPane(this);
+        // panel.add(scrollPane);
         this.add(panel);
 
 
@@ -124,7 +124,7 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ListingsState state = (ListingsState) evt.getNewValue();
+        // ListingsState state = (ListingsState) evt.getNewValue();
         //listings.setText(state.getListingsString());
     }
 }

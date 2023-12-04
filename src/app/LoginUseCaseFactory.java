@@ -2,6 +2,7 @@ package app;
 
 import entity.CommonUserFactory;
 import entity.UserFactory;
+import interface_adapter.Listings.ListingsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.booksearch.BookSearchViewModel;
 import interface_adapter.create_listing.CreateListingViewModel;
@@ -31,12 +32,13 @@ public class LoginUseCaseFactory {
             BookSearchViewModel bookSearchViewModel,
             LoginUserDataAccessInterface userDataAccessObject,
             SignupViewModel signupViewModel,
-            CreateListingViewModel createListingViewModel
+            CreateListingViewModel createListingViewModel,
+            ListingsViewModel listingsViewModel
             ) {
 
         try {
             LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
-                    bookSearchViewModel, userDataAccessObject, signupViewModel, createListingViewModel);
+                    bookSearchViewModel, userDataAccessObject, signupViewModel, createListingViewModel, listingsViewModel);
             return new LoginView(loginViewModel, loginController, signupViewModel, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -52,12 +54,13 @@ public class LoginUseCaseFactory {
             BookSearchViewModel bookSearchViewModel,
             LoginUserDataAccessInterface userDataAccessObject,
             SignupViewModel signupViewmodel,
-            CreateListingViewModel createListingViewModel
+            CreateListingViewModel createListingViewModel,
+            ListingsViewModel listingsViewModel
     ) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel,
-                loginViewModel, bookSearchViewModel, createListingViewModel);
+                loginViewModel, bookSearchViewModel, createListingViewModel, listingsViewModel);
 
         UserFactory userFactory = new CommonUserFactory();
 

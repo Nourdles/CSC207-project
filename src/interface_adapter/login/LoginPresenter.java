@@ -1,5 +1,7 @@
 package interface_adapter.login;
 
+import interface_adapter.Listings.ListingsState;
+import interface_adapter.Listings.ListingsViewModel;
 import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -14,18 +16,20 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final BookSearchViewModel bookSearchViewModel;
     private final CreateListingViewModel createListingViewModel;
+    private final ListingsViewModel listingsViewModel;
 
     private ViewManagerModel viewManagerModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel,
-                          BookSearchViewModel bookSearchViewModel, CreateListingViewModel createListingViewModel) {
+                          BookSearchViewModel bookSearchViewModel, CreateListingViewModel createListingViewModel, ListingsViewModel listingsViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.bookSearchViewModel = bookSearchViewModel;
         this.createListingViewModel = createListingViewModel;
+        this.listingsViewModel = listingsViewModel;
     }
 
     @Override
@@ -35,6 +39,11 @@ public class LoginPresenter implements LoginOutputBoundary {
         createListingState.setSeller(response.getUsername());
         createListingViewModel.setState(createListingState);
         createListingViewModel.firePropertyChanged();
+
+        ListingsState listingsState = listingsViewModel.getState();
+        listingsState.setUsername(response.getUsername());
+        listingsViewModel.setState(listingsState);
+        listingsViewModel.firePropertyChanged();
 
         BookSearchState currentState = bookSearchViewModel.getState();
         // Assuming BookSearchState can store a username or other relevant information

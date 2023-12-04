@@ -12,6 +12,9 @@ import interface_adapter.book_info.BookInfoViewModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
+import interface_adapter.delete_listing.DeleteListingController;
+import interface_adapter.delete_listing.DeleteListingPresenter;
+import interface_adapter.delete_listing.DeleteListingViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.profile.ProfileController;
@@ -28,7 +31,7 @@ import use_case.create_listing.CreateListingOutputBoundary;
 
 import use_case.booksearch.*;
 import interface_adapter.booksearch.*;
-import use_case.listings.ListingsDataAccessInterface;
+import use_case.delete_listing.DeleteListingInteractor;
 import use_case.listings.ListingsInteractor;
 import use_case.searchfilter.SearchFilterInteractor;
 import view.*;
@@ -65,6 +68,8 @@ import java.io.IOException;
         BookInfoViewModel infoViewModel = new BookInfoViewModel();
         CreateListingViewModel createListingViewModel = new CreateListingViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
+        DeleteListingViewModel deleteListingViewModel = new DeleteListingViewModel();
+        ListingsViewModel listingsViewModel = new ListingsViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
 
@@ -81,26 +86,25 @@ import java.io.IOException;
             throw new RuntimeException(e);
         }
 
-
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel, createListingViewModel);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel, createListingViewModel, listingsViewModel);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        ListingsView listingsView = new ListingsView();
-        views.add(listingsView, listingsView.viewName);
-
-
-        ListingsViewModel listingsViewModel = new ListingsViewModel();
         ListingsPresenter listingsPresenter = new ListingsPresenter(viewManagerModel, listingsViewModel);
         ListingsInteractor listingsInteractor = new ListingsInteractor(fileListingDataAccessObject, listingsPresenter);
         ListingsController listingsController = new ListingsController(listingsInteractor);
 
+        DeleteListingPresenter deleteListingPresenter = new DeleteListingPresenter(viewManagerModel, deleteListingViewModel);
+        DeleteListingInteractor deleteListingInteractor = new DeleteListingInteractor(fileListingDataAccessObject, deleteListingPresenter);
+        DeleteListingController deleteListingController = new DeleteListingController(deleteListingInteractor);
 
+        ListingsProfileView listingsView = new ListingsProfileView(listingsViewModel, deleteListingController, viewManagerModel, deleteListingViewModel, profileViewModel);
+        views.add(listingsView, listingsView.viewName);
 
         ProfileController profileController = new ProfileController();
         ProfileView profileView = new ProfileView(profileController, profileViewModel, listingsViewModel, listingsController, viewManagerModel);
