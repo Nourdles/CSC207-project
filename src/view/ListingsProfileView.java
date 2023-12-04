@@ -56,7 +56,7 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
         listings = new JLabel();
 
         JPanel panel= new JPanel();
-        JComboBox<String> listingDropdown = new JComboBox<>(listingsViewModel.getState().getListings().toArray(new String[0]));
+        JComboBox<String> listingDropdown = new JComboBox<>(listingsViewModel.getState().getListingsString().toArray(new String[0]));
         panel.add(listingDropdown);
         delete = new JButton(ListingsViewModel.DELETE_BUTTON_LABEL);
         panel.add(delete);

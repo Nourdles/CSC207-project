@@ -13,10 +13,18 @@ public class ListingsState {
         username = copy.username;
     }
     public ListingsState(){}
-    public List<Listing> getListings(){
+    public List<String> getListingsString(){
         //String listing = String.join("\n", listings);
+        List<String> listingsString = new ArrayList<>();
+        for (Listing listing: listings){
+            listingsString.add(listing.getListingId());
+        }
+        return listingsString;
+    }
+    public List<Listing> getListings(){
         return listings;
     }
+
 
     public void setListings(List<Listing> listings){
         this.listings = listings;

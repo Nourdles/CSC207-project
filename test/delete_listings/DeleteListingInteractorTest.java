@@ -22,14 +22,14 @@ public class DeleteListingInteractorTest {
         CommonUser user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
                 "unu@mail.com", "1234456", "toronto");
         File photo = new File("bookPhoto.png");
-        Listing listing1 = new ListingFactory().create(book, user, 23, "Good", photo, LocalDateTime.now());
+        Listing listing1 = new ListingFactory().create("Dracula","123", "Unu", 23, "Good", photo, LocalDateTime.now());
         DeleteListingInputData inputData = new DeleteListingInputData(listing1.getListingId());
         DeleteListingDataAccessInterface listingRepo = new InMemoryListingsDAO();
         ((InMemoryListingsDAO) listingRepo).addListing(listing1);
         DeleteListingOutputBoundary successPresenter = new DeleteListingOutputBoundary() {
             @Override
             public void prepareDeleteView(DeleteListingOutputData deletedListing) {
-                assertEquals("null0", deletedListing.getDeleted_listing());
+                assertEquals("123", deletedListing.getDeleted_listing());
             }
         };
         DeleteListingInputBoundary interactor = new DeleteListingInteractor(listingRepo, successPresenter);
