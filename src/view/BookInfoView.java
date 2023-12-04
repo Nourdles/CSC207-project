@@ -25,8 +25,8 @@ import java.util.List;
 public class BookInfoView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "book info";
     private final BookInfoViewModel viewModel;
-    private final CreateListingViewModel createListingViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final CreateListingViewModel createListingViewModel;
     private final CreateListingController createListingController;
     private JButton backButton;
     private JButton createListingButton;
@@ -34,10 +34,10 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
     private JPanel subjectsPanel;
     private JPanel listingsPanel;
 
-    public BookInfoView(BookInfoViewModel viewModel, CreateListingViewModel createListingViewModel, ViewManagerModel viewManagerModel, CreateListingController createListingController) {
+    public BookInfoView(BookInfoViewModel viewModel, ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel, CreateListingController createListingController) {
         this.viewModel = viewModel;
-        this.createListingViewModel = createListingViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.createListingViewModel = createListingViewModel;
         this.createListingController = createListingController;
         viewModel.addPropertyChangeListener(this);
         viewManagerModel.addPropertyChangeListener(this);

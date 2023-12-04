@@ -3,6 +3,8 @@ package data_access;
 import entity.*;
 import use_case.book_info.BookInfoDataAccessInterface;
 import use_case.create_listing.CreateListingDataAccessInterface;
+import use_case.delete_listing.DeleteListingDataAccessInterface;
+import use_case.listings.ListingsDataAccessInterface;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -13,7 +15,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class FileListingDataAccessObject implements CreateListingDataAccessInterface, BookInfoDataAccessInterface {
+public class FileListingDataAccessObject implements CreateListingDataAccessInterface, BookInfoDataAccessInterface, DeleteListingDataAccessInterface, ListingsDataAccessInterface {
     /**
      * A Data Access Object that stores all listing information except images.
      * @param csvPath the String that represents a filepath for the file that stores Listings.

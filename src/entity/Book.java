@@ -14,11 +14,6 @@ public class Book {
     private String language;
     private ArrayList<String> subjects;
 
-    public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl,
-                String language, ArrayList<String> subjects) {
-
-    }
-
     /**
      * A book listed in the OpenLibrary database.
      * @param title
@@ -30,8 +25,7 @@ public class Book {
      * @param inStock the number of listings currently available for a unique book.
      * @param coverUrl a url associated with a particular book cover from OpenLibrary.
      */
-    public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl
-                ) {
+    public Book(String title, int year, String author, String summary, String ISBN, int inStock, String coverUrl, String language, ArrayList<String> subjects) {
         this.title = title;
         this.year = year;
         this.author = author;

@@ -111,7 +111,7 @@ import java.io.IOException;
                     createListingPresenter, listingFactory);
 
             CreateListingController createListingController = new CreateListingController(createListingInteractor);
-            BookInfoView bookInfoView = new BookInfoView(infoViewModel, createListingViewModel, viewManagerModel, createListingController);
+            BookInfoView bookInfoView = new BookInfoView(infoViewModel, viewManagerModel, createListingViewModel, createListingController);
             views.add(bookInfoView, bookInfoView.viewName);
 
             CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController, viewManagerModel);

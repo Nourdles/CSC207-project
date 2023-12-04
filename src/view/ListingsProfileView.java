@@ -76,7 +76,7 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
             JLabel picturelabel = new JLabel(icon);
             picturelabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JLabel bookname = new JLabel("Book name:" + listing.getBook().getTitle());
+            JLabel bookname = new JLabel("Book name:" + listing.getTitle());
             bookname.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             JLabel listingId = new JLabel("Listing Id:" + listing.getListingId());
