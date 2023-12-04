@@ -1,34 +1,33 @@
 package use_case.create_listing;
 
-import entity.Book;
 import entity.CommonUser;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDateTime;
 
 public class  CreateListingInputData {
 
-    final private CommonUser seller;
-    final private Book book;
+    final private String seller;
+    final private String title;
+    final private String ISBN;
     private String condition;
     private double listingPrice;
     private File bookPhoto;
     private String imgPath;
-    public CreateListingInputData(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto,
+    public CreateListingInputData(String title, String ISBN, String seller, double listingPrice, String condition, File bookPhoto,
                                   LocalDateTime ltd) {
-        this.book = book;
+        this.ISBN = ISBN;
         this.seller = seller;
         this.listingPrice = listingPrice;
         this.condition = condition;
         this.bookPhoto = bookPhoto;
+        this.title = title;
     }
 
     /*Methods to retrieve listing data: cannot edit, edit listing is another use case. */
-    Book getBook(){
-        return book;
-    }
-    CommonUser getSeller(){
+    String getTitle(){return this.title;}
+    String getBookISBN(){return this.ISBN;}
+    String getSeller(){
         return seller;
     }
     double getListingPrice(){

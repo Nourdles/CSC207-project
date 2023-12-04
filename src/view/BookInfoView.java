@@ -3,6 +3,9 @@ package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.book_info.BookInfoState;
 import interface_adapter.book_info.BookInfoViewModel;
+import interface_adapter.create_listing.CreateListingController;
+import interface_adapter.create_listing.CreateListingState;
+import interface_adapter.create_listing.CreateListingViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,16 +25,20 @@ import java.util.List;
 public class BookInfoView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "book info";
     private final BookInfoViewModel viewModel;
+    private final CreateListingViewModel createListingViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final CreateListingController createListingController;
     private JButton backButton;
     private JButton createListingButton;
     private JLabel titleLabel, isbnLabel, authorLabel, yearLabel, languageLabel, coverLabel;
     private JPanel subjectsPanel;
     private JPanel listingsPanel;
 
-    public BookInfoView(BookInfoViewModel viewModel, ViewManagerModel viewManagerModel) {
+    public BookInfoView(BookInfoViewModel viewModel, CreateListingViewModel createListingViewModel, ViewManagerModel viewManagerModel, CreateListingController createListingController) {
         this.viewModel = viewModel;
+        this.createListingViewModel = createListingViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.createListingController = createListingController;
         viewModel.addPropertyChangeListener(this);
         viewManagerModel.addPropertyChangeListener(this);
         createUI();
@@ -119,13 +126,24 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    private void openCreateListingView() {
+        BookInfoState bookInfoState = viewModel.getState();
+        CreateListingState createListingState = createListingViewModel.getState();
+        createListingState.setBookISBN(bookInfoState.getISBN());
+        createListingState.setTitle(bookInfoState.getTitle());
+        createListingViewModel.setState(createListingState);
+
+        viewManagerModel.setActiveView("create listing");
+        viewManagerModel.firePropertyChanged();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             viewManagerModel.setActiveView("book search");
             viewManagerModel.firePropertyChanged();
         } else if (e.getSource() == createListingButton) {
-
+            openCreateListingView();
         }
     }
 
