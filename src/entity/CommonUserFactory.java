@@ -2,15 +2,15 @@ package entity;
 
 import java.time.LocalDateTime;
 
-public class AllUserFactory implements UserFactory {
-        /**
+public class CommonUserFactory implements UserFactory {
+        /** A factory to create a Commonuser.
          * Requires: password is valid.
          * @param username
          * @param password
          * @param email
          * @param phoneNumber
          * @param city
-         * @return
+         * @return a new CommonUser
          */
 
     /*Creating a CommonUser.  */
