@@ -2,7 +2,6 @@ package use_case.book_info;
 
 
 import entity.Listing;
-import entity.CommonUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ public class BookInfoInteractor implements BookInfoInputBoundary{
         this.bookInfoDataAccessInterface = bookInfoDataAccessInterface;
     }
 
-
     @Override
     public void showBookDetails(BookInfoInputData inputData) {
         try {
@@ -25,12 +23,12 @@ public class BookInfoInteractor implements BookInfoInputBoundary{
 
             for (Listing listing : listings) {
                 List<String> listingDetails = new ArrayList<>();
-                listingDetails.add(listing.getSeller());
+                listingDetails.add(listing.getSeller().getUsername());
                 listingDetails.add(String.valueOf(listing.getPrice()));
                 listingDetails.add(listing.getCondition());
-                listingDetails.add(bookInfoDataAccessInterface.findUserByUsername(listing.getSeller()).getCity());
-                listingDetails.add(bookInfoDataAccessInterface.findUserByUsername(listing.getSeller()).getEmail());
-                listingDetails.add(bookInfoDataAccessInterface.findUserByUsername(listing.getSeller()).getPhoneNumber());
+                listingDetails.add(listing.getSeller().getCity());
+                listingDetails.add(listing.getSeller().getEmail());
+                listingDetails.add(listing.getSeller().getPhoneNumber());
                 listingsInfo.add(listingDetails);
             }
 

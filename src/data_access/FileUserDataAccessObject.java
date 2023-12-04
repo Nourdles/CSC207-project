@@ -1,6 +1,5 @@
 package data_access;
 
-import entity.CommonUser;
 import entity.User;
 import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
@@ -113,15 +112,6 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
-    public CommonUser findUserByUsername(String username) {
-        User user = accounts.get(username);
-        if (user instanceof CommonUser) {
-            return (CommonUser) user;
-        } else {
-            return null;
-        }
-    }
-
 
     public boolean passwordMeetsReq(String password) {
         if (password.length() < 6){
@@ -158,37 +148,5 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         // Return true if the email matches the pattern, otherwise false
         return matcher.matches();
 
-    }
-
-    public void updatePhoneNumber(String username, String newPhoneNumber) {
-        User user = accounts.get(username);
-        if (user != null) {
-            user.setPhoneNumber(newPhoneNumber);
-            save();
-        }
-    }
-
-    public void updateCity(String username, String newCity) {
-        User user = accounts.get(username);
-        if (user != null) {
-            user.setCity(newCity);
-            save();
-        }
-    }
-
-    public void updateEmail(String username, String newEmail) {
-        User user = accounts.get(username);
-        if (user != null) {
-            user.setEmail(newEmail);
-            save();
-        }
-    }
-
-    public void updatePassword(String username, String newPassword) {
-        User user = accounts.get(username);
-        if (user != null) {
-            user.setPassword(newPassword);
-            save();
-        }
     }
 }

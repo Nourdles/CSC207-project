@@ -4,30 +4,28 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDateTime;
 public class Listing {
-    private final String ISBN;
-    private final String title;
+    private final Book book;
     private final LocalDateTime creationTime;
     private final String listingId;
     private File bookPhoto;
     private double listingPrice;
     private String condition;
-    private final String seller;
+    private final CommonUser seller;
     private String pathId;
 
     /** A seller's listing of a book.
      * Requires: book must be in the OpenLibraryDatabase
      * Users may upload up to one photo per listing.
      */
-    Listing(String ISBN, String title, String seller, double listingPrice, String condition, File bookPhoto, LocalDateTime creationTime) {
-        this.ISBN = ISBN;
-        this.title = title;
+    Listing(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto, LocalDateTime creationTime) {
+        this.book = book;
         this.seller = seller;
         this.creationTime = creationTime;
         this.listingPrice = listingPrice;
         this.condition = condition;
         this.bookPhoto = bookPhoto;
-        this.listingId = String.valueOf(this.ISBN); // + String.valueOf(book.getEverInStock());
-        this.pathId = seller + "/" + this.ISBN + ".png";
+        this.listingId = String.valueOf(book.getISBN()) + String.valueOf(book.getEverInStock());
+        this.pathId = seller.getUsername() + "/" + book.getISBN() + ".png";
     }
     public double getPrice(){
         return listingPrice;
@@ -45,14 +43,10 @@ public class Listing {
     public String getListingId(){
         return listingId;
     }
-
-    public String getISBN() {return ISBN;}
-
-    public String getTitle() {return title;}
-
+    public Book getBook(){ return book; }
     public File getBookPhoto() {return bookPhoto;}
     public void setBookPhoto(File bookPhoto) {this.bookPhoto = bookPhoto;}
-    public String getSeller() {return seller;}
+    public CommonUser getSeller() {return seller; }
     public LocalDateTime getCreationTime() {return creationTime; }
 }
 
