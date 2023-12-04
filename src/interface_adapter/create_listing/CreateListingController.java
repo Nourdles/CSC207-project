@@ -1,5 +1,6 @@
 package interface_adapter.create_listing;
 
+import entity.Book;
 import entity.CommonUser;
 import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInputData;
@@ -14,9 +15,9 @@ public class CreateListingController {
     public CreateListingController(CreateListingInputBoundary createListingInteractor) {
         this.createListingInteractor = createListingInteractor;
     }
-    public void execute(String title, String ISBN, String seller, double listingPrice, String condition, File bookPhoto, LocalDateTime ltd) throws IOException {
+    public void execute(Book book, CommonUser seller, double listingPrice, String condition, File bookPhoto, LocalDateTime ltd) throws IOException {
         CreateListingInputData createListingInputData = new CreateListingInputData(
-                title, ISBN, seller, listingPrice, condition, bookPhoto, ltd);
+                book, seller, listingPrice, condition, bookPhoto, ltd);
         createListingInteractor.execute(createListingInputData);
     }
 }

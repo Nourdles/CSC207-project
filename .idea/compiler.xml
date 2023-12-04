@@ -4,5 +4,17 @@
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/pom.xml/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+      <entry name="!*.java" />
+    </wildcardResourcePatterns>
   </component>
 </project>

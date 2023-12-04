@@ -56,14 +56,4 @@ public class AdminUser implements User {
         this.email = email;
     }
 
-    @Override
-    public void setPhoneNumber(String phoneNumber) {
-
-    }
-
-    @Override
-    public void setCity(String city) {
-
-    }
-
 }
