@@ -1,8 +1,5 @@
 package interface_adapter.create_listing;
 
-import entity.Book;
-import entity.CommonUser;
-
 import java.io.File;
 
 public class CreateListingState {
