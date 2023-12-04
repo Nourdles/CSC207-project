@@ -73,7 +73,7 @@ import java.io.IOException;
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel, createListingViewModel);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
@@ -98,14 +98,11 @@ import java.io.IOException;
         SearchFilterController searchFilterController = new SearchFilterController(filterInteractor);
         BookInfoController bookInfoController = new BookInfoController(infoInteractor);
 
-        BookInfoView bookInfoView = new BookInfoView(infoViewModel, viewManagerModel);
-        views.add(bookInfoView, bookInfoView.viewName);
-
         BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController, bookInfoController);
         views.add(bookSearchView, bookSearchView.viewName);
 
 
-        CreateListingOutputBoundary createListingPresenter = new CreateListingPresenter(viewManagerModel, createListingViewModel);
+        CreateListingOutputBoundary createListingPresenter = new CreateListingPresenter(viewManagerModel, createListingViewModel, infoViewModel);
         ListingFactory listingFactory = new ListingFactory();
 
         try {
@@ -114,8 +111,11 @@ import java.io.IOException;
                     createListingPresenter, listingFactory);
 
             CreateListingController createListingController = new CreateListingController(createListingInteractor);
+            BookInfoView bookInfoView = new BookInfoView(infoViewModel, createListingViewModel, viewManagerModel, createListingController);
+            views.add(bookInfoView, bookInfoView.viewName);
 
-            CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController);
+            CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController, viewManagerModel);
+            views.add(createListingView, createListingView.viewName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

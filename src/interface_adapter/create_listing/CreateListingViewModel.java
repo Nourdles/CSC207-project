@@ -16,7 +16,10 @@ public class CreateListingViewModel extends ViewModel {
     public static final String CREATE_LISTING_LABEL = "Create Listing";
     private CreateListingState state;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    public CreateListingViewModel(){super("Create Listing");}
+    public CreateListingViewModel(){
+        super("Create Listing");
+        this.state = new CreateListingState();
+    }
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }

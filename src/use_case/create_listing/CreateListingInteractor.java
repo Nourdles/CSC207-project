@@ -22,7 +22,7 @@ public class CreateListingInteractor implements CreateListingInputBoundary{
     }
     @Override
     public void execute(CreateListingInputData createListingInputData) throws IOException {
-        Listing listing = listingFactory.create(createListingInputData.getBook(), createListingInputData.getSeller(),
+        Listing listing = listingFactory.create(createListingInputData.getTitle(), createListingInputData.getBookISBN(), createListingInputData.getSeller(),
                 createListingInputData.getListingPrice(), createListingInputData.getCondition(),
                 createListingInputData.getBookPhoto(), createListingInputData.getCreationTime());
         listingDataAccessObject.save(listing);
