@@ -1,7 +1,7 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
-import entity.AllUserFactory;
+import entity.CommonUserFactory;
 import entity.ListingFactory;
 import interface_adapter.Listings.ListingsController;
 import interface_adapter.Listings.ListingsPresenter;
@@ -74,7 +74,7 @@ import java.io.IOException;
         FileUserDataAccessObject userDataAccessObject;
 
         try {
-            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new AllUserFactory());
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
