@@ -56,9 +56,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     }
 
-    private void createUI() {
 
-    }
 
 
     @Override
