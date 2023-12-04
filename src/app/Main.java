@@ -125,7 +125,6 @@ import java.io.IOException;
 
         application.pack();
         application.setVisible(true);
-
     }
 
 }
