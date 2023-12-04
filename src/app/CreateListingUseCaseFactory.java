@@ -1,25 +1,17 @@
 package app;
 
-import entity.CommonUserFactory;
 import entity.ListingFactory;
-import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginPresenter;
-import interface_adapter.signup.SignupController;
+import interface_adapter.book_info.*;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.create_listing.CreateListingInputBoundary;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInteractor;
-import use_case.login.LoginOutputBoundary;
 import view.CreateListingView;
 //import view.ListingsView;
-import view.SignupView;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -39,12 +31,12 @@ public class CreateListingUseCaseFactory {
      * @return A View of a User's listings after a user has attempted to create a listing.
      */
     public static CreateListingView create(ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel,
-                                           CreateListingDataAccessInterface fileListingDataAccessObject){
+                                           CreateListingDataAccessInterface fileListingDataAccessObject, BookInfoViewModel bookInfoViewModel){
         try {
             CreateListingController createListingController = createCreateListingUseCase(viewManagerModel,
-                    createListingViewModel, fileListingDataAccessObject);
+                    createListingViewModel, bookInfoViewModel, fileListingDataAccessObject);
 
-            return new CreateListingView(createListingViewModel, createListingController);
+            return new CreateListingView(createListingViewModel, createListingController, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open listings data file.");
         }
@@ -53,8 +45,9 @@ public class CreateListingUseCaseFactory {
 
     private static CreateListingController createCreateListingUseCase(ViewManagerModel viewManagerModel,
                                                                       CreateListingViewModel createListingViewModel,
+                                                                      BookInfoViewModel bookInfoViewModel,
                                                                       CreateListingDataAccessInterface fileListingDataAccessObject) throws IOException {
-        CreateListingOutputBoundary createListingOutputBoundary = new CreateListingPresenter(viewManagerModel, createListingViewModel);
+        CreateListingOutputBoundary createListingOutputBoundary = new CreateListingPresenter(viewManagerModel, createListingViewModel, bookInfoViewModel);
 
         ListingFactory listingFactory = new ListingFactory();
 

@@ -2,9 +2,10 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
-import entity.Listing;
 import entity.ListingFactory;
-import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.book_info.BookInfoController;
+import interface_adapter.book_info.BookInfoPresenter;
+import interface_adapter.book_info.BookInfoViewModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingPresenter;
 import interface_adapter.create_listing.CreateListingViewModel;
@@ -14,10 +15,11 @@ import interface_adapter.searchfilter.SearchFilterController;
 import interface_adapter.searchfilter.SearchFilterPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.book_info.BookInfoDataAccessInterface;
+import use_case.book_info.BookInfoInteractor;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
-import use_case.login.LoginUserDataAccessInterface;
 
 import use_case.booksearch.*;
 import interface_adapter.booksearch.*;
@@ -53,8 +55,8 @@ import java.io.IOException;
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         BookSearchViewModel bookSearchViewModel = new BookSearchViewModel();
+        BookInfoViewModel infoViewModel = new BookInfoViewModel();
         CreateListingViewModel createListingViewModel = new CreateListingViewModel();
-        ListingsViewModel listingsViewModel = new ListingsViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
 
@@ -71,8 +73,7 @@ import java.io.IOException;
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel,
-                listingsViewModel);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, bookSearchViewModel, userDataAccessObject, signupViewModel, createListingViewModel);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
@@ -83,19 +84,25 @@ import java.io.IOException;
         BookSearchPresenter presenter = new BookSearchPresenter(bookSearchViewModel);
         BookSearchDataAccessInterface realDataAccess = new OpenLibraryDB();
 
+        BookInfoPresenter infoPresenter = new BookInfoPresenter(infoViewModel, viewManagerModel);
+
         // Initialize the interactor (use case) with the real data access and presenter
         BookSearchInteractor interactor = new BookSearchInteractor(realDataAccess, presenter);
         SearchFilterInteractor filterInteractor = new SearchFilterInteractor(filterPresenter);
 
+        BookInfoDataAccessInterface bookInfoDataAccessInterface = new FileListingDataAccessObject("./listingInfo.csv", new ListingFactory());
+        BookInfoInteractor infoInteractor = new BookInfoInteractor(infoPresenter, bookInfoDataAccessInterface);
+
         // Initialize the controller with the interactor
         BookSearchController bookSearchController = new BookSearchController(interactor);
         SearchFilterController searchFilterController = new SearchFilterController(filterInteractor);
+        BookInfoController bookInfoController = new BookInfoController(infoInteractor);
 
-        BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController);
+        BookSearchView bookSearchView = new BookSearchView(bookSearchController, bookSearchViewModel, searchFilterController, bookInfoController);
         views.add(bookSearchView, bookSearchView.viewName);
 
 
-        CreateListingOutputBoundary createListingPresenter = new CreateListingPresenter(viewManagerModel, createListingViewModel);
+        CreateListingOutputBoundary createListingPresenter = new CreateListingPresenter(viewManagerModel, createListingViewModel, infoViewModel);
         ListingFactory listingFactory = new ListingFactory();
 
         try {
@@ -104,8 +111,11 @@ import java.io.IOException;
                     createListingPresenter, listingFactory);
 
             CreateListingController createListingController = new CreateListingController(createListingInteractor);
+            BookInfoView bookInfoView = new BookInfoView(infoViewModel, createListingViewModel, viewManagerModel, createListingController);
+            views.add(bookInfoView, bookInfoView.viewName);
 
-            CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController);
+            CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController, viewManagerModel);
+            views.add(createListingView, createListingView.viewName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -115,7 +125,6 @@ import java.io.IOException;
 
         application.pack();
         application.setVisible(true);
-
     }
 
 }

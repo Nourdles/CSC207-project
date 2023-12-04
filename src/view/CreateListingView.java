@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
@@ -7,10 +8,7 @@ import interface_adapter.create_listing.CreateListingViewModel;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -22,106 +20,147 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
     /**
      * The View allowing sellers to input listing information to create a book.
      */
-
     public final String viewName = "create listing";
     final JButton upload;
     final JButton createListing;
+    private JButton cancelButton;
     private final CreateListingViewModel createListingViewModel;
     private final CreateListingController createListingController;
+    private final ViewManagerModel viewManagerModel;
     private final DecimalFormat listingPriceFormat = new DecimalFormat("##,###.00");
-    private final JFormattedTextField listingPriceInputField = new JFormattedTextField(listingPriceFormat);
+    private final JTextField listingPriceInputField = new JTextField(10);
     private final JFileChooser bookPhotoChooser = new JFileChooser();
     private final String[] options = new String[]{"New", "Excellent", "Good", "Ok", "Poor"};
     private final String selectedCondition = "New";
     private final JComboBox<String> conditionDropdown = new JComboBox<String>(options);
     private File image;
     public CreateListingView(CreateListingViewModel createListingViewModel,
-                             CreateListingController createListingController){
+                             CreateListingController createListingController, ViewManagerModel viewManagerModel){
         this.createListingViewModel = createListingViewModel;
         this.createListingController = createListingController;
+        this.viewManagerModel = viewManagerModel;
         this.createListingViewModel.addPropertyChangeListener(this);
 
+        this.setLayout(new BorderLayout());
+        Color Brown = new Color(217, 196, 152);
+        Color lightBrown = new Color(245, 229, 196);
+        Color whiteBrown = new Color(224, 218, 213);
+
         JLabel title = new JLabel(CreateListingViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setHorizontalAlignment(JLabel.CENTER);
+        title.setBackground(lightBrown);
+        this.add(title, BorderLayout.NORTH);
 
-        LabelTextPanel listingPrice = new LabelTextPanel(
-                new JLabel(CreateListingViewModel.LISTING_PRICE_LABEL), listingPriceInputField);
+        JPanel centerPanel = new JPanel();
+        centerPanel.setBackground(lightBrown);
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        JPanel priceInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // JLabel priceLabel = new JLabel(CreateListingViewModel.LISTING_PRICE_LABEL);
 
-        JPanel createListingPanel = new JPanel();
+        LabelTextPanel priceLabel = new LabelTextPanel(new JLabel("Price (CAD):"), listingPriceInputField);
+        priceInputPanel.add(priceLabel);
+        priceLabel.setBackground(lightBrown);
+        priceInputPanel.setBackground(lightBrown);
+        listingPriceInputField.setBackground(whiteBrown);
+
+        priceInputPanel.add(listingPriceInputField);
+        centerPanel.add(priceInputPanel);
+
+        JPanel uploadPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        uploadPanel.setBackground(lightBrown);
         upload = new JButton(CreateListingViewModel.UPLOAD_BUTTON_LABEL);
+        upload.setBackground(Brown);
+        uploadPanel.add(upload);
+        centerPanel.add(uploadPanel);
+
+        JPanel conditionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        conditionPanel.setBackground(lightBrown);
+        JLabel conditionLabel = new JLabel("Condition:");
+        conditionPanel.add(conditionLabel);
+        conditionPanel.add(conditionDropdown);
+        conditionDropdown.setBackground(Brown);
+        centerPanel.add(conditionPanel);
+
+        this.add(centerPanel, BorderLayout.CENTER);
+
         createListing = new JButton(CreateListingViewModel.CREATE_LISTING_LABEL);
-        createListingPanel.add(upload);
-        createListingPanel.add(createListing);
-        createListingPanel.add(conditionDropdown);
-        final File[] image = {null};
-        Label createListingFail = new Label("");
+        cancelButton = new JButton("Cancel");
+        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        southPanel.setBackground(lightBrown);
+        cancelButton.setBackground(Brown);
+        createListing.setBackground(Brown);
+        southPanel.add(createListing);
+        southPanel.add(cancelButton);
+        this.add(southPanel, BorderLayout.SOUTH);
+
+        conditionDropdown.addActionListener(this);
+        createListing.addActionListener(this);
+        cancelButton.addActionListener(this);
 
         upload.addActionListener(
             // This creates an anonymous subclass of ActionListener and instantiates it.
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(upload)) {
-                        bookPhotoChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-                        FileNameExtensionFilter filter = new FileNameExtensionFilter("png");
-                            bookPhotoChooser.setFileFilter(filter);
-                        image[0] = bookPhotoChooser.getSelectedFile();
+                        bookPhotoChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG Images", "png");
+                        bookPhotoChooser.setFileFilter(filter);
+                        int returnVal = bookPhotoChooser.showOpenDialog(CreateListingView.this);
+                        if (returnVal == JFileChooser.APPROVE_OPTION) {
+                            image = bookPhotoChooser.getSelectedFile(); // Directly use 'image' field
+                            // Update the state with the selected image
+                            CreateListingState currentState = createListingViewModel.getState();
+                            currentState.setBookPhoto(image);
+                            createListingViewModel.setState(currentState);
+                        }
                     }
                 }
             }
         );
 
-        createListing.addActionListener(
-            // This creates an anonymous subclass of ActionListener and instantiates it.
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(createListing)) {
-                        LocalDateTime ltd = LocalDateTime.now();
-                        CreateListingState currentState = createListingViewModel.getState();
-                        try {
-                            createListingController.execute(currentState.getBook(), currentState.getSeller(),
-                                    currentState.getListingPrice(), currentState.getCondition(),
-                                    currentState.getBookPhoto(), ltd);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    }
+        listingPriceInputField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                try {
+                    double price = Double.parseDouble(listingPriceInputField.getText());
+                    CreateListingState currentState = createListingViewModel.getState();
+                    currentState.setListingPrice(price);
+                    createListingViewModel.setState(currentState);
+                } catch (NumberFormatException ex) {
+                    // Handle invalid input, maybe reset to previous valid value or show a warning
                 }
-        );
-
-        conditionDropdown.addActionListener(
-            // This creates an anonymous subclass of ActionListener and instantiates it.
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(conditionDropdown)) {
-                        String selectedCondition = (String)conditionDropdown.getSelectedItem();
-                        }
-                    }
-                }
-        );
-        listingPriceInputField.addKeyListener(
-                new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        CreateListingState currentState = createListingViewModel.getState();
-                        String text = listingPriceInputField.getText() + e.getKeyChar();
-                        currentState.setListingPrice(Double.parseDouble(text));
-                        createListingViewModel.setState(currentState);
-                    }
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                    }
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                    }
-            });
+            }
+        });
     }
 
     /**
      * Empty class for now
      * @param evt the event to be processed
      */
+    @Override
     public void actionPerformed(ActionEvent evt) {
+        if (evt.getSource().equals(createListing)) {
+            LocalDateTime ltd = LocalDateTime.now();
+            CreateListingState currentState = createListingViewModel.getState();
+            try {
+                createListingController.execute(currentState.getTitle(), currentState.getBookISBN(), currentState.getSeller(),
+                        currentState.getListingPrice(), currentState.getCondition(),
+                        currentState.getBookPhoto(), ltd);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (evt.getSource().equals(conditionDropdown)) {
+            // String selectedCondition = (String)conditionDropdown.getSelectedItem();
+            JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+            String selectedCondition = (String) cb.getSelectedItem();
+            // Update the state with the selected condition
+            CreateListingState currentState = createListingViewModel.getState();
+            currentState.setCondition(selectedCondition);
+            createListingViewModel.setState(currentState);
+        } else if (evt.getSource().equals(cancelButton)){
+            CreateListingView.this.viewManagerModel.setActiveView("book info");
+            CreateListingView.this.viewManagerModel.firePropertyChanged();
+        }
     }
         @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -129,6 +168,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
         setFields(state);
     }
     private void setFields(CreateListingState state) {
-        listingPriceInputField.setText(String.valueOf(state.getListingPrice()));
+        String formattedPrice = listingPriceFormat.format(state.getListingPrice());
+        listingPriceInputField.setText(formattedPrice);
     }
 }
