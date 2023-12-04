@@ -1,6 +1,8 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.book_info.BookInfoController;
+import interface_adapter.book_info.BookInfoViewModel;
 import interface_adapter.create_listing.CreateListingController;
 import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
@@ -27,6 +29,8 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
     private final CreateListingViewModel createListingViewModel;
     private final CreateListingController createListingController;
     private final ViewManagerModel viewManagerModel;
+    private final BookInfoController bookInfoController;
+    private final BookInfoViewModel bookInfoViewModel;
     private final DecimalFormat listingPriceFormat = new DecimalFormat("##,###.00");
     private final JTextField listingPriceInputField = new JTextField(10);
     private final JFileChooser bookPhotoChooser = new JFileChooser();
@@ -35,10 +39,12 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
     private final JComboBox<String> conditionDropdown = new JComboBox<String>(options);
     private File image;
     public CreateListingView(CreateListingViewModel createListingViewModel,
-                             CreateListingController createListingController, ViewManagerModel viewManagerModel){
+                             CreateListingController createListingController, ViewManagerModel viewManagerModel, BookInfoController bookInfoController, BookInfoViewModel bookInfoViewModel){
         this.createListingViewModel = createListingViewModel;
         this.createListingController = createListingController;
         this.viewManagerModel = viewManagerModel;
+        this.bookInfoController = bookInfoController;
+        this.bookInfoViewModel = bookInfoViewModel;
         this.createListingViewModel.addPropertyChangeListener(this);
 
         this.setLayout(new BorderLayout());
@@ -146,6 +152,16 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                 createListingController.execute(currentState.getTitle(), currentState.getBookISBN(), currentState.getSeller(),
                         currentState.getListingPrice(), currentState.getCondition(),
                         currentState.getBookPhoto(), ltd);
+
+                bookInfoController.onBookSelected(bookInfoViewModel.getState().getTitle(),
+                        bookInfoViewModel.getState().getYear(),
+                        bookInfoViewModel.getState().getAuthor(),
+                        bookInfoViewModel.getState().getISBN(),
+                        bookInfoViewModel.getState().getCoverURL(),
+                        bookInfoViewModel.getState().getLanguage(),
+                        bookInfoViewModel.getState().getSubjects()
+
+                );
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

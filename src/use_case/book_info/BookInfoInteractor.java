@@ -2,7 +2,6 @@ package use_case.book_info;
 
 
 import entity.Listing;
-import entity.CommonUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,8 @@ public class BookInfoInteractor implements BookInfoInputBoundary{
     final BookInfoOutputBoundary bookInfoOutputPresenter;
     final BookInfoDataAccessInterface bookInfoDataAccessInterface;
 
-    public BookInfoInteractor(BookInfoOutputBoundary bookInfoOuputPresenter, BookInfoDataAccessInterface bookInfoDataAccessInterface) {
-        this.bookInfoOutputPresenter = bookInfoOuputPresenter;
+    public BookInfoInteractor(BookInfoOutputBoundary bookInfoOutputPresenter, BookInfoDataAccessInterface bookInfoDataAccessInterface) {
+        this.bookInfoOutputPresenter = bookInfoOutputPresenter;
         this.bookInfoDataAccessInterface = bookInfoDataAccessInterface;
     }
 
@@ -28,9 +27,9 @@ public class BookInfoInteractor implements BookInfoInputBoundary{
                 listingDetails.add(listing.getSeller());
                 listingDetails.add(String.valueOf(listing.getPrice()));
                 listingDetails.add(listing.getCondition());
-                listingDetails.add(bookInfoDataAccessInterface.findUserByUsername(listing.getSeller()).getCity());
-                listingDetails.add(bookInfoDataAccessInterface.findUserByUsername(listing.getSeller()).getEmail());
-                listingDetails.add(bookInfoDataAccessInterface.findUserByUsername(listing.getSeller()).getPhoneNumber());
+                listingDetails.add(bookInfoDataAccessInterface.findCity(listing.getSeller()));
+                listingDetails.add(bookInfoDataAccessInterface.findEmail(listing.getSeller()));
+                listingDetails.add(bookInfoDataAccessInterface.findPhoneNumber(listing.getSeller()));
                 listingsInfo.add(listingDetails);
             }
 

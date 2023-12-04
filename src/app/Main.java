@@ -145,7 +145,7 @@ import java.io.IOException;
             BookInfoView bookInfoView = new BookInfoView(infoViewModel, viewManagerModel, createListingViewModel, createListingController);
             views.add(bookInfoView, bookInfoView.viewName);
 
-            CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController, viewManagerModel);
+            CreateListingView createListingView = new CreateListingView(createListingViewModel, createListingController, viewManagerModel, bookInfoController, infoViewModel);
             views.add(createListingView, createListingView.viewName);
         } catch (IOException e) {
             throw new RuntimeException(e);

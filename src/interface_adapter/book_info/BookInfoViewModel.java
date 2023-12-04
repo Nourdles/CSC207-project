@@ -6,6 +6,7 @@ import interface_adapter.booksearch.BookSearchState;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookInfoViewModel extends ViewModel {
     public static final String viewName = "book info";
@@ -20,7 +21,7 @@ public class BookInfoViewModel extends ViewModel {
         firePropertyChanged();
     }
 
-    public void updateBookInfo(String title, int year, String author, String ISBN, String coverURL, String language, ArrayList<String> subjects) {
+    public void updateBookInfo(String title, int year, String author, String ISBN, String coverURL, String language, ArrayList<String> subjects, List<List<String>> listingsInfo) {
         state.setTitle(title);
         state.setYear(year);
         state.setAuthor(author);
@@ -28,6 +29,7 @@ public class BookInfoViewModel extends ViewModel {
         state.setCoverURL(coverURL);
         state.setLanguage(language);
         state.setSubjects(subjects);
+        state.setListingsInfo(listingsInfo);
         state.setErrorMessage(null);
         firePropertyChanged();
     }

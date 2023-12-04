@@ -31,12 +31,12 @@ public class CreateListingUseCaseFactory {
      * @return A View of a User's listings after a user has attempted to create a listing.
      */
     public static CreateListingView create(ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel,
-                                           CreateListingDataAccessInterface fileListingDataAccessObject, BookInfoViewModel bookInfoViewModel){
+                                           CreateListingDataAccessInterface fileListingDataAccessObject, BookInfoViewModel bookInfoViewModel, BookInfoController bookInfoController){
         try {
             CreateListingController createListingController = createCreateListingUseCase(viewManagerModel,
                     createListingViewModel, bookInfoViewModel, fileListingDataAccessObject);
 
-            return new CreateListingView(createListingViewModel, createListingController, viewManagerModel);
+            return new CreateListingView(createListingViewModel, createListingController, viewManagerModel, bookInfoController, bookInfoViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open listings data file.");
         }

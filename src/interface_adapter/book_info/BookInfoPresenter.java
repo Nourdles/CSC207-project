@@ -24,7 +24,8 @@ public class BookInfoPresenter implements BookInfoOutputBoundary {
                     outputData.getISBN(),
                     outputData.getCoverURL(),
                     outputData.getLanguage(),
-                    outputData.getSubjects()
+                    outputData.getSubjects(),
+                    outputData.getListingsDetails()
             );
 
             this.viewManagerModel.setActiveView(viewModel.getViewName());

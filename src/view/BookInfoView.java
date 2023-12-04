@@ -212,6 +212,8 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
 
                 gbc.gridy++;
                 JButton contactButton = new JButton("Contact");
+                Color Brown = new Color(217, 196, 152);
+                contactButton.setBackground(Brown);
                 String contactInfo = "Email: " + listing.get(4) + "\nPhone: " + listing.get(5);
                 contactButton.addActionListener(e -> JOptionPane.showMessageDialog(this, contactInfo, "Contact Info", JOptionPane.INFORMATION_MESSAGE));
                 listingsPanel.add(contactButton, gbc);

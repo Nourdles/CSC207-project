@@ -218,7 +218,17 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     }
 
     @Override
-    public CommonUser findUserByUsername(String username) {
+    public String findCity(String username) {
+        return null;
+    }
+
+    @Override
+    public String findEmail(String username) {
+        return null;
+    }
+
+    @Override
+    public String findPhoneNumber(String username) {
         return null;
     }
 }

@@ -1,8 +1,10 @@
 package data_access;
 
 import entity.CommonUser;
+import entity.Listing;
 import entity.User;
 import entity.UserFactory;
+import use_case.book_info.BookInfoDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
@@ -10,10 +12,11 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.*;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, BookInfoDataAccessInterface {
 
     private final File csvFile;
 
@@ -113,6 +116,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
+    @Override
+    public List<Listing> getBookListings(String ISBN) {
+        return null;
+    }
+
     public CommonUser findUserByUsername(String username) {
         User user = accounts.get(username);
         if (user instanceof CommonUser) {
@@ -122,6 +130,23 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
+    @Override
+    public String findCity(String username) {
+        User user = accounts.get(username);
+        return (user != null) ? user.getCity() : null;
+    }
+
+    @Override
+    public String findEmail(String username) {
+        User user = accounts.get(username);
+        return (user != null) ? user.getEmail() : null;
+    }
+
+    @Override
+    public String findPhoneNumber(String username) {
+        User user = accounts.get(username);
+        return (user != null) ? user.getPhoneNumber() : null;
+    }
 
     public boolean passwordMeetsReq(String password) {
         if (password.length() < 6){
