@@ -33,38 +33,50 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.viewManagerModel = viewManagerModel;
         this.listingsViewModel = listingsViewModel;
         this.listingsController = listingsController;
+        //this.viewManagerModel.addPropertyChangeListener(this);
         viewModel.addPropertyChangeListener(this);
+        listingsViewModel.addPropertyChangeListener(this);
 
         this.setLayout(new BorderLayout());
+        JPanel centerPanel = new JPanel();
 
-        viewListing = new JButton("View Listings");
+
+        viewListing = new JButton("View listings");
         Color Brown = new Color(217, 196, 152);
         viewListing.setBackground(Brown);
-        viewListing.addActionListener(new ActionListener() {
-            @Override
+        centerPanel.add(viewListing);
+
+        viewListing.addActionListener(
+                new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(viewListing)) {
-                    ListingsState state = listingsViewModel.getState();
-                    listingsController.execute(state.getUsername());
+//                    ListingsState state = listingsViewModel.getState();
+//                    listingsController.execute(state.getUsername());
+                    viewManagerModel.setActiveView(listingsViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
                 }
             }
         });
 
-        JPanel centerPanel = new JPanel();
-        centerPanel.add(viewListing);
+
 
         this.add(centerPanel, BorderLayout.CENTER);
 
     }
 
 
-    @Override
+
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(viewListing)){
+        viewManagerModel.setActiveView(listingsViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();}
 
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
 
     }
 }

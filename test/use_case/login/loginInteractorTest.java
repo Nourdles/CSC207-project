@@ -2,6 +2,7 @@ package use_case.login;
 
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUser;
+import entity.User;
 import entity.CommonUserFactory;
 import org.junit.jupiter.api.Test;
 import use_case.login.*;
@@ -15,11 +16,11 @@ public class loginInteractorTest {
     @Test
     void  UsernameFailTest(){
 
-        CommonUser user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
-                "unu@mail.com", "123455478", "Toronto");
+        CommonUser user = (CommonUser) new CommonUserFactory().create("Un", "Password123", LocalDateTime.now(),
+                "unumail", "69", "to");
         LoginInputData loginInputData = new LoginInputData("Unu", "Password123");
         LoginUserDataAccessInterface userRepo = new InMemoryUserDataAccessObject();
-        //userRepo.save(user);
+        userRepo.save(user);
 
         LoginOutputBoundary failPresenter = new LoginOutputBoundary() {
             @Override
@@ -37,11 +38,11 @@ public class loginInteractorTest {
     }
     @Test
     void PasswordFailTest(){
-        CommonUser user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
+        CommonUser user = (CommonUser) new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
                 "unu@mail.com", "123455478", "Toronto");
         LoginInputData loginInputData = new LoginInputData("Unu", "Password12");
         LoginUserDataAccessInterface userRepo = new InMemoryUserDataAccessObject();
-        userRepo.save(user);
+       userRepo.save(user);
 
         LoginOutputBoundary failPresenter = new LoginOutputBoundary() {
             @Override
