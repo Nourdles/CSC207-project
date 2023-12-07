@@ -24,7 +24,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JButton logOut;
 
     /**
-     * A window with a title and a JButton.
+     * Create a new Logged In View with the given parameters
+     * @param loggedInViewModel Logged In View Model
      */
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;

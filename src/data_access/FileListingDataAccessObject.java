@@ -4,24 +4,17 @@ import entity.*;
 import use_case.book_info.BookInfoDataAccessInterface;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.delete_listing.DeleteListingDataAccessInterface;
-import use_case.listings.ListingsDataAccessInterface;
+import use_case.view_listings.ListingsDataAccessInterface;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class FileListingDataAccessObject implements CreateListingDataAccessInterface, BookInfoDataAccessInterface, DeleteListingDataAccessInterface, ListingsDataAccessInterface {
-    /**
-     * A Data Access Object that stores all listing information except images.
-     * @param csvPath the String that represents a filepath for the file that stores Listings.
-     * @param listingFactory a Factory for creating Listings.
-     * @param bookPhoto: a photo of the book, default or uploaded by the seller.
-     */
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
     private final Map<String, Listing> listingInfo = new HashMap<>();
@@ -39,8 +32,8 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
     /** Constructing a Data Access Object with a csv for Strings corresponding to Listings' data.
      *
-     * @param csvPath
-     * @param listingFactory
+     * @param csvPath path to the csv file we want to save our Listings to
+     * @param listingFactory factory to create listings
      * @throws IOException
      */
     public FileListingDataAccessObject(String csvPath, ListingFactory listingFactory) throws IOException {
@@ -89,20 +82,17 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
     /**
      * Maps a listing ID to a listing object, then saves the listing information to a local system.
-     * @param listing
+     * @param listing the Listing we want to save
      * @throws IOException
      */
     @Override
     public void save(Listing listing) throws IOException {
         listingInfo.put(listing.getListingId(), listing);
 
-        // Use a default image if the image directory is null or the book photo is not set
         if (imageDirectory == null || listing.getBookPhoto() == null) {
-            // Path to your default image inside your project
             String defaultImagePath = "default.png";
             storedImage = ImageIO.read(new File(defaultImagePath));
         } else {
-            // If imageDirectory is not null and book photo is set, proceed with normal operations
             File userDirectory = new File(listing.getSeller());
             if (!userDirectory.exists()) {
                 userDirectory.mkdir();
@@ -111,19 +101,9 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
             Path imageDirFullpath = Paths.get(imageDirectory.getAbsolutePath());
             Path userDirFullpath = Paths.get(userDirectory.getAbsolutePath());
 
-            // Perform file operations as necessary
-            // ...
-
             storedImage = ImageIO.read(listing.getBookPhoto());
         }
 
-        this.save();
-    }
-    /**
-     * Clears the listing data file.
-     */
-    public void clear() throws IOException {
-        listingInfo.clear();
         this.save();
     }
 
@@ -189,8 +169,8 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
 
     /**
      * Returns the listings of the given username in a list
-     * @param username
-     * @return
+     * @param username username of the User whose listings we want
+     * @return a list of the listings create by the User with the corresponding username.
      */
     public List<Listing> getUserListings(String username) {
         List<Listing> listings = new ArrayList<>();
@@ -203,6 +183,11 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         return listings;
     }
 
+    /**
+     * Returns a list of listings for a specific Book, given that Book's ISBN
+     * @param ISBN the ISBN of the Book we want to retrieve the listings of
+     * @return a list of listings for a specific Book, given that Book's ISBN
+     */
     public List<Listing> getBookListings(String ISBN) {
         List<Listing> listings = new ArrayList<>();
         for (Listing listing : listingInfo.values()) {
@@ -214,20 +199,36 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         return listings;
     }
 
+    /**
+     * Return the city of a specific User given their username
+     * @param username the username of the User whose city we want
+     * @return a string representing the city of a specific User given their username
+     */
     @Override
     public String findCity(String username) {
         return null;
     }
 
+    /**
+     * Return the email of a specific User given their username
+     * @param username the username of the User whose email we want
+     * @return a string representing the email of a specific User given their username
+     */
     @Override
     public String findEmail(String username) {
         return null;
     }
 
+    /**
+     * Return the phone number of a specific User given their username
+     * @param username username of the user whose phone number we want
+     * @return a string representing the phone number of a specific User given their username
+     */
     @Override
     public String findPhoneNumber(String username) {
         return null;
     }
+
     public Map<String, Listing> getListingInfo(){
         return listingInfo;
     }

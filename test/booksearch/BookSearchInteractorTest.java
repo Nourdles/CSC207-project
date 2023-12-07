@@ -1,8 +1,7 @@
 package booksearch;
 import data_access.OpenLibraryDB;
 import org.junit.jupiter.api.Test;
-import use_case.book_info.BookInfoDataAccessInterface;
-import use_case.booksearch.*;
+import use_case.book_search.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class BookSearchInteractorTest {

@@ -6,19 +6,15 @@ import entity.UserFactory;
 import java.time.LocalDateTime;
 
 public class SignupInteractor implements SignupInputBoundary {
-
-    /**
-     * An interactor that directs the creation and saving of users after checking for username matching.
-     */
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
     final UserFactory userFactory;
 
     /**
-     * Initializing the Signup Interactor.
-     * @param signupDataAccessInterface
-     * @param signupOutputBoundary
-     * @param userFactory
+     * Creates a new Signup Interactor with the given parameters
+     * @param signupDataAccessInterface Signup Data Access Interface
+     * @param signupOutputBoundary Signup Output Boundary
+     * @param userFactory User Factory
      */
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
@@ -29,8 +25,10 @@ public class SignupInteractor implements SignupInputBoundary {
     }
 
     /**
-     * Executing the use case based on the Signup Data.
-     * @param signupInputData
+     * Executing the use case based on the Signup Data: call the prepareFailView of the Presenter the User already
+     * exists, the repeat password does not match the password, or either the email or password do not meet the
+     * security requirements. Otherwise, call the prepareSuccessView method.
+     * @param signupInputData Signup Input Data
      */
     @Override
     public void execute(SignupInputData signupInputData) {

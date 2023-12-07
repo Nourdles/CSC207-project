@@ -16,26 +16,28 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-/*Currently the CA5 view, update later */
+
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";
-
     private final LoginViewModel loginViewModel;
     private final SignupViewModel signupViewModel;
     private ViewManagerModel viewManagerModel;
-
     final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
-
     final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorField = new JLabel();
-
     final JButton logIn;
-
     final JButton signup;
     private final LoginController loginController;
 
+    /**
+     * Create a new Login View
+     * @param loginViewModel Login View Model
+     * @param controller Login Controller
+     * @param signupViewModel Signup View Model
+     * @param viewManagerModel View Manager Model
+     */
     public LoginView(LoginViewModel loginViewModel, LoginController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel ) {
 
         this.loginController = controller;
@@ -54,46 +56,33 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         setLayout(new BorderLayout());
 
-        // Create a panel for the title
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JLabel title = new JLabel("Login Screen");
         titlePanel.setBackground(lightBrown);
         titlePanel.add(title);
 
-        // Add the title panel to the NORTH
-         // add(titlePanel, BorderLayout.NORTH);
-
-        // Create a panel for the input fields
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(2, 2)); // Two rows, two columns
+        inputPanel.setLayout(new GridLayout(2, 2));
 
         inputPanel.setBackground(lightBrown);
 
-        // LabelTextPanel for Username
         LabelTextPanel usernameInfo = new LabelTextPanel(new JLabel("Username"), usernameInputField);
         inputPanel.add(usernameInfo);
 
         usernameInfo.setBackground(lightBrown);
-
-        // Error label for Username
         inputPanel.add(usernameErrorField);
 
-        // LabelTextPanel for Password
         LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), passwordInputField);
         inputPanel.add(passwordInfo);
 
         passwordInfo.setBackground(lightBrown);
-
-        // Error label for Password
         inputPanel.add(passwordErrorField);
 
-        // Add the input panel to the CENTER
         add(inputPanel, BorderLayout.CENTER);
 
-
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new FlowLayout()); // FlowLayout for buttons in a row
+        buttonsPanel.setLayout(new FlowLayout());
         buttonsPanel.setBackground(lightBrown);
 
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
@@ -106,7 +95,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         add(buttonsPanel, BorderLayout.CENTER);
 
-        // Add an image to the WEST
         JPanel imagePanel = new JPanel();
         ImageIcon imageIcon = new ImageIcon("src/logo.png");
         Image image = imageIcon.getImage();
@@ -118,7 +106,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         imagePanel.setBackground(lightBrown);
         add(imagePanel, BorderLayout.WEST);
 
-        logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
+        logIn.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
@@ -183,7 +171,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 });
 
-         // this.add(title);
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
@@ -206,12 +193,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         if ("loginSuccess".equals(propertyName)) {
             Boolean loginSuccess = (Boolean) evt.getNewValue();
             if (loginSuccess) {
-                // Change to BookSearchView
                 viewManagerModel.setActiveView("BookSearchView");
                 viewManagerModel.firePropertyChanged();
             }
         } else {
-            // Retrieve the updated LoginState object
             LoginState state = (LoginState) evt.getNewValue();
 
             if ("usernameError".equals(propertyName) && state.getUsernameError() != null) {
@@ -221,9 +206,4 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         }
     }
-
-    private void setFields(LoginState state) {
-        usernameInputField.setText(state.getUsername());
-    }
-
 }

@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.Listings.ListingsController;
-import interface_adapter.Listings.ListingsState;
-import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.view_listings.ListingsController;
+import interface_adapter.view_listings.ListingsState;
+import interface_adapter.view_listings.ListingsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileViewModel;
@@ -26,6 +26,14 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     private JButton viewListing;
 
+    /**
+     * Create a new Profile View with the given parameters
+     * @param controller Profile Controller
+     * @param viewModel Profile View Model
+     * @param listingsViewModel Listings View Model
+     * @param listingsController Listings Controller
+     * @param viewManagerModel View Manager Model
+     */
     public ProfileView(ProfileController controller, ProfileViewModel viewModel, ListingsViewModel listingsViewModel,ListingsController listingsController,
                        ViewManagerModel viewManagerModel) {
         this.profileController = controller;
@@ -54,9 +62,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         centerPanel.add(viewListing);
 
         this.add(centerPanel, BorderLayout.CENTER);
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -1,7 +1,6 @@
 package view;
 
-import interface_adapter.Listings.ListingsState;
-import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.view_listings.ListingsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.delete_listing.DeleteListingController;
 import interface_adapter.delete_listing.DeleteListingState;
@@ -36,6 +35,14 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
     final JButton delete;
     final JButton back;
 
+    /**
+     * Create a new Listings Profile View
+     * @param listingsViewModel Listings View Model
+     * @param deleteListingController Delete Listings Controller
+     * @param viewManagerModel View Manager Model
+     * @param deleteListingViewModel Delete Listing View Model
+     * @param profileViewModel Profile View Model
+     */
     public ListingsProfileView(ListingsViewModel listingsViewModel, DeleteListingController deleteListingController,
                                ViewManagerModel viewManagerModel, DeleteListingViewModel deleteListingViewModel,
                                ProfileViewModel profileViewModel){
@@ -67,7 +74,6 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
         this.add(title);
         this.add(listingInfo);
 
-        //Populate layout with listings
         for (Listing listing: listingsViewModel.getState().getListings()){
             ImageIcon icon = new ImageIcon(listing.getBookPhoto().getPath());
             Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
@@ -89,7 +95,6 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
         // JScrollPane scrollPane = new JScrollPane(this);
         // panel.add(scrollPane);
         this.add(panel);
-
 
         delete.addActionListener(
                 new ActionListener() {
@@ -114,9 +119,7 @@ public class ListingsProfileView extends JPanel implements ActionListener, Prope
                 }
             }
         });
-
     }
-
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("Takes the user back to profile view. Not implemented yet.");

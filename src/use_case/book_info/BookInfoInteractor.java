@@ -1,6 +1,5 @@
 package use_case.book_info;
 
-
 import entity.Listing;
 
 import java.util.ArrayList;
@@ -10,12 +9,23 @@ public class BookInfoInteractor implements BookInfoInputBoundary{
     final BookInfoOutputBoundary bookInfoOutputPresenter;
     final BookInfoDataAccessInterface bookInfoDataAccessInterface;
 
+    /**
+     * Create a new Book Info Interactor with the given parameters
+     * @param bookInfoOutputPresenter Book Info Output Boundary
+     * @param bookInfoDataAccessInterface Book Info Data Access Interface
+     */
     public BookInfoInteractor(BookInfoOutputBoundary bookInfoOutputPresenter, BookInfoDataAccessInterface bookInfoDataAccessInterface) {
         this.bookInfoOutputPresenter = bookInfoOutputPresenter;
         this.bookInfoDataAccessInterface = bookInfoDataAccessInterface;
     }
 
-
+    /**
+     * If there are no exceptions, calls the getBookListings method of the Data Access Interface, then creates a List of
+     * Lists with the information of every Listing of that Book, creates a new Output Data with it, then calls the
+     * displayBookInfo method of the Presenter. If there is an exception, creates a new Output Data for an error state
+     * and calls displayBookInfo in the Presenter with that error data.
+     * @param inputData Book Info Input Data
+     */
     @Override
     public void showBookDetails(BookInfoInputData inputData) {
         try {

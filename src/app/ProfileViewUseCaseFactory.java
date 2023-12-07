@@ -1,15 +1,15 @@
 package app;
 
-import interface_adapter.Listings.ListingsController;
-import interface_adapter.Listings.ListingsPresenter;
-import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.view_listings.ListingsController;
+import interface_adapter.view_listings.ListingsPresenter;
+import interface_adapter.view_listings.ListingsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileViewModel;
-import use_case.listings.ListingsDataAccessInterface;
-import use_case.listings.ListingsInputBoundary;
-import use_case.listings.ListingsInteractor;
-import use_case.listings.ListingsOutputBoundary;
+import use_case.view_listings.ListingsDataAccessInterface;
+import use_case.view_listings.ListingsInputBoundary;
+import use_case.view_listings.ListingsInteractor;
+import use_case.view_listings.ListingsOutputBoundary;
 import view.ProfileView;
 
 import javax.swing.*;
@@ -17,6 +17,15 @@ import java.io.IOException;
 
 public class ProfileViewUseCaseFactory {
     private ProfileViewUseCaseFactory(){}
+
+    /**
+     * Returns a View where a User can click on a button to view their listings
+     * @param viewModel the view model for the profile view
+     * @param viewManagerModel
+     * @param listingDataAccessObject
+     * @param listingsViewModel the view model for the view where the currently logged in User can view their listings
+     * @return A View where a User can click on a button to view their listings
+     */
     public static ProfileView create(
             ProfileViewModel viewModel,
             ViewManagerModel viewManagerModel,

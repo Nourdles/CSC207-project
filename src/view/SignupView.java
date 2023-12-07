@@ -17,7 +17,6 @@ import java.beans.PropertyChangeListener;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sign up";
-
     private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -31,6 +30,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton signUp;
     private final JButton cancel;
 
+    /**
+     * Create a new Signup View with the given parameters
+     * @param controller Signup Controller
+     * @param signupViewModel Signup View Model
+     * @param loginViewModel Login View Model
+     * @param viewManagerModel View Manager Model
+     */
     public SignupView(SignupController controller, SignupViewModel signupViewModel, LoginViewModel loginViewModel, ViewManagerModel viewManagerModel) {
 
         this.signupController = controller;
@@ -117,10 +123,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        // This makes a new KeyListener implementing class, instantiates it, and
-        // makes it listen to keystrokes in the usernameInputField.
-        //
-        // Notice how it has access to instance variables in the enclosing class!
         usernameInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -252,10 +254,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      */
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
-    }
-
-    public void clearPerformed(ActionEvent e, String usernames){
-        JOptionPane.showConfirmDialog(this, usernames);
     }
 
     @Override

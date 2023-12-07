@@ -3,9 +3,9 @@ package app;
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.ListingFactory;
-import interface_adapter.Listings.ListingsController;
-import interface_adapter.Listings.ListingsPresenter;
-import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.view_listings.ListingsController;
+import interface_adapter.view_listings.ListingsPresenter;
+import interface_adapter.view_listings.ListingsViewModel;
 import interface_adapter.book_info.BookInfoController;
 import interface_adapter.book_info.BookInfoPresenter;
 import interface_adapter.book_info.BookInfoViewModel;
@@ -19,8 +19,8 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileViewModel;
-import interface_adapter.searchfilter.SearchFilterController;
-import interface_adapter.searchfilter.SearchFilterPresenter;
+import interface_adapter.search_filter.SearchFilterController;
+import interface_adapter.search_filter.SearchFilterPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.book_info.BookInfoDataAccessInterface;
@@ -29,11 +29,11 @@ import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
 
-import use_case.booksearch.*;
-import interface_adapter.booksearch.*;
+import use_case.book_search.*;
+import interface_adapter.book_search.*;
 import use_case.delete_listing.DeleteListingInteractor;
-import use_case.listings.ListingsInteractor;
-import use_case.searchfilter.SearchFilterInteractor;
+import use_case.view_listings.ListingsInteractor;
+import use_case.search_filter.SearchFilterInteractor;
 import view.*;
 import data_access.*;
 
@@ -44,20 +44,13 @@ import java.io.IOException;
  public class Main {
 
     public static void main(String[] args) throws IOException {
-        // Build the main program window, the main panel containing the
-        // various cards, and the layout, and stitch them together.
-
-        // The main application window.
         JFrame application = new JFrame("Login");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
-
-        // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
@@ -117,14 +110,12 @@ import java.io.IOException;
 
         BookInfoPresenter infoPresenter = new BookInfoPresenter(infoViewModel, viewManagerModel);
 
-        // Initialize the interactor (use case) with the real data access and presenter
         BookSearchInteractor interactor = new BookSearchInteractor(realDataAccess, presenter);
         SearchFilterInteractor filterInteractor = new SearchFilterInteractor(filterPresenter);
 
         BookInfoDataAccessInterface bookInfoDataAccessInterface = new FileListingDataAccessObject("./listingInfo.csv", new ListingFactory());
         BookInfoInteractor infoInteractor = new BookInfoInteractor(infoPresenter, bookInfoDataAccessInterface);
 
-        // Initialize the controller with the interactor
         BookSearchController bookSearchController = new BookSearchController(interactor);
         SearchFilterController searchFilterController = new SearchFilterController(filterInteractor);
         BookInfoController bookInfoController = new BookInfoController(infoInteractor);
@@ -157,5 +148,4 @@ import java.io.IOException;
         application.pack();
         application.setVisible(true);
     }
-
 }

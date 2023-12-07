@@ -39,41 +39,98 @@ public class Book {
         this.subjects = subjects;
     }
 
+    /**
+     * Returns the title of the Book
+     * @return The title of the Book
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Set the title of the Book to be the given String
+     * @param title String we want to set the title to
+     */
     public void setTitle(String title){
         this.title = title;
     }
 
+    /**
+     * Returns the year of the Book
+     * @return The year of the Book
+     */
     public int getYear() {
         return year;
     }
+
+    /**
+     * Set the year of the Book to be the given int
+     * @param year int we want to set the year to
+     */
     public void setYear(int year) {
         this.year = year;
     }
+
+    /**
+     * Returns the author of the Book
+     * @return The author of the Book
+     */
     public String getAuthor() {
         return author;
     }
+
+    /**
+     * Set the author of the Book to be the given String
+     * @param author String we want to set the author to
+     */
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    /**
+     * Returns the summary of the Book
+     * @return The summary of the Book
+     */
     public String getSummary() {
         return summary;
     }
+
+    /**
+     * Set the summary of the Book to be the given String
+     * @param summary String we want to set the summary to
+     */
     public void setSummary(String summary) {
         this.summary = summary;
     }
+
+    /**
+     * Returns the ISBN of the Book
+     * @return The ISBN of the Book
+     */
     public String getISBN() {
         return ISBN;
     }
+
+    /**
+     * Set the ISBN of the Book to be the given String
+     * @param ISBN String we want to set the ISBN to
+     */
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
+
+    /**
+     * Returns the amount of listings for the Book
+     * @return The amount of listings for the Book
+     */
     public int getInStock() {
         return inStock;
     }
+
+    /**
+     * Set the number of listings of the Book to be the given int
+     * @param inStock int we want to set the amount in stock to
+     */
     public void setInStock(int inStock) {
         this.inStock = inStock;
     }
@@ -94,10 +151,25 @@ public class Book {
                 ", coverUrl='" + coverUrl + '\'' +
                 '}';
     }
+
+    /**
+     * Returns the url for the cover of the Book
+     * @return The url for the cover of the Book
+     */
     public String getCoverUrl() {
         return this.coverUrl;
     }
+
+    /**
+     * Returns the language of the Book
+     * @return The language of the Book
+     */
     public String getLanguage() {return this.language;}
+
+    /**
+     * Returns the subjects of the Book
+     * @return The subjects of the Book
+     */
     public ArrayList<String> getSubjects(){return this.subjects;}
 }
 

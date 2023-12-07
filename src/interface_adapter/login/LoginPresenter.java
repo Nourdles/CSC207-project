@@ -1,12 +1,12 @@
 package interface_adapter.login;
 
-import interface_adapter.Listings.ListingsState;
-import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.view_listings.ListingsState;
+import interface_adapter.view_listings.ListingsViewModel;
 import interface_adapter.create_listing.CreateListingState;
 import interface_adapter.create_listing.CreateListingViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.booksearch.*;
+import interface_adapter.book_search.*;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -17,9 +17,18 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final BookSearchViewModel bookSearchViewModel;
     private final CreateListingViewModel createListingViewModel;
     private final ListingsViewModel listingsViewModel;
-
     private ViewManagerModel viewManagerModel;
 
+    /**
+     * Creates a new Login Presenter with the given parameters
+     *
+     * @param viewManagerModel       View Manager Model
+     * @param loggedInViewModel      Logged In View Model
+     * @param loginViewModel         Login View Model
+     * @param bookSearchViewModel    Book Search View Model
+     * @param createListingViewModel Create Listing View Model
+     * @param listingsViewModel      Listings View Model
+     */
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel,
@@ -32,9 +41,14 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.listingsViewModel = listingsViewModel;
     }
 
+    /**
+     * Provided no errors have occurred elsewhere in the use case, updates the Create Listing, Listings, and Book Search
+     * State with the currently logged-in User, and switches the view to Book Search View
+     *
+     * @param response Login Output Data
+     */
     @Override
     public void prepareSuccessView(LoginOutputData response) {
-        // On success, switch to the logged in view.
         CreateListingState createListingState = createListingViewModel.getState();
         createListingState.setSeller(response.getUsername());
         createListingViewModel.setState(createListingState);
@@ -46,8 +60,6 @@ public class LoginPresenter implements LoginOutputBoundary {
         listingsViewModel.firePropertyChanged();
 
         BookSearchState currentState = bookSearchViewModel.getState();
-        // Assuming BookSearchState can store a username or other relevant information
-        // currentState.setUsername(response.getUsername());
         bookSearchViewModel.setState(currentState);
         bookSearchViewModel.firePropertyChanged();
 
@@ -55,6 +67,11 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Provided an error occurred somewhere in the use case, sets the Login State to an error state
+     *
+     * @param error String representing the error that occurred
+     */
     @Override
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();

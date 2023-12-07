@@ -1,5 +1,4 @@
 package entity;
-import entity.User;
 
 import java.time.LocalDateTime;
 
@@ -13,18 +12,14 @@ public class CommonUser implements User {
     private String city;
     private LocalDateTime creationTime;
 
-    /*Common Users need to provide a phoneNumber, an email, or both. */
-
-    /*Common User provides both.*/
-
     /**
      * A CommonUser of the system: They can browse others' listings or create/delete their own.
-     * @param username
-     * @param password
-     * @param creationTime
-     * @param email
-     * @param phoneNumber
-     * @param city
+     * @param username username of the CommonUser
+     * @param password password of the CommonUser
+     * @param creationTime time the CommonUser was created
+     * @param email email of the CommonUser
+     * @param phoneNumber phone number of the CommonUser
+     * @param city city of the CommonUser
      */
     CommonUser(String username, String password, LocalDateTime creationTime, String email, String phoneNumber, String city){
         this.username = username;
@@ -37,50 +32,96 @@ public class CommonUser implements User {
         this.creationTime = creationTime;
     }
 
+    /**
+     * Returns the username of the CommonUser
+     * @return The username of the CommonUser
+     */
     @Override
     public String getUsername(){
         return username;
     }
+
+    /**
+     * Returns the password of the CommonUser
+     * @return The password of the CommonUser
+     */
     @Override
     public String getPassword(){
         return password;
     }
+
+    /**
+     * Returns the email of the CommonUser
+     * @return The email of the CommonUser
+     */
     @Override
     public String getEmail(){
         return email;
     }
 
+    /**
+     * Returns the phone number of the CommonUser
+     * @return The phone number of the CommonUser
+     */
     public String getPhoneNumber(){
         return phoneNumber;
     }
 
-    public int getNumRatings() {
-        return numRatings;
-    }
-    public double getPerformanceRating() {
-        return performanceRating;
-    }
+    /**
+     * Returns the city of the CommonUser
+     * @return The city of the CommonUser
+     */
     public String getCity(){
         return city;
     }
+
+    /**
+     * Returns the time the CommonUser was created
+     * @return The time the CommonUser was created
+     */
     @Override
     public LocalDateTime getCreationTime(){
         return creationTime;
     }
+
+    /**
+     * Sets the CommonUser's username to the given String
+     * @param username String we want to set the CommonUser's username to
+     */
     @Override
     public void setUsername(String username) {this.username = username;}
+
+    /**
+     * Sets the CommonUser's password to the given String
+     * @param password String we want to set the CommonUser's password to
+     */
     @Override
     public void setPassword(String password) {
         this.password = password;
     }
+
+    /**
+     * Sets the CommonUser's email to the given String
+     * @param email String we want to set the CommonUser's email to
+     */
     @Override
     public void setEmail(String email) {
         this.email = email;
     }
+
+    /**
+     * Sets the CommonUser's phone number to the given String
+     * @param phoneNumber String we want to set the CommonUser's phone number to
+     */
     @Override
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    /**
+     * Sets the CommonUser's city to the given String
+     * @param city String we want to set the CommonUser's city to
+     */
     @Override
     public void setCity(String city) {
         this.city = city;

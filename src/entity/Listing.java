@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDateTime;
 public class Listing {
@@ -29,30 +28,73 @@ public class Listing {
         this.listingId = String.valueOf(this.ISBN); // + String.valueOf(book.getEverInStock());
         this.pathId = seller + "/" + this.ISBN + ".png";
     }
+
+    /**
+     * Returns the price of the Listing
+     * @return the price of the Listing
+     */
     public double getPrice(){
         return listingPrice;
     }
-    public void setPrice(double newPrice){
-        this.listingPrice = newPrice;
-    }
+
+    /**
+     * Returns the path ID for the picture of the Listing
+     * @return the path ID for the picture of the Listing
+     */
     public String getPathId() {return pathId;}
+
+    /**
+     * Returns the Book condition of the Listing
+     * @return the Book condition of the Listing
+     */
     public String getCondition(){
         return this.condition;
     }
+
+    /**
+     * Set the condition of the Book in the Listing
+     * @param newCondition String we want to set the Book condition to
+     */
     public void setCondition(String newCondition){
         this.condition = newCondition;
     }
+
+    /**
+     * Returns the ID of the Listing
+     * @return the ID of the Listing
+     */
     public String getListingId(){
         return listingId;
     }
 
+    /**
+     * Returns the ISBN of the Book in the Listing
+     * @return the ISBN of the Book in the Listing
+     */
     public String getISBN() {return ISBN;}
 
+    /**
+     * Returns the Book title of the Listing
+     * @return the Book title of the Listing
+     */
     public String getTitle() {return title;}
 
+    /**
+     * Returns the Book photo of the Listing
+     * @return the Book photo of the Listing
+     */
     public File getBookPhoto() {return bookPhoto;}
-    public void setBookPhoto(File bookPhoto) {this.bookPhoto = bookPhoto;}
+
+    /**
+     * Returns the seller of the Listing
+     * @return the seller of the Listing
+     */
     public String getSeller() {return seller;}
+
+    /**
+     * Returns the creation time of the Listing
+     * @return the creation time of the Listing
+     */
     public LocalDateTime getCreationTime() {return creationTime; }
 }
 

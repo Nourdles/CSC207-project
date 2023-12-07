@@ -7,14 +7,18 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ProfileViewModel extends ViewModel {
-    public void addPropertyChangeListener(ProfileView profileView) {
-    }
     private ProfileState state = new ProfileState();
-
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+    /**
+     * Create a new Profile View Model with the view name "profile"
+     */
     public ProfileViewModel(){super("profile");}
 
+    /**
+     * Returns the Profile State of the View Model
+     * @return ProfileState that represents the State of the View Model
+     */
     public ProfileState getState() { return state;}
 
     @Override

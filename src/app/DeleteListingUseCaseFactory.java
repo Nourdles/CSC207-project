@@ -1,8 +1,6 @@
 package app;
 
-import interface_adapter.Listings.ListingsController;
-import interface_adapter.Listings.ListingsPresenter;
-import interface_adapter.Listings.ListingsViewModel;
+import interface_adapter.view_listings.ListingsViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.delete_listing.DeleteListingController;
 import interface_adapter.delete_listing.DeleteListingPresenter;
@@ -12,10 +10,7 @@ import use_case.delete_listing.DeleteListingDataAccessInterface;
 import use_case.delete_listing.DeleteListingInputBoundary;
 import use_case.delete_listing.DeleteListingInteractor;
 import use_case.delete_listing.DeleteListingOutputBoundary;
-import use_case.listings.ListingsDataAccessInterface;
-import use_case.listings.ListingsInputBoundary;
-import use_case.listings.ListingsInteractor;
-import use_case.listings.ListingsOutputBoundary;
+import use_case.view_listings.ListingsDataAccessInterface;
 import view.ListingsProfileView;
 
 import javax.swing.*;
@@ -25,6 +20,15 @@ public class DeleteListingUseCaseFactory {
 
     private DeleteListingUseCaseFactory(){}
 
+    /** Return a View of a User's Listings on their profile
+     * @param viewManagerModel
+     * @param listingsViewModel
+     * @param listingDataAccessObject
+     * @param deleteListingDataAccessObject DAO in charge of deleting listings from the csv file they are stored in
+     * @param deleteListingViewModel
+     * @param profileViewModel
+     * @return A View of a User's listings on their profile
+     */
     public static ListingsProfileView create(
             ViewManagerModel viewManagerModel,
             ListingsViewModel listingsViewModel,
@@ -55,14 +59,4 @@ public class DeleteListingUseCaseFactory {
 
         return new DeleteListingController(deleteListingInteractor);
     }
-//    private static ListingsController createListingsUseCase(
-//            ViewManagerModel viewManagerModel,
-//            ListingsViewModel listingsViewModel,
-//            ListingsDataAccessInterface listingsDataAccessInterface
-//    )throws IOException{
-//        ListingsOutputBoundary listingsOutputBoundary = new ListingsPresenter(viewManagerModel, listingsViewModel
-//                );
-//        ListingsInputBoundary listingsInputBoundary = new ListingsInteractor(listingsDataAccessInterface, listingsOutputBoundary);
-//        return new ListingsController(listingsInputBoundary);
-//    }
 }

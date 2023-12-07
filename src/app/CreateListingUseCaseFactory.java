@@ -26,8 +26,10 @@ public class CreateListingUseCaseFactory {
     /** Return a View of a User's listings after an attempt to create a listing.
      *
      * @param viewManagerModel
-     * @param createListingViewModel
-     * @param fileListingDataAccessObject
+     * @param createListingViewModel the view that is switched to when the "create listing" button is clicked
+     * @param fileListingDataAccessObject the DAO in charge or writing and retrieving created listings in a csv file
+     * @param bookInfoViewModel the view that contains the "create listing" button
+     * @param bookInfoController
      * @return A View of a User's listings after a user has attempted to create a listing.
      */
     public static CreateListingView create(ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel,

@@ -7,10 +7,18 @@ public class ViewManagerModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+    /**
+     * Returns the name of the current active view
+     * @return A String representing the name of the current view
+     */
     public String getActiveView() {
         return activeViewName;
     }
 
+    /**
+     * Sets the name of the current active view to the given String
+     * @param activeView String we want to set the name of the current active view to
+     */
     public void setActiveView(String activeView) {
         this.activeViewName = activeView;
     }

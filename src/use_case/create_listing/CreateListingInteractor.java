@@ -1,11 +1,9 @@
 package use_case.create_listing;
 
-import data_access.FileListingDataAccessObject;
 import entity.Listing;
 import entity.ListingFactory;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class CreateListingInteractor implements CreateListingInputBoundary{
 
@@ -13,6 +11,12 @@ public class CreateListingInteractor implements CreateListingInputBoundary{
     final CreateListingOutputBoundary listingPresenter;
     final ListingFactory listingFactory;
 
+    /**
+     * Creates a new Create Listing Interactor with the given parameters
+     * @param listingDataAccessInterface Listing Data Access Interface
+     * @param createListingOutputBoundary Create Listing Output Boundary
+     * @param listingFactory Listing Factory
+     */
     public CreateListingInteractor(CreateListingDataAccessInterface listingDataAccessInterface,
                                    CreateListingOutputBoundary createListingOutputBoundary,
                                    ListingFactory listingFactory){
@@ -20,6 +24,13 @@ public class CreateListingInteractor implements CreateListingInputBoundary{
         this.listingPresenter = createListingOutputBoundary;
         this.listingFactory = listingFactory;
     }
+
+    /**
+     * Create a new Listing through the Factory's create() method, then save it through the DAO and call the Presenter's
+     * prepareSuccessView method.
+     * @param createListingInputData Create Listing Input Data
+     * @throws IOException
+     */
     @Override
     public void execute(CreateListingInputData createListingInputData) throws IOException {
         Listing listing = listingFactory.create(createListingInputData.getTitle(), createListingInputData.getBookISBN(), createListingInputData.getSeller(),

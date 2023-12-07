@@ -25,13 +25,13 @@ public class SignupUseCaseFactory {
     }
 
     /**
-     * Creates a SignupView upon opening the application, instantiates a controller to execute signup if the user
-     * data file exists.
+     * Return a View where the User can enter their information to create an account.
      * @param viewManagerModel
-     * @param loginViewModel
-     * @param signupViewModel
-     * @param userDataAccessObject
-     * @return
+     * @param loginViewModel the view model for the view that is loaded when the User clicks the "Cancel" or "Sign up"
+     *                       button
+     * @param signupViewModel the view model for the sign-up view
+     * @param userDataAccessObject DAO that write user info to a csv file when a new User is created
+     * @return A View where the User can enter their information to create an account.
      */
     public static SignupView create(
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel,

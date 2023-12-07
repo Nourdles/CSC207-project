@@ -9,11 +9,16 @@ import use_case.signup.SignupOutputData;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class SignupPresenter implements SignupOutputBoundary {
-
     private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
+    /**
+     * Creates a new Signup Presenter with the given parameters
+     * @param viewManagerModel View Manager Model
+     * @param signupViewModel Signup View Model
+     * @param loginViewModel Login View Model
+     */
     public SignupPresenter(ViewManagerModel viewManagerModel,
                            SignupViewModel signupViewModel,
                            LoginViewModel loginViewModel) {
@@ -21,9 +26,14 @@ public class SignupPresenter implements SignupOutputBoundary {
         this.signupViewModel = signupViewModel;
         this.loginViewModel = loginViewModel;
     }
+
+    /**
+     * Provided no errors occurred elsewhere in the use case, updates the Login State and switches the View to the
+     * Login View
+     * @param response Signup Output Data
+     */
     @Override
     public void prepareSuccessView(SignupOutputData response) {
-        // On success, switch to the login view.
         LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
         response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
         LoginState loginState = loginViewModel.getState();
@@ -34,6 +44,11 @@ public class SignupPresenter implements SignupOutputBoundary {
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    /**
+     * If an error occurred elsewhere in the use case, update the Signup State to an error state
+     * @param error String representing the error that occurred
+     */
     @Override
     public void prepareFailView(String error) {
         SignupState signupState = signupViewModel.getState();

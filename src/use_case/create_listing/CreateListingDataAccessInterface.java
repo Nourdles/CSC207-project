@@ -8,6 +8,4 @@ import java.util.List;
 public interface CreateListingDataAccessInterface {
     void save(Listing listing) throws IOException;
     boolean existsById(String listingId);
-
-
 }

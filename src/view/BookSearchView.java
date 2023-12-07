@@ -1,9 +1,9 @@
 package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.book_info.BookInfoController;
-import interface_adapter.booksearch.*;
+import interface_adapter.book_search.*;
 import entity.Book;
-import interface_adapter.searchfilter.SearchFilterController;
+import interface_adapter.search_filter.SearchFilterController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
     private JButton profileButton;
     private JPanel resultsPanel;
     private JButton loadMoreButton;
-    private int currentLoadIndex = 0; // To keep track of how many books have been loaded
+    private int currentLoadIndex = 0;
     private BookSearchController controller;
     private BookSearchViewModel viewModel;
     private SearchFilterController filterController;
@@ -39,6 +39,14 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
     private ViewManagerModel viewManagerModel;
     private ArrayList<Book> displayedBooks;
 
+    /**
+     * Creates a new Book Search View with the given parameters
+     * @param controller Book Search Controller
+     * @param viewModel Book Search View Model
+     * @param searchFilterController Search Filter Controller
+     * @param bookInfoController Book Info Controller
+     * @param viewManagerModel View Manager Model
+     */
     public BookSearchView(BookSearchController controller, BookSearchViewModel viewModel, SearchFilterController searchFilterController, BookInfoController bookInfoController, ViewManagerModel viewManagerModel) {
         this.controller = controller;
         this.viewModel = viewModel;
@@ -51,43 +59,38 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         createUI();
     }
 
+    /**
+     * Creates the UI for the main page, which contains the search bar, search button, filter button, and profile button
+     */
     private void createUI() {
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(800, 600)); // Set the preferred size of the panel
+        this.setPreferredSize(new Dimension(800, 600));
 
         Color Brown = new Color(217, 196, 152);
         Color lightBrown = new Color(245, 229, 196);
         Color whiteBrown = new Color(224, 218, 213);
 
-        // Create a panel for the title
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JLabel titleLabel = new JLabel("Book Search");
         titlePanel.add(titleLabel);
 
-
-
-        // Main content panel with BorderLayout
         JPanel mainPanel = new JPanel(new BorderLayout());
-
-        // Top panel setup
         JPanel topPanel = new JPanel();
         topPanel.setBackground(lightBrown);
         topPanel.setLayout(new BorderLayout());
         this.add(topPanel, BorderLayout.NORTH);
 
-        // Add our logo as an ImageIcon to a JLabel
-        ImageIcon logoIcon = new ImageIcon("bookshelf.png"); // Replace with the path to your logo image
+        ImageIcon logoIcon = new ImageIcon("bookshelf.png");
         JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setPreferredSize(new Dimension(150, 150)); // Set the preferred size (adjust as needed)
+        logoLabel.setPreferredSize(new Dimension(150, 150));
 
-        // Create a JTextArea for our search instructions
         JTextArea paragraphText = new JTextArea("Welcome to our second-hand book selling application! " +
                 "Enter a book title, author, or keyword to start searching. Please make sure there are no typos, and " +
                 "press the Search button when you are ready. You can use the Filter button to filter your search once " +
                 "results are displayed.", 5, 20);
 
-        Font font = new Font("SansSerif", Font.PLAIN, 14); // You can adjust the font and size
+        Font font = new Font("SansSerif", Font.PLAIN, 14);
         paragraphText.setFont(font);
 
         JPanel topComponentsPanel = new JPanel();
@@ -106,27 +109,24 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         profileButton = new JButton("Profile");
         profileButton.setBackground(Brown);
 
-        // Create an EmptyBorder to add space around the paragraph text
-        int topPadding = 20; // Adjust the top padding as needed
-        int leftPadding = 20; // Adjust the left padding as needed
-        int bottomPadding = 20; // Adjust the bottom padding as needed
-        int rightPadding = 20; // Adjust the right padding as needed
+        int topPadding = 20;
+        int leftPadding = 20;
+        int bottomPadding = 20;
+        int rightPadding = 20;
         paragraphText.setBorder(BorderFactory.createEmptyBorder(
                 topPadding, leftPadding, bottomPadding, rightPadding));
 
-        // Add the logo to the topPanel
         topPanel.add(logoLabel, BorderLayout.NORTH);
         JPanel paragraphPanel = new JPanel();
         paragraphPanel.setLayout(new BoxLayout(paragraphPanel, BoxLayout.Y_AXIS));
         paragraphPanel.setBackground(lightBrown);
         paragraphPanel.add(paragraphText);
-        paragraphPanel.add(Box.createVerticalStrut(10)); // Add some vertical space between components
+        paragraphPanel.add(Box.createVerticalStrut(10));
         paragraphPanel.add(profileButton);
 
         topComponentsPanel.add(paragraphPanel, BorderLayout.CENTER);
         topPanel.add(topComponentsPanel, BorderLayout.CENTER);
 
-        // Search panel setup
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new FlowLayout());
         searchPanel.setBackground(lightBrown);
@@ -147,8 +147,6 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         searchComponentsPanel.add(searchButton, BorderLayout.EAST);
         searchComponentsPanel.add(filterButton, BorderLayout.WEST);
 
-
-        // Add the search components panel to the search panel
         searchPanel.add(searchComponentsPanel, BorderLayout.NORTH);
 
         searchButton.setBackground(Brown);
@@ -164,18 +162,14 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
             }
         });
 
-        // Set initial visibility of the load more button to false
         loadMoreButton.setVisible(false);
 
-        // Results panel setup
         resultsPanel = new JPanel();
         resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
         resultsPanel.setBackground(lightBrown);
 
-        // Encapsulate the resultsPanel within a JScrollPane
         JScrollPane resultsScrollPane = new JScrollPane(resultsPanel);
 
-        // Adding the topPanel and search panel to the main panel
         mainPanel.add(searchPanel, BorderLayout.NORTH);
         mainPanel.add(resultsScrollPane, BorderLayout.CENTER);
 
@@ -184,10 +178,8 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         loadMorePanel.add(loadMoreButton);
         mainPanel.add(loadMorePanel, BorderLayout.SOUTH);
 
-        // Adding components directly to 'this' (the BookSearchView panel)
-        this.add(mainPanel, BorderLayout.CENTER); // Add the main panel to the top
+        this.add(mainPanel, BorderLayout.CENTER);
 
-        // Ensure that the components are visible
         setVisible(true);
     }
 
@@ -196,8 +188,6 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         if (e.getSource() == searchButton) {
             controller.onSearchButtonClicked(searchField.getText());
             boolean resultsAvailable = checkResultsAvailability();
-
-            // Set the visibility of the load more button based on results availability
             loadMoreButton.setVisible(resultsAvailable);
         }
 
@@ -215,7 +205,6 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
             filterDialog.setBackground(lightBrown);
             filterDialog.setTitle("Filter Options");
 
-            // Create UI components for author, year, and "has listings" filters
             JTextField authorFilter = new JTextField(20);
             authorFilter.setBackground(whiteBrown);
             JTextField yearFilter = new JTextField(10);
@@ -237,15 +226,10 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
             applyFilterButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Get the selected filter values
                     String authorValue = authorFilter.getText();
                     String yearValue = yearFilter.getText();
                     String hasListingsValue = (String) hasListingsFilter.getSelectedItem();
-
-                    // Call the controller or delegate to handle filter logic
                     filterController.onFilterButtonClicked(authorValue, yearValue, hasListingsValue, displayedBooks);
-
-                    // Close the filter dialog
                     filterDialog.dispose();
                 }
             });
@@ -265,28 +249,25 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
             buttonPanel.add(cancelButton);
 
             filterPanel.add(buttonPanel, BorderLayout.SOUTH);
-
             filterDialog.add(filterPanel);
-
-            // Set dialog properties and display
             filterDialog.pack();
-            filterDialog.setLocationRelativeTo(this); // Center the dialog relative to the main window
+            filterDialog.setLocationRelativeTo(this);
             filterDialog.setVisible(true);
         }
     }
 
+    /**
+     * Returns whether there are still Book results to display when the "load more" button is clicked
+     * @return A boolean corresponding to whether there are still Book results to display when the "load more" button
+     * is clicked
+     */
     public boolean checkResultsAvailability() {
         List<Book> searchResults = viewModel.getState().getSearchResults();
-        // Check if there are more results available
         if (searchResults != null && !searchResults.isEmpty()) {
-            // You can define a threshold to decide whether to show the "Load More" button
-            int maxResultsToShow = 10; // Set your threshold here
-
-            // Check if there are more results beyond the threshold
+            int maxResultsToShow = 10;
             return searchResults.size() > maxResultsToShow;
         }
-
-        return false; // No results available
+        return false;
     }
 
     @Override
@@ -296,6 +277,10 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         }
     }
 
+    /**
+     * Populate the space beneath the search bar with 20 Book results once a search is made
+     * @param books List of Books to display
+     */
     private void updateResultsPanel(List<Book> books) {
         resultsPanel.removeAll();
         currentLoadIndex = 0;
@@ -306,13 +291,9 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
             for (int i = 0; i < displayLimit; i++) {
                 Book book = books.get(i);
                 displayedBooks.add(book);
-
                 currentLoadIndex++;
-
-                // Create a custom JPanel for each book entry
                 addBookToPanel(book);
 
-                // Add a separator after each bookPanel except the last one
                 if (i < displayLimit - 1) {
                     JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
                     resultsPanel.add(separator);
@@ -326,6 +307,9 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         resultsPanel.repaint();
     }
 
+    /**
+     * Display 20 more Books beneath the currently displayed Books
+     */
     private void loadMoreBooks() {
         List<Book> books = viewModel.getState().getSearchResults();
         if (books == null) {
@@ -336,64 +320,55 @@ public class BookSearchView extends JPanel implements ActionListener, PropertyCh
         for (int i = currentLoadIndex; i < nextLoadIndex; i++) {
             addBookToPanel(books.get(i));
         }
-
         currentLoadIndex = nextLoadIndex;
-        // Hide the load more button if there are no more books to load
         loadMoreButton.setVisible(currentLoadIndex < books.size());
     }
 
+    /**
+     * Creates a JPanel for a specific Book with that Book's cover, title, author, and year
+     * @param book Book to create a panel for
+     */
     private void addBookToPanel(Book book) {
         JPanel bookPanel = new JPanel();
         bookPanel.setLayout(new BorderLayout());
-
-        // Create a JLabel for the book cover image
         JLabel coverLabel = new JLabel();
 
         if (book.getCoverUrl() != null) {
             try {
                 URL coverUrl = new URL(book.getCoverUrl());
-                // Configure HttpURLConnection to follow redirects
                 HttpURLConnection connection = (HttpURLConnection) coverUrl.openConnection();
                 connection.setInstanceFollowRedirects(true);
                 connection.connect();
                 InputStream inputStream = connection.getInputStream();
 
                 ImageIcon coverImage = new ImageIcon(ImageIO.read(inputStream));
-                // Set a preferred size for the cover image
                 coverImage.setImage(coverImage.getImage().getScaledInstance(120, 140, Image.SCALE_DEFAULT));
                 coverLabel.setIcon(coverImage);
             } catch (MalformedURLException e) {
-                e.printStackTrace(); // Handle the exception appropriately or log it
+                e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace(); // Handle IO exceptions
+                e.printStackTrace();
             }
         } else {
-            // Set a default image when no cover URL is available
-            ImageIcon defaultCoverImage = new ImageIcon("default.png"); // Replace with your default image path
+            ImageIcon defaultCoverImage = new ImageIcon("default.png");
             defaultCoverImage.setImage(defaultCoverImage.getImage().getScaledInstance(120, 140, Image.SCALE_DEFAULT));
             coverLabel.setIcon(defaultCoverImage);
         }
 
         bookPanel.add(coverLabel, BorderLayout.WEST);
-
-        // Create a JPanel to hold book details (title, author, year)
         JPanel detailsPanel = new JPanel();
         detailsPanel.setLayout(new GridLayout(3, 1));
 
-        // Create JLabels for book details
         JLabel titleLabel = new JLabel("Title: " + book.getTitle());
         JLabel authorLabel = new JLabel("Author: " + book.getAuthor());
         JLabel yearLabel = new JLabel("Publication Year: " + book.getYear());
 
-        // Add book details JLabels to the detailsPanel
         detailsPanel.add(titleLabel);
         detailsPanel.add(authorLabel);
         detailsPanel.add(yearLabel);
 
-        // Add the detailsPanel to the bookPanel
         bookPanel.add(detailsPanel, BorderLayout.CENTER);
 
-        // Add the custom bookPanel to the resultsPanel
         resultsPanel.add(bookPanel);
 
         bookPanel.addMouseListener(new MouseAdapter() {

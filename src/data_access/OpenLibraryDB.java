@@ -1,6 +1,6 @@
 package data_access;
 import entity.Book;
-import use_case.booksearch.BookSearchDataAccessInterface;
+import use_case.book_search.BookSearchDataAccessInterface;
 
 import okhttp3.*;
 import java.io.IOException;
@@ -14,8 +14,13 @@ import java.nio.charset.StandardCharsets;
 
 public class OpenLibraryDB implements BookSearchDataAccessInterface {
     private final OkHttpClient client = new OkHttpClient();
-    //StandardCharsets.UTF_8
 
+    /**
+     * Returns an array of Books corresponding to the search results from the search query through a call to the Open
+     * Library API
+     * @param searchQuery a String that can correspond to an author, title, ISBN, etc
+     * @return An array of Books corresponding to the search result
+     */
     public ArrayList<Book> getSearchResult(String searchQuery) {
         String encodedQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8);
         String url = "https://openlibrary.org/search.json?q=" + encodedQuery;
@@ -46,11 +51,11 @@ public class OpenLibraryDB implements BookSearchDataAccessInterface {
                 String author = bookJson.optJSONArray("author_name") != null
                         ? bookJson.optJSONArray("author_name").getString(0)
                         : "Unknown";
-                // Summaries will be fetched later, as needed
+
                 String isbn = bookJson.optJSONArray("isbn") != null
                         ? bookJson.optJSONArray("isbn").getString(0)
                         : "Unknown";
-                int inStock = 0;  // Placeholder, update as per your application logic
+                int inStock = 0;
                 String coverId = bookJson.optString("cover_i");
                 String coverUrl = coverId.isEmpty() ? null : "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg";
                 String language = bookJson.optString("language", "Unknown");
@@ -69,10 +74,8 @@ public class OpenLibraryDB implements BookSearchDataAccessInterface {
             return books;
 
         } catch (IOException | JSONException e) {
-            // Enhanced error handling
             e.printStackTrace();
             System.err.println("Error fetching or parsing the book search results: " + e.getMessage());
-            // Depending on your application's design, you might want to return an empty list or throw a custom exception
             return new ArrayList<>();
         }
     }

@@ -1,6 +1,5 @@
 package data_access;
 
-import entity.CommonUser;
 import entity.Listing;
 import entity.User;
 import entity.UserFactory;
@@ -24,7 +23,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     private final Map<String, User> accounts = new HashMap<>();
 
-    private UserFactory userFactory;
+    private final UserFactory userFactory;
 
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
         this.userFactory = userFactory;
@@ -66,17 +65,21 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
+    /**
+     * Save a new User to our existing hash map of User accounts
+     * @param user the User to save
+     */
     @Override
     public void save(User user) {
         accounts.put(user.getUsername(), user);
         this.save();
     }
 
-    public void clear(){
-        accounts.clear();
-        this.save();
-    }
-
+    /**
+     * Returns the User that has the specified username
+     * @param username username of the User we want to find
+     * @return the User that has the specified username
+     */
     @Override
     public User get(String username) {
         return accounts.get(username);
@@ -109,82 +112,61 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     /**
      * Return whether a user exists with username identifier.
      * @param identifier the username to check.
-     * @return whether a user exists with username identifier
+     * @return a boolean representing whether a user exists with username identifier
      */
     @Override
     public boolean existsByName(String identifier) {
         return accounts.containsKey(identifier);
     }
 
+    /**
+     * Returns a list of listings for a specific Book, given that Book's ISBN
+     * @param ISBN ISBN of the Book we want to fetch the listings of
+     * @return a list of listings for a specific Book, given that Book's ISBN
+     */
     @Override
     public List<Listing> getBookListings(String ISBN) {
         return null;
     }
 
-    public CommonUser findUserByUsername(String username) {
-        User user = accounts.get(username);
-        if (user instanceof CommonUser) {
-            return (CommonUser) user;
-        } else {
-            return null;
-        }
-    }
-
+    /**
+     * Return the city of a specific User given their username
+     * @param username username of the User whose city we want
+     * @return a string representing the city of a specific User given their username
+     */
     @Override
     public String findCity(String username) {
         User user = accounts.get(username);
         return (user != null) ? user.getCity() : null;
     }
 
+    /**
+     * Return the email of a specific User given their username
+     * @param username username of the User whose email we want
+     * @return a string representing the email of a specific User given their username
+     */
     @Override
     public String findEmail(String username) {
         User user = accounts.get(username);
         return (user != null) ? user.getEmail() : null;
     }
 
+    /**
+     * Return the phone number of a specific User given their username
+     * @param username username of the User whose phone number we want
+     * @return a string representing the phone number of a specific User given their username
+     */
     @Override
     public String findPhoneNumber(String username) {
         User user = accounts.get(username);
         return (user != null) ? user.getPhoneNumber() : null;
     }
 
-    public boolean passwordMeetsReq(String password) {
-        if (password.length() < 6){
-            return false;
-        }
-        else {
-            boolean lowerCase = false;
-            boolean upperCase = false;
-            boolean number = false;
-            for (char c: password.toCharArray()){
-                if (c == ' '){
-                    return false;
-                } else if (Character.isLowerCase(c)) {
-                    lowerCase = true;
-                } else if (Character.isUpperCase(c)) {
-                    upperCase = true;
-                } else if (Character.isDigit(c)) {
-                    number = true;
-                }
-            }
-            return (lowerCase && upperCase && number);
-        }
-    }
-
-    public boolean emailValid(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-
-        // Create a Pattern object
-        Pattern pattern = Pattern.compile(emailRegex);
-
-        // Create a Matcher object
-        Matcher matcher = pattern.matcher(email);
-
-        // Return true if the email matches the pattern, otherwise false
-        return matcher.matches();
-
-    }
-
+    /**
+     * Overwrites the phone number of a given User with a new password
+     * @param username
+     * @param newPhoneNumber
+     */
     public void updatePhoneNumber(String username, String newPhoneNumber) {
         User user = accounts.get(username);
         if (user != null) {
@@ -193,6 +175,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
+    /**
+     * Overwrites the city of a given User with a new password
+     * @param username username of the User whose city we want to change
+     * @param newCity String we want to replace the current city with
+     */
     public void updateCity(String username, String newCity) {
         User user = accounts.get(username);
         if (user != null) {
@@ -201,6 +188,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
+    /**
+     * Overwrites the email of a given User with a new password
+     * @param username username of the User whose email we want to change
+     * @param newEmail String we want to replace the current email with
+     */
     public void updateEmail(String username, String newEmail) {
         User user = accounts.get(username);
         if (user != null) {
@@ -209,6 +201,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
+    /**
+     * Overwrites the password of a given User with a new password
+     * @param username username of the User whose password we want to change
+     * @param newPassword String we want to replace the current password with
+     */
     public void updatePassword(String username, String newPassword) {
         User user = accounts.get(username);
         if (user != null) {

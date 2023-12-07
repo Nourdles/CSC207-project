@@ -34,6 +34,13 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
     private JPanel subjectsPanel;
     private JPanel listingsPanel;
 
+    /**
+     * Creates a new Book Info View
+     * @param viewModel Book Info View Model
+     * @param viewManagerModel View Manager Model
+     * @param createListingViewModel Create Listing View Model
+     * @param createListingController Create Listing Controller
+     */
     public BookInfoView(BookInfoViewModel viewModel, ViewManagerModel viewManagerModel, CreateListingViewModel createListingViewModel, CreateListingController createListingController) {
         this.viewModel = viewModel;
         this.viewManagerModel = viewManagerModel;
@@ -44,6 +51,10 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         createUI();
     }
 
+    /**
+     * Creates the UI for the Book Info View, which displays more information on the selected Book, the listings for
+     * that Book, and a cancel and create listings button.
+     */
     private void createUI() {
         setLayout(new BorderLayout());
         Color Brown = new Color(217, 196, 152);
@@ -126,6 +137,9 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Switches the view to the Create Listing View and communicates the necessary information from the Book Info State
+     */
     private void openCreateListingView() {
         BookInfoState bookInfoState = viewModel.getState();
         CreateListingState createListingState = createListingViewModel.getState();
@@ -154,6 +168,10 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         }
     }
 
+    /**
+     * Populate the Book Info View with information on the selected Book, obtained from the current Book Info State
+     * @param state the current Book Info State
+     */
     private void updateUI(BookInfoState state) {
         titleLabel.setText(state.getTitle());
         isbnLabel.setText("ISBN: " + state.getISBN());
@@ -200,13 +218,10 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
                 gbc.gridx = column;
                 gbc.gridy = 0;
                 listingsPanel.add(new JLabel("Seller: " + listing.get(0)), gbc);
-
                 gbc.gridy++;
                 listingsPanel.add(new JLabel("Price: $" + listing.get(1)), gbc);
-
                 gbc.gridy++;
                 listingsPanel.add(new JLabel("Condition: " + listing.get(2)), gbc);
-
                 gbc.gridy++;
                 listingsPanel.add(new JLabel("City: " + listing.get(3)), gbc);
 
@@ -221,10 +236,8 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
                 column++;
             }
         }
-
         listingsPanel.revalidate();
         listingsPanel.repaint();
-
         revalidate();
         repaint();
     }

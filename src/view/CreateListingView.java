@@ -38,6 +38,15 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
     private final String selectedCondition = "New";
     private final JComboBox<String> conditionDropdown = new JComboBox<String>(options);
     private File image;
+
+    /**
+     * Create a new Create Listing View
+     * @param createListingViewModel Create Listing View Model
+     * @param createListingController Create Listing Controller
+     * @param viewManagerModel View Manager Model
+     * @param bookInfoController Book Info Controller
+     * @param bookInfoViewModel Book Info View Model
+     */
     public CreateListingView(CreateListingViewModel createListingViewModel,
                              CreateListingController createListingController, ViewManagerModel viewManagerModel, BookInfoController bookInfoController, BookInfoViewModel bookInfoViewModel){
         this.createListingViewModel = createListingViewModel;
@@ -61,7 +70,6 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
         centerPanel.setBackground(lightBrown);
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         JPanel priceInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        // JLabel priceLabel = new JLabel(CreateListingViewModel.LISTING_PRICE_LABEL);
 
         LabelTextPanel priceLabel = new LabelTextPanel(new JLabel("Price (CAD):"), listingPriceInputField);
         priceInputPanel.add(priceLabel);
@@ -104,7 +112,6 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
         cancelButton.addActionListener(this);
 
         upload.addActionListener(
-            // This creates an anonymous subclass of ActionListener and instantiates it.
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(upload)) {
@@ -113,8 +120,7 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                         bookPhotoChooser.setFileFilter(filter);
                         int returnVal = bookPhotoChooser.showOpenDialog(CreateListingView.this);
                         if (returnVal == JFileChooser.APPROVE_OPTION) {
-                            image = bookPhotoChooser.getSelectedFile(); // Directly use 'image' field
-                            // Update the state with the selected image
+                            image = bookPhotoChooser.getSelectedFile();
                             CreateListingState currentState = createListingViewModel.getState();
                             currentState.setBookPhoto(image);
                             createListingViewModel.setState(currentState);
@@ -133,16 +139,11 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                     currentState.setListingPrice(price);
                     createListingViewModel.setState(currentState);
                 } catch (NumberFormatException ex) {
-                    // Handle invalid input, maybe reset to previous valid value or show a warning
                 }
             }
         });
     }
 
-    /**
-     * Empty class for now
-     * @param evt the event to be processed
-     */
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(createListing)) {
@@ -166,10 +167,8 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
                 throw new RuntimeException(e);
             }
         } else if (evt.getSource().equals(conditionDropdown)) {
-            // String selectedCondition = (String)conditionDropdown.getSelectedItem();
             JComboBox<String> cb = (JComboBox<String>) evt.getSource();
             String selectedCondition = (String) cb.getSelectedItem();
-            // Update the state with the selected condition
             CreateListingState currentState = createListingViewModel.getState();
             currentState.setCondition(selectedCondition);
             createListingViewModel.setState(currentState);
@@ -183,6 +182,11 @@ public class CreateListingView extends JPanel implements ActionListener, Propert
         CreateListingState state = (CreateListingState) evt.getNewValue();
         setFields(state);
     }
+
+    /**
+     * Set a format for the price input field
+     * @param state the current Create Listing State
+     */
     private void setFields(CreateListingState state) {
         String formattedPrice = listingPriceFormat.format(state.getListingPrice());
         listingPriceInputField.setText(formattedPrice);
