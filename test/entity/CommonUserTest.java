@@ -82,4 +82,10 @@ class CommonUserTest {
                 "1234567890", "Toronto");
         assertEquals(user, newUser);
     }
+    @Test
+    void isNotEquals(){
+        CommonUser newUser = new CommonUser("username", "123**User", LocalDateTime.MAX, "userc@mail.com",
+                "1234567890", "Toronto");
+        assertNotEquals(user, newUser);
+    }
 }
