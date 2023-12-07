@@ -18,11 +18,8 @@ import java.util.regex.*;
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, BookInfoDataAccessInterface {
 
     private final File csvFile;
-
     private final Map<String, Integer> headers = new LinkedHashMap<>();
-
     private final Map<String, User> accounts = new HashMap<>();
-
     private final UserFactory userFactory;
 
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
@@ -44,7 +41,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time, email, phoneNumber, city");
+                assert header.equals("username,password,creation_time,email,phoneNumber,city");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -72,6 +69,19 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     @Override
     public void save(User user) {
         accounts.put(user.getUsername(), user);
+        this.save();
+    }
+
+    /**
+     * Deletes the User with the given username if they exist.
+     * @param username
+     */
+    public void delete(String username){
+        for(String id : accounts.keySet()){
+            if(id.equals(username)){
+                accounts.remove(username);
+            }
+        }
         this.save();
     }
 
@@ -120,12 +130,12 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     }
 
     /**
-     * Returns a list of listings for a specific Book, given that Book's ISBN
-     * @param ISBN ISBN of the Book we want to fetch the listings of
-     * @return a list of listings for a specific Book, given that Book's ISBN
+     * Returns a list of listings for a specific User, given that User's username
+     * @param username Username of the User we want to fetch the listings of
+     * @return a list of listings for a specific User, given that User's username
      */
     @Override
-    public List<Listing> getBookListings(String ISBN) {
+    public List<Listing> getBookListings(String username) {
         return null;
     }
 
@@ -213,4 +223,5 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             save();
         }
     }
+    public Map<String, User> getAccounts(){return accounts;}
 }

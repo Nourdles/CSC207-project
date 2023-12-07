@@ -12,6 +12,9 @@ class ListingTest {
 
     private Listing listing;
 
+    // For testing equals() method
+    private Listing listing2;
+
     @BeforeEach
     void init() {
         File file = new File("demo.txt");
@@ -70,4 +73,11 @@ class ListingTest {
     void getCreationTime() {
         assertEquals(LocalDateTime.MAX, listing.getCreationTime());
     }
+    @Test
+    void equals(){
+        File file = new File("demo.txt");
+        listing2 = new Listing("123", "Dracula", "user", 50.5, "Excellent",
+                file, LocalDateTime.MAX);
+        assertTrue(listing.equals(listing2));
+    };
 }

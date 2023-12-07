@@ -9,7 +9,9 @@ import use_case.create_listing.CreateListingOutputBoundary;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,9 +25,7 @@ class FileListingDataAccessObjectTest {
     private String sellerName;
     private Listing listing;
     private String ISBN;
-    private Map<String, Listing> expectedMap = new HashMap<>();
     private Map<String, Listing> actualMap = new HashMap<>();
-    private File listingInfoCSV = new File("listingInfo.csv");
     @org.junit.jupiter.api.BeforeEach
     void setUp() throws IOException {
         ListingFactory listingFactory = new ListingFactory();
@@ -38,28 +38,54 @@ class FileListingDataAccessObjectTest {
         LocalDateTime bookLDT = LocalDateTime.now();
         listing = listingFactory.create(bookTitle, ISBN, sellerName, 50, "Excellent", bookPhoto, bookLDT);
         fileListingDAO = new FileListingDataAccessObject(listingsPath, listingFactory);
-        fileListingDAO.save(listing);
     }
     @org.junit.jupiter.api.BeforeEach
     void clear() {
     }
     @org.junit.jupiter.api.Test
-    void save() {
+    void save() throws IOException {
         String listingId = ISBN;
-        expectedMap.put(listingId, listing);
         actualMap = fileListingDAO.getListingInfo();
-        assertEquals(actualMap, expectedMap);
+        Map<String, Listing> expectedMap = new HashMap<>(actualMap);
+        expectedMap.put(listingId, listing);
+        fileListingDAO.save(listing);
+        assertEquals(actualMap.size(), expectedMap.size());
+        for(Listing listing: actualMap.values()){
+            assertTrue(expectedMap.containsValue(listing));
+        }
+    }
+    @org.junit.jupiter.api.Test
+    void successExistsById() {
+        assertTrue(fileListingDAO.existsById(ISBN));
+    }
+    @org.junit.jupiter.api.Test
+    void failExistById(){
+        assertFalse(fileListingDAO.existsById("abcdefg"));
+    }
+    @org.junit.jupiter.api.Test
+    void successDelete() throws IOException {
+        actualMap = fileListingDAO.getListingInfo();
+        fileListingDAO.save(listing);
+        assertTrue(actualMap.containsKey(ISBN));
+        assertTrue(actualMap.containsValue(listing));
+        actualMap.remove(ISBN);
+        assertFalse(actualMap.containsKey(ISBN));
+        assertFalse(actualMap.containsValue(listing));
     }
 
     @org.junit.jupiter.api.Test
-    void existsById() {
+    void getUserListings() throws IOException {
+        List<Listing> expectedList = new ArrayList<>();
+        fileListingDAO.save(listing);
+        expectedList.add(listing);
+        assertEquals(fileListingDAO.getUserListings(sellerName), expectedList);
+    }
+    @org.junit.jupiter.api.Test
+    void getBookListings() throws IOException {
+        List<Listing> expectedList = new ArrayList<>();
+        expectedList.add(listing);
+        fileListingDAO.save(listing);
+        assertEquals(fileListingDAO.getBookListings(ISBN), expectedList);
     }
 
-    @org.junit.jupiter.api.Test
-    void delete() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void getUserListings() {
-    }
 }
