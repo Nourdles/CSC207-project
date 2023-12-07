@@ -19,7 +19,7 @@ public class DeleteListingInteractorTest {
     void successTest(){
         Book book = new Book( "Dracula", 1988, "Author", "SUmmary", "123", 0, "URL",
                 "english", new ArrayList<>());
-        User user = new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
+        CommonUser user = (CommonUser) new CommonUserFactory().create("Unu", "Password123", LocalDateTime.now(),
                 "unu@mail.com", "1234456", "toronto");
         File photo = new File("bookPhoto.png");
         Listing listing1 = new ListingFactory().create("Dracula","123", "Unu", 23, "Good", photo, LocalDateTime.now());
