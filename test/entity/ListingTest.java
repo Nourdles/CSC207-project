@@ -1,52 +1,73 @@
 package entity;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ListingTest {
 
-    @Test
-    void getPrice() {
+    private Listing listing;
+
+    @BeforeEach
+    void init() {
+        File file = new File("demo.txt");
+        listing = new Listing("123", "Dracula", "user", 50.5, "Excellent", file,
+                LocalDateTime.MAX);
     }
 
     @Test
-    void setPrice() {
+    void getPrice() {
+        assertEquals(50.5, listing.getPrice());
     }
 
     @Test
     void getPathId() {
+        assertEquals("user/123.png", listing.getPathId());
     }
 
     @Test
     void getCondition() {
+        assertEquals("Excellent", listing.getCondition());
     }
 
     @Test
     void setCondition() {
+        listing.setCondition("Poor");
+        assertEquals("Poor", listing.getCondition());
     }
 
     @Test
     void getListingId() {
+        assertEquals("123", listing.getListingId());
     }
 
     @Test
-    void getBook() {
+    void getTitle() {
+        assertEquals("Dracula", listing.getTitle());
+    }
+
+    @Test
+    void getISBN() {
+        assertEquals("123", listing.getISBN());
     }
 
     @Test
     void getBookPhoto() {
-    }
-
-    @Test
-    void setBookPhoto() {
+        File file = new File("demo.txt");
+        assertEquals(file, listing.getBookPhoto());
     }
 
     @Test
     void getSeller() {
+        assertEquals("user", listing.getSeller());
     }
 
     @Test
     void getCreationTime() {
+        assertEquals(LocalDateTime.MAX, listing.getCreationTime());
     }
 }

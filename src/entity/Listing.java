@@ -7,11 +7,11 @@ public class Listing {
     private final String title;
     private final LocalDateTime creationTime;
     private final String listingId;
-    private File bookPhoto;
-    private double listingPrice;
+    private final File bookPhoto;
+    private final double listingPrice;
     private String condition;
     private final String seller;
-    private String pathId;
+    private final String pathId;
 
     /** A seller's listing of a book.
      * Requires: book must be in the OpenLibraryDatabase
@@ -25,7 +25,7 @@ public class Listing {
         this.listingPrice = listingPrice;
         this.condition = condition;
         this.bookPhoto = bookPhoto;
-        this.listingId = String.valueOf(this.ISBN); // + String.valueOf(book.getEverInStock());
+        this.listingId = this.ISBN; // + String.valueOf(book.getEverInStock());
         this.pathId = seller + "/" + this.ISBN + ".png";
     }
 

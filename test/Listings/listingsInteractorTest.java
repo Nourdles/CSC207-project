@@ -4,7 +4,7 @@ import data_access.InMemoryListingsDAO;
 import entity.Listing;
 import entity.ListingFactory;
 import org.junit.jupiter.api.Test;
-import use_case.listings.*;
+import use_case.view_listings.*;
 
 import java.io.File;
 import java.time.LocalDateTime;

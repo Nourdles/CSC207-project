@@ -3,7 +3,6 @@ package entity;
 import java.util.ArrayList;
 
 public class Book {
-    private int everInStock;
     private String title;
     private int year;
     private String author;
@@ -96,14 +95,6 @@ public class Book {
     }
 
     /**
-     * Set the summary of the Book to be the given String
-     * @param summary String we want to set the summary to
-     */
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    /**
      * Returns the ISBN of the Book
      * @return The ISBN of the Book
      */
@@ -125,14 +116,6 @@ public class Book {
      */
     public int getInStock() {
         return inStock;
-    }
-
-    /**
-     * Set the number of listings of the Book to be the given int
-     * @param inStock int we want to set the amount in stock to
-     */
-    public void setInStock(int inStock) {
-        this.inStock = inStock;
     }
 
     /**
