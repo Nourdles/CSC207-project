@@ -73,15 +73,7 @@ class BookTest {
 
     @Test
     void testToString() {
-        assertEquals("Book{" +
-                "title='" + "Dracula" + '\'' +
-                ", year=" + "1988" +
-                ", author='" + "Bram Stoker" + '\'' +
-                ", summary='" + "Summary" + '\'' +
-                ", ISBN=" + "123" +
-                ", inStock=" + "0" +
-                ", coverUrl='" + "URL" + '\'' +
-                '}'
+        assertEquals(book.toString()
 
         , "Book{" +
                 "title='" + book.getTitle() + '\'' +

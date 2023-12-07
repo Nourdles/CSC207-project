@@ -87,4 +87,8 @@ class ListingTest {
                 file, LocalDateTime.MAX);
         assertFalse(listing.equals(listing2));
     };
+    @Test
+    void nonListingEqualsFalse(){
+        assertNotEquals(listing, "12345");
+    };
 }
