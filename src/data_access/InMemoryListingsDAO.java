@@ -1,17 +1,40 @@
 package data_access;
 
 import entity.Listing;
+import entity.User;
 import use_case.book_info.BookInfoDataAccessInterface;
+import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.delete_listing.DeleteListingDataAccessInterface;
 import use_case.view_listings.ListingsDataAccessInterface;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class InMemoryListingsDAO implements ListingsDataAccessInterface, DeleteListingDataAccessInterface,
-        BookInfoDataAccessInterface {
+        BookInfoDataAccessInterface, CreateListingDataAccessInterface {
     private final Map<String, Listing> listings = new HashMap<>();
+
+    /**
+     * Saves the given Listing and its ID to the Map
+     * @param listing Listing we want to save
+     */
+    @Override
+    public void save(Listing listing){
+        listings.put(listing.getListingId(), listing);
+    }
+
+    @Override
+    public boolean existsById(String listingId) {
+        for(String id : listings.keySet()){
+            if(id.equals(listingId)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Deletes the listing that has the given listing ID
@@ -36,7 +59,13 @@ public class InMemoryListingsDAO implements ListingsDataAccessInterface, DeleteL
      */
     @Override
     public List<Listing> getUserListings(String username) {
-        return null;
+        List<Listing> listingsList = new ArrayList<>();
+        for (Listing listing : listings.values()){
+            if (listing.getSeller().equals(username)){
+                listingsList.add(listing);
+            }
+        }
+        return listingsList;
     }
 
     /**
@@ -54,7 +83,13 @@ public class InMemoryListingsDAO implements ListingsDataAccessInterface, DeleteL
      */
     @Override
     public List<Listing> getBookListings(String ISBN) {
-        return null;
+        List<Listing> listingsList = new ArrayList<>();
+        for (Listing listing : listings.values()){
+            if (listing.getISBN().equals(ISBN)){
+                listingsList.add(listing);
+            }
+        }
+        return listingsList;
     }
 
     /**
@@ -85,5 +120,10 @@ public class InMemoryListingsDAO implements ListingsDataAccessInterface, DeleteL
     @Override
     public String findPhoneNumber(String username) {
         return null;
+    }
+
+    @Override
+    public void save(User user) {
+
     }
 }
