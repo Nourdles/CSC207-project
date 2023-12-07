@@ -1,4 +1,4 @@
-package delete_listings;
+package use_case.delete_listings;
 
 import data_access.InMemoryListingsDAO;
 import entity.*;

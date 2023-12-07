@@ -1,4 +1,4 @@
-package signup;
+package use_case.signup;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
@@ -17,13 +17,11 @@ public class SignupInteractorTest {
                 "mail@mail.com", "4379950765", "Toronto");
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // This creates a successPresenter that tests whether the test case is as we expect.
         SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
                 assertEquals("Paul", user.getUsername());
-                assertNotNull(user.getCreationTime()); // any creation time is fine.
+                assertNotNull(user.getCreationTime());
                 assertTrue(userRepository.existsByName("Paul"));
             }
 
@@ -43,11 +41,9 @@ public class SignupInteractorTest {
                 "mail@mail.com", "4379950765", "Toronto");
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // This creates a presenter that tests whether the test case is as we expect.
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
                 fail("Use case success is unexpected.");
             }
 
@@ -67,16 +63,13 @@ public class SignupInteractorTest {
                 "mail@mail.com", "4379950765", "Toronto");
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // Add Paul to the repo so that when we check later they already exist
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Paul", "Password123",  LocalDateTime.now(), "mail@mail.com", "4379950765", "Toronto");
         userRepository.save(user);
 
-        // This creates a presenter that tests whether the test case is as we expect.
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
                 fail("Use case success is unexpected.");
             }
 
@@ -98,7 +91,6 @@ public class SignupInteractorTest {
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
                 fail("Use case success is unexpected.");
             }
 

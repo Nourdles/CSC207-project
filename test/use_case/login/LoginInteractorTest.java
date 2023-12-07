@@ -12,7 +12,31 @@ import use_case.signup.SignupUserDataAccessInterface;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class loginInteractorTest {
+public class LoginInteractorTest {
+
+    @Test
+    void successTest() {
+        CommonUser user = (CommonUser) new CommonUserFactory().create("Un", "Password123", LocalDateTime.now(),
+                "unumail", "69", "to");
+        LoginInputData inputData = new LoginInputData("Un", "Password123");
+        LoginUserDataAccessInterface userRepo = new InMemoryUserDataAccessObject();
+        userRepo.save(user);
+
+        LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LoginOutputData user) {
+                assertTrue(userRepo.existsByName("Un"));
+                assertEquals("Password123", inputData.getPassword());
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Use case failure is unexpected.");
+            }
+        };
+        LoginInputBoundary loginInputBoundary = new LoginInteractor(userRepo, successPresenter);
+        loginInputBoundary.execute(inputData);
+    }
     @Test
     void  UsernameFailTest(){
 

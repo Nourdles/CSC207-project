@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ListingsDataAccessInterface {
     List<Listing> getUserListings(String username);
+    void save(Listing listing);
 }

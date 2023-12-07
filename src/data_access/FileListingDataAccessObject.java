@@ -86,12 +86,15 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
      * @throws IOException
      */
     @Override
-    public void save(Listing listing) throws IOException {
+    public void save(Listing listing) {
         listingInfo.put(listing.getListingId(), listing);
-
         if (imageDirectory == null || listing.getBookPhoto() == null) {
             String defaultImagePath = "default.png";
-            storedImage = ImageIO.read(new File(defaultImagePath));
+            try {
+                storedImage = ImageIO.read(new File(defaultImagePath));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             File userDirectory = new File(listing.getSeller());
             if (!userDirectory.exists()) {
@@ -101,10 +104,17 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
             Path imageDirFullpath = Paths.get(imageDirectory.getAbsolutePath());
             Path userDirFullpath = Paths.get(userDirectory.getAbsolutePath());
 
-            storedImage = ImageIO.read(listing.getBookPhoto());
+            try {
+                storedImage = ImageIO.read(listing.getBookPhoto());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-
-        this.save();
+        try {
+            this.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void save() throws IOException {
@@ -227,6 +237,11 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
     @Override
     public String findPhoneNumber(String username) {
         return null;
+    }
+
+    @Override
+    public void save(User user) {
+
     }
 
     public Map<String, Listing> getListingInfo(){

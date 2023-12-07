@@ -17,7 +17,7 @@ public class Listing {
      * Requires: book must be in the OpenLibraryDatabase
      * Users may upload up to one photo per listing.
      */
-    Listing(String ISBN, String title, String seller, double listingPrice, String condition, File bookPhoto, LocalDateTime creationTime) {
+    public Listing(String ISBN, String title, String seller, double listingPrice, String condition, File bookPhoto, LocalDateTime creationTime) {
         this.ISBN = ISBN;
         this.title = title;
         this.seller = seller;
