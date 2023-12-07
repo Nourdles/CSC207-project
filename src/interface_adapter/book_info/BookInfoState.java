@@ -28,6 +28,12 @@ public class BookInfoState {
     }
 
     /**
+     * Returns the error message in the current State
+     * @return String that represents the error message in the current State
+     */
+    public String getErrorMessage() {return this.errorMessage;}
+
+    /**
      * Sets the year for this State
      * @param year int we want to set the year of the State to
      */

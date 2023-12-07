@@ -6,9 +6,7 @@ public class DeleteListingState {
     /**
      * Create a new Delete Listings State
      */
-    public DeleteListingState(){
-
-    }
+    public DeleteListingState(){}
 
     /**
      * Returns the listing in the current State

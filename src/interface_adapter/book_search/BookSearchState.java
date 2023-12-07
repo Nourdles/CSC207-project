@@ -34,4 +34,10 @@ public class BookSearchState {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    /**
+     * Returns the error message stored in the current State
+     * @return String that represents the error message stored in the current State
+     */
+    public String getErrorMessage() {return this.errorMessage;}
 }
