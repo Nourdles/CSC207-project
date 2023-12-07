@@ -126,4 +126,17 @@ public class CommonUser implements User {
     public void setCity(String city) {
         this.city = city;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(!(obj instanceof User)){
+            return false;
+        }
+        CommonUser user = (CommonUser) obj;
+        double performDifference = user.performanceRating - this.performanceRating;
+        return (user.username.equals(this.username) && user.password.equals(this.password) &&
+                user.email.equals(this.email)&& user.phoneNumber.equals(this.phoneNumber) &&
+                user.city.equals(this.city) && user.creationTime.equals(this.creationTime) &&
+                user.numRatings == this.numRatings && performDifference < 0.00001);
+    }
 }

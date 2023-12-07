@@ -96,5 +96,24 @@ public class Listing {
      * @return the creation time of the Listing
      */
     public LocalDateTime getCreationTime() {return creationTime; }
+
+    /**
+     * Returns true if two listings are equivalent: same ID, creation time, seller, photo, title, condition, price etc.
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj){
+        if (!(obj instanceof Listing)){
+            return false;
+        }
+        Listing listing = (Listing)(obj);
+        double doubleDifference = listing.listingPrice - this.listingPrice;
+        return (listing.listingId.equals(this.listingId) && listing.condition.equals(this.condition)&&
+                listing.title.equals(this.title) && doubleDifference < 0.000001 &&
+                listing.bookPhoto.equals(this.bookPhoto) && listing.ISBN.equals(this.ISBN) &&
+                listing.creationTime.equals(this.creationTime) && listing.pathId.equals(this.pathId) &&
+                listing.seller.equals(this.seller));
+    }
 }
 

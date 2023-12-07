@@ -60,7 +60,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("isbn,seller,listing_price,condition,creation_time");
+                assert header.equals("isbn,seller,listing_price,condition,listingId,creation_time");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -158,7 +158,7 @@ public class FileListingDataAccessObject implements CreateListingDataAccessInter
         return listingInfo.containsKey(listingId);
     }
     /**
-     * Deletes the listing with the given listing ID
+     * Deletes the listing with the given listing ID if it exists.
      * @param listingId the listingId to delete
      * @return the listingId as a string.
      */

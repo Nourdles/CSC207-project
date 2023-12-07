@@ -16,7 +16,6 @@ class CommonUserTest {
         user = new CommonUser("username", "123**User", LocalDateTime.MAX, "user@mail.com",
                 "1234567890", "Toronto");
     }
-
     @Test
     void getUsername() {
         assertEquals("username", user.getUsername());
@@ -75,5 +74,18 @@ class CommonUserTest {
     void setCity() {
         user.setCity("Montreal");
         assertEquals("Montreal", user.getCity());
+    }
+
+    @Test
+    void isEquals(){
+        CommonUser newUser = new CommonUser("username", "123**User", LocalDateTime.MAX, "user@mail.com",
+                "1234567890", "Toronto");
+        assertEquals(user, newUser);
+    }
+    @Test
+    void isNotEquals(){
+        CommonUser newUser = new CommonUser("username", "123**User", LocalDateTime.MAX, "userc@mail.com",
+                "1234567890", "Toronto");
+        assertNotEquals(user, newUser);
     }
 }
