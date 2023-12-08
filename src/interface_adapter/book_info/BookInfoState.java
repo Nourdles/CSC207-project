@@ -1,5 +1,7 @@
 package interface_adapter.book_info;
 
+import entity.Listing;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,4 +130,22 @@ public class BookInfoState {
      * @return All the Book Listing information
      */
     public List<List<String>> getListingsInfo() {return listingsInfo;}
+
+    /**
+     * Return true if both BookInfoStates are equals (they have the same attributes).
+     * Otherwise, return false.
+     * @param obj
+     * @return true if BookInfoStates have equivalent attributes. Else, return false.
+     */
+    public boolean equals(Object obj){
+        if (!(obj instanceof BookInfoState)){
+            return false;
+        }
+        BookInfoState state = (BookInfoState) (obj);
+        return (state.title.equals(this.title) && state.author.equals(this.author)&&
+                state.year == this.year && state.ISBN.equals(this.ISBN) &&
+                state.coverURL.equals(this.coverURL) && state.language.equals(this.language) &&
+                state.subjects.equals(this.subjects) && state.listingsInfo.equals(this.listingsInfo));
+    }
+
 }
