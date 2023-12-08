@@ -98,49 +98,62 @@ class FileUserDataAccessObjectTest {
     }
     @Test
     void getBookListings(){
+        fileUserDAO.save(user);
+        assertNull(fileUserDAO.getBookListings(user.getUsername()));
     }
 
     @Test
     void findCity() {
+        fileUserDAO.save(user);
+        assertEquals("New York", user.getCity());
     }
 
     @Test
     void findEmail() {
+        fileUserDAO.save(user);
+        assertEquals("tommy123@gmail.com", user.getEmail());
     }
 
     @Test
     void findPhoneNumber() {
+        fileUserDAO.save(user);
+        assertEquals("1234554321", user.getPhoneNumber());
     }
 
     @Test
     void updatePhoneNumber() {
-        String newPhoneNumber = "0001112222";
         fileUserDAO.save(user);
-        fileUserDAO.updatePhoneNumber(username, newPhoneNumber);
+        String newPhoneNumber = "0001112222";
+        fileUserDAO.updatePhoneNumber(user.getUsername(), newPhoneNumber);
         assertEquals(user.getPhoneNumber(), newPhoneNumber);
     }
 
     @Test
     void updateCity() {
-        String newCity = "England";
         fileUserDAO.save(user);
-        fileUserDAO.updateCity(username, newCity);
-        assertEquals(user.getCity(), newCity);
+        String newCity = "England";
+        fileUserDAO.updateCity(user.getUsername(), newCity);
+        assertEquals(newCity, user.getCity());
     }
 
     @Test
     void updateEmail() {
-        String newEmail = "tommy234@gmail.com";
         fileUserDAO.save(user);
-        fileUserDAO.updateEmail(username, newEmail);
-        assertEquals(user.getEmail(), newEmail);
+        String newEmail = "user@mail.com";
+        fileUserDAO.updateEmail(user.getUsername(), newEmail);
+        assertEquals(newEmail, user.getEmail());
     }
 
     @Test
     void updatePassword() {
-        String newPassword = "Qwerty123$";
         fileUserDAO.save(user);
-        fileUserDAO.updatePassword(username, newPassword);
-        assertEquals(user.getPassword(), newPassword);
+        String newPassword = "Qwerty123$";
+        fileUserDAO.updatePassword(user.getUsername(), newPassword);
+        assertEquals(newPassword, user.getPassword());
+    }
+
+    @Test
+    void getAccounts() {
+        assertEquals(accounts, fileUserDAO.getAccounts());
     }
 }
