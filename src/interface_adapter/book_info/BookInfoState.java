@@ -141,7 +141,26 @@ public class BookInfoState {
         if (!(obj instanceof BookInfoState)){
             return false;
         }
+
         BookInfoState state = (BookInfoState) (obj);
+        if (state.title == null && this.title == null && state.author == null &&
+                this.author == null && state.year == 0 && this.year == 0 &&
+                state.ISBN == null && this.ISBN == null && state.coverURL == null &&
+                this.coverURL == null && state.language == null && this.language == null &&
+                state.subjects == null && this.subjects == null && state.listingsInfo == null &&
+                this.listingsInfo == null){
+            return true;
+        }
+
+        if (state.title == null || this.title == null || state.author == null ||
+                this.author == null || state.year == 0 || this.year == 0 ||
+                state.ISBN == null || this.ISBN == null || state.coverURL == null ||
+                this.coverURL == null || state.language == null || this.language == null ||
+                state.subjects == null || this.subjects == null || state.listingsInfo == null ||
+                this.listingsInfo == null) {
+            return false;
+        }
+
         return (state.title.equals(this.title) && state.author.equals(this.author)&&
                 state.year == this.year && state.ISBN.equals(this.ISBN) &&
                 state.coverURL.equals(this.coverURL) && state.language.equals(this.language) &&
