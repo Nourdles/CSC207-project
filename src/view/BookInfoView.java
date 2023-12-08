@@ -49,6 +49,7 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         viewModel.addPropertyChangeListener(this);
         viewManagerModel.addPropertyChangeListener(this);
         createUI();
+        setComponentNames();
     }
 
     /**
@@ -151,6 +152,11 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Change the view to the Book Search view if the Back Button is clicked
+     * OR Change the view to the Create Listing menu if the create listing button is clicked.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
@@ -240,6 +246,14 @@ public class BookInfoView extends JPanel implements ActionListener, PropertyChan
         listingsPanel.repaint();
         revalidate();
         repaint();
+    }
+
+    /**
+     * Setting components, used for testing BookInfoView.
+     */
+    private void setComponentNames(){
+       backButton.setName("back");
+       createListingButton.setName("create listing");
     }
 
 }
