@@ -2,6 +2,7 @@ package data_access;
 
 import app.CreateListingUseCaseFactory;
 import entity.*;
+import org.junit.jupiter.api.Test;
 import use_case.create_listing.CreateListingDataAccessInterface;
 import use_case.create_listing.CreateListingInteractor;
 import use_case.create_listing.CreateListingOutputBoundary;
@@ -123,4 +124,18 @@ class FileListingDataAccessObjectTest {
         assertEquals(fileListingDAO.getBookListings(ISBN), expectedList);
     }
 
+    @Test
+    void findPhoneNumber() {
+        assertNull(fileListingDAO.findPhoneNumber(""));
+    }
+
+    @Test
+    void findEmail() {
+        assertNull(fileListingDAO.findEmail(""));
+    }
+
+    @Test
+    void findCity() {
+        assertNull(fileListingDAO.findCity(""));
+    }
 }
