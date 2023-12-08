@@ -8,6 +8,9 @@ import use_case.create_listing.CreateListingOutputBoundary;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,14 +26,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileListingDataAccessObjectTest {
     private FileListingDataAccessObject fileListingDAO;
     private String sellerName;
+    private String listingsPath;
+    private ListingFactory listingFactory;
     private Listing listing;
     private String ISBN;
     private Map<String, Listing> actualMap = new HashMap<>();
     @org.junit.jupiter.api.BeforeEach
     void setUp() throws IOException {
-        ListingFactory listingFactory = new ListingFactory();
+        listingFactory = new ListingFactory();
         String photoPath = "src/default.png";
-        String listingsPath = "listingInfo.csv";
+        listingsPath = "listingInfo.csv";
         String bookTitle = "History";
         sellerName = "Bob Jones";
         ISBN = "1234567898765";
@@ -42,6 +47,35 @@ class FileListingDataAccessObjectTest {
     @org.junit.jupiter.api.BeforeEach
     void clear() {
     }
+
+    @org.junit.jupiter.api.Test
+    void makeImagesDirectory() throws IOException {
+        File file = new File("allImages");
+        assertTrue(file.isDirectory());
+        File[] images = file.listFiles();
+        assert images != null;
+        for (File image: images){
+            assertTrue(image.delete());
+        }
+        assertTrue(file.delete());
+        FileListingDataAccessObject newfileListingDAO = new FileListingDataAccessObject(listingsPath, listingFactory);
+        Path dirPath = Paths.get("allImages");
+        assertTrue(Files.exists(dirPath));
+    }
+    @org.junit.jupiter.api.Test
+    void makeListingsCSV() throws IOException {
+        String testListingString = "listingsTest.csv";
+        Path testListingPath = Paths.get(testListingString);
+        if (Files.exists(testListingPath)){
+            Files.delete(testListingPath);
+        }
+        File file = new File(testListingString);
+        assertEquals(file.length(),0);
+        FileListingDataAccessObject newfileListingDAO = new FileListingDataAccessObject(testListingString, listingFactory);
+        Path listingsTestPath = Paths.get("listingsTest.csv");
+        assertTrue(Files.exists(listingsTestPath));
+    }
+
     @org.junit.jupiter.api.Test
     void save() throws IOException {
         String listingId = ISBN;
@@ -56,6 +90,7 @@ class FileListingDataAccessObjectTest {
     }
     @org.junit.jupiter.api.Test
     void successExistsById() {
+        fileListingDAO.save(listing);
         assertTrue(fileListingDAO.existsById(ISBN));
     }
     @org.junit.jupiter.api.Test
@@ -68,7 +103,7 @@ class FileListingDataAccessObjectTest {
         fileListingDAO.save(listing);
         assertTrue(actualMap.containsKey(ISBN));
         assertTrue(actualMap.containsValue(listing));
-        actualMap.remove(ISBN);
+        fileListingDAO.delete(ISBN);
         assertFalse(actualMap.containsKey(ISBN));
         assertFalse(actualMap.containsValue(listing));
     }
