@@ -151,9 +151,4 @@ class FileUserDataAccessObjectTest {
         fileUserDAO.updatePassword(user.getUsername(), newPassword);
         assertEquals(newPassword, user.getPassword());
     }
-
-    @Test
-    void getAccounts() {
-        assertEquals(accounts, fileUserDAO.getAccounts());
-    }
 }

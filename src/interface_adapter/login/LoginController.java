@@ -19,8 +19,8 @@ public class LoginController {
 
     /**
      * Creates a new Input Data for the Login use case and calls the execute method of the Interactor
-     * @param username
-     * @param password
+     * @param username String that represents the username entered by the User
+     * @param password String that represents the password entered by the User
      */
     public void execute(String username, String password) {
         LoginInputData loginInputData = new LoginInputData(username, password);
