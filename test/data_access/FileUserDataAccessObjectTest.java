@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +16,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileUserDataAccessObjectTest {
-
+    private CommonUserFactory userFactory;
     private String username;
     private String password;
     private LocalDateTime ldt;
@@ -25,7 +28,7 @@ class FileUserDataAccessObjectTest {
     private Map<String, User> accounts = new HashMap<>();
     @org.junit.jupiter.api.BeforeEach
     void setUp() throws IOException {
-        CommonUserFactory userFactory = new CommonUserFactory();
+        userFactory = new CommonUserFactory();
         username = "Tommy";
         password = "Abcd1234!";
         ldt = LocalDateTime.MAX;
@@ -65,6 +68,20 @@ class FileUserDataAccessObjectTest {
     }
 
     @Test
+    void makeUsersCSV() throws IOException {
+        String testUserString = "usersTest.csv";
+        Path testUserPath = Paths.get(testUserString);
+        if (Files.exists(testUserPath)){
+            Files.delete(testUserPath);
+        }
+        File file = new File(testUserString);
+        assertEquals(file.length(),0);
+        FileUserDataAccessObject newfileUserDAO = new FileUserDataAccessObject(testUserString, userFactory);
+        Path usersTestPath = Paths.get("usersTest.csv");
+        assertTrue(Files.exists(usersTestPath));
+    }
+
+    @Test
     void get(){
         fileUserDAO.save(user);
         assertEquals(fileUserDAO.get(username), user);
@@ -98,28 +115,32 @@ class FileUserDataAccessObjectTest {
     @Test
     void updatePhoneNumber() {
         String newPhoneNumber = "0001112222";
+        fileUserDAO.save(user);
         fileUserDAO.updatePhoneNumber(username, newPhoneNumber);
-        assertEquals(phoneNumber, newPhoneNumber);
+        assertEquals(user.getPhoneNumber(), newPhoneNumber);
     }
 
     @Test
     void updateCity() {
         String newCity = "England";
+        fileUserDAO.save(user);
         fileUserDAO.updateCity(username, newCity);
-        assertEquals(city, newCity);
+        assertEquals(user.getCity(), newCity);
     }
 
     @Test
     void updateEmail() {
-        String newEmail = "England";
-        fileUserDAO.updateCity(username, newEmail);
-        assertEquals(city, newEmail);
+        String newEmail = "tommy234@gmail.com";
+        fileUserDAO.save(user);
+        fileUserDAO.updateEmail(username, newEmail);
+        assertEquals(user.getEmail(), newEmail);
     }
 
     @Test
     void updatePassword() {
         String newPassword = "Qwerty123$";
-        fileUserDAO.updateCity(username, newPassword);
-        assertEquals(password, newPassword);
+        fileUserDAO.save(user);
+        fileUserDAO.updatePassword(username, newPassword);
+        assertEquals(user.getPassword(), newPassword);
     }
 }
